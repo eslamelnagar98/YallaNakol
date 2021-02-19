@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31005.135
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YallaNakol.Data", "YallaNakol.Data\YallaNakol.Data.csproj", "{5D1BB040-8128-4A40-BFB7-1DF819E9D680}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YallaNakol.UI", "YallaNakol.UI\YallaNakol.UI.csproj", "{4BFF7DF2-5A57-46BE-B5C2-FA97C18F7488}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5D1BB040-8128-4A40-BFB7-1DF819E9D680}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D1BB040-8128-4A40-BFB7-1DF819E9D680}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5D1BB040-8128-4A40-BFB7-1DF819E9D680}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5D1BB040-8128-4A40-BFB7-1DF819E9D680}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4BFF7DF2-5A57-46BE-B5C2-FA97C18F7488}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4BFF7DF2-5A57-46BE-B5C2-FA97C18F7488}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4BFF7DF2-5A57-46BE-B5C2-FA97C18F7488}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4BFF7DF2-5A57-46BE-B5C2-FA97C18F7488}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6837A790-85B2-4F2B-AE4B-79A305F1800C}
+	EndGlobalSection
+EndGlobal

@@ -19,27 +19,23 @@ namespace YallaNakol.UI.Controllers
             _repo = context;
         }
 
-        // GET: Dishes
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            return View(await _repo.Dishes.ToListAsync());
+            return View(_repo.AllDishes);
         }
 
         // GET: Dishes/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public IActionResult Details(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
-
-            var dish = await _repo.Dishes
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var dish = _repo.GetDishById(id);
             if (dish == null)
             {
                 return NotFound();
             }
-
             return View(dish);
         }
 
@@ -54,26 +50,25 @@ namespace YallaNakol.UI.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Description,Price,ImageUrl,InStock")] Dish dish)
+        public IActionResult Create([Bind("Id,Name,Address,Description,Rate,ImageUrl,PhoneNumber,WorkingHours,DeliveryAreas")] Dish dish)
         {
             if (ModelState.IsValid)
             {
-                _repo.Add(dish);
-                await _repo.SaveChangesAsync();
+                _repo.AddDish(dish);
                 return RedirectToAction(nameof(Index));
             }
             return View(dish);
         }
 
         // GET: Dishes/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public IActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var dish = await _repo.Dishes.FindAsync(id);
+            var dish = _repo.GetDishById(id);
             if (dish == null)
             {
                 return NotFound();
@@ -86,23 +81,21 @@ namespace YallaNakol.UI.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,Price,ImageUrl,InStock")] Dish dish)
+        public IActionResult Edit(int id, [Bind("Id,Name,Address,Description,Rate,ImageUrl,PhoneNumber,WorkingHours,DeliveryAreas")] Dish dish)
         {
             if (id != dish.Id)
             {
                 return NotFound();
             }
-
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _repo.Update(dish);
-                    await _repo.SaveChangesAsync();
+                    _repo.UpdateDish(dish);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!DishExists(dish.Id))
+                    if (!_repo.DishExists(dish.Id))
                     {
                         return NotFound();
                     }
@@ -117,15 +110,14 @@ namespace YallaNakol.UI.Controllers
         }
 
         // GET: Dishes/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public IActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var dish = await _repo.Dishes
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var dish = _repo.GetDishById(id);
             if (dish == null)
             {
                 return NotFound();
@@ -137,17 +129,11 @@ namespace YallaNakol.UI.Controllers
         // POST: Dishes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public IActionResult DeleteConfirmed(int id)
         {
-            var dish = await _repo.Dishes.FindAsync(id);
-            _repo.Dishes.Remove(dish);
-            await _repo.SaveChangesAsync();
+            var dish = _repo.GetDishById(id);
+            _repo.DeleteDish(dish);
             return RedirectToAction(nameof(Index));
-        }
-
-        private bool DishExists(int id)
-        {
-            return _repo.Dishes.Any(e => e.Id == id);
         }
     }
 }

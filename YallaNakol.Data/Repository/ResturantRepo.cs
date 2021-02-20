@@ -15,7 +15,7 @@ namespace YallaNakol.Data.Repository
         {
             this._applicationDbContext = applicationDbContext;
         }
-        public IEnumerable<Restaurant> AllRestaurant => _applicationDbContext.Restaurants;
+        public IEnumerable<Restaurant> AllRestaurants => _applicationDbContext.Restaurants.ToList();
         
         public Restaurant GetRestaurantById(int restaurantId)=>
             _applicationDbContext.Restaurants.FirstOrDefault(I => I.Id == restaurantId);

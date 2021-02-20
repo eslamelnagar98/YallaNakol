@@ -7,7 +7,7 @@ namespace YallaNakol.Data.Services
 {
     public interface IRestaurant
     {
-        IEnumerable<Restaurant> AllRestaurant { get; }
+        IEnumerable<Restaurant> AllRestaurants { get; }
         Restaurant GetRestaurantById(int restaurantId);
     }
 }

@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace YallaNakol.Data.Repository
 {
-    class ResturantRepo : IRestaurant
+    public class ResturantRepo : IRestaurant
     {
         private readonly ApplicationDbContext _applicationDbContext;
 

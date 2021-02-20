@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace YallaNakol.Data.Repository
 {
-    class MenuRepo:IMenu
+    public class MenuRepo:IMenu
     {
         private readonly ApplicationDbContext _applicationDbContext;
         public MenuRepo(ApplicationDbContext applicationDbContext)

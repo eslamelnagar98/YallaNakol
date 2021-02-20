@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace YallaNakol.Data.Repository
 {
-    class CategoryRepo : ICategory
+    public class CategoryRepo : ICategory
     {
         private readonly ApplicationDbContext _applicationDbContext;
 

@@ -25,5 +25,7 @@ namespace YallaNakol.Data.Models
         public virtual ICollection<Restaurant> Restaurants { get; set; }
         public virtual ICollection<Dish> Dishes { get; set; }
 
+        public int Islam { get; set; }
+
     }
 }

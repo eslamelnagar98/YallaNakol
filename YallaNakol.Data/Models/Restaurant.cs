@@ -24,8 +24,8 @@ namespace YallaNakol.Data.Models
         public string Rate { get; set; }
         [Required]
         public string ImageUrl { get; set; }
-        [Required]
-        [RegularExpression(@"^01[0125]\d{8}$")]
+
+        [Required,RegularExpression(@"^01[0125]\d{8}$",ErrorMessage ="Invalid Phone Number")]
         public string PhoneNumber { get; set; }
         [Required]
         public string WorkingHours { get; set; }

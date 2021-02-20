@@ -13,6 +13,8 @@ namespace YallaNakol.Data.Models
             Restaurants = new HashSet<Restaurant>();
             Dishes = new HashSet<Dish>();
         }
+
+
         [Key]
         public int Id { get; set; }
 
@@ -24,8 +26,6 @@ namespace YallaNakol.Data.Models
         public string Description { get; set; }
         public virtual ICollection<Restaurant> Restaurants { get; set; }
         public virtual ICollection<Dish> Dishes { get; set; }
-
-        
 
     }
 }

@@ -10,8 +10,8 @@ using YallaNakol.Data.Models;
 namespace YallaNakol.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210219223435_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20210220213351_initialMigration")]
+    partial class initialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -247,11 +247,21 @@ namespace YallaNakol.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.HasKey("Id");
 
                     b.ToTable("Categories");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Description = "A hamburger (also burger for short) is a sandwich consisting of one or more cooked patties of ground meat, usually beef, placed inside a sliced bread roll or bun. The patty may be pan fried, grilled, smoked or flame broiled. Hamburgers are often served with cheese, lettuce, tomato, onion, pickles, bacon, or chiles; condiments such as ketchup, mustard, mayonnaise, relish, or a special sauce, often a variation of Thousand Island dressing; and are frequently placed on sesame seed buns. A hamburger topped with cheese is called a cheeseburger",
+                            Name = "Burger"
+                        });
                 });
 
             modelBuilder.Entity("YallaNakol.Data.Models.Dish", b =>
@@ -268,6 +278,7 @@ namespace YallaNakol.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ImageUrl")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("InStock")
@@ -277,7 +288,9 @@ namespace YallaNakol.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)");
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
@@ -289,6 +302,44 @@ namespace YallaNakol.Data.Migrations
                     b.HasIndex("MenuId");
 
                     b.ToTable("Dishes");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Description = "Juicy beef patty smothered in three extraordinary slices of Emmental cheese and topped with sliced tomato, shredded lettuce, onions and that special Big Tasty sauce",
+                            ImageUrl = "https://s3-eu-west-1.amazonaws.com/elmenusv5-stg/Normal/a660c55e-d9ea-4c0d-be33-4d0cc5d0a7b4.jpg",
+                            InStock = true,
+                            Name = "Big Tasty",
+                            Price = 100m
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Description = "Two beef patties, that unbeatably tasty Big Mac sauce, melting signature cheese, crisp shredded lettuce, onions, pickles and a bun in the middle all between a toasted sesame seed bun",
+                            ImageUrl = "https://s3-eu-west-1.amazonaws.com/elmenusv5-stg/Normal/298f37b4-f9f7-44ea-a297-02cda66bd50b.jpg",
+                            InStock = true,
+                            Name = "Big Mac",
+                            Price = 60m
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Description = "Two Juicy beef patty smothered in three extraordinary slices of Emmental cheese and topped with sliced tomato, shredded lettuce, onions and that special Big Tasty sauce",
+                            ImageUrl = "https://s3-eu-west-1.amazonaws.com/elmenusv5-stg/Normal/b7d655fd-9cee-4a79-89f7-8a4b6a28ab00.jpg",
+                            InStock = true,
+                            Name = "Double Big Tasty",
+                            Price = 110m
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Description = "A delicious combination of breaded chicken patties, crisp lettuce, melting cheese, onions, pickles, and our special sauce, all framed between a toasted sesame seed bun",
+                            ImageUrl = "https://s3-eu-west-1.amazonaws.com/elmenusv5-stg/Thumbnail/0e13cb43-dacb-4788-8c7d-2c0ab72c23e9.jpg",
+                            InStock = true,
+                            Name = "Chicken Mac",
+                            Price = 90m
+                        });
                 });
 
             modelBuilder.Entity("YallaNakol.Data.Models.Menu", b =>
@@ -306,6 +357,12 @@ namespace YallaNakol.Data.Migrations
                     b.HasIndex("DishOfTheWeekId");
 
                     b.ToTable("Menus");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1
+                        });
                 });
 
             modelBuilder.Entity("YallaNakol.Data.Models.Restaurant", b =>
@@ -316,6 +373,7 @@ namespace YallaNakol.Data.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Address")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("DeliveryAreas")
@@ -325,21 +383,27 @@ namespace YallaNakol.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ImageUrl")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("MenuId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<string>("PhoneNumber")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Rate")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("WorkingHours")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -347,6 +411,20 @@ namespace YallaNakol.Data.Migrations
                     b.HasIndex("MenuId");
 
                     b.ToTable("Restaurants");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Address = "39 Abbas El Akkad StreetAbbas El Akkad Nasr City",
+                            DeliveryAreas = 4,
+                            Description = "McDonald's Corporation is an American fast food company, founded in 1940 as a restaurant operated by Richard and Maurice McDonald, in San Bernardino, California, United States. They rechristened their business as a hamburger stand, and later turned the company into a franchise, with the Golden Arches logo being introduced in 1953 at a location in Phoenix, Arizona. In 1955, Ray Kroc, a businessman, joined the company as a franchise agent and proceeded to purchase the chain from the McDonald brothers. McDonald's had its previous headquarters in Oak Brook, Illinois, but moved its global headquarters to Chicago in June 2018",
+                            ImageUrl = "https://www.nrn.com/sites/nrn.com/files/styles/article_featured_standard/public/mcdonalds-logo.gif?itok=U_TliriA",
+                            Name = "McDonalds",
+                            PhoneNumber = "19991",
+                            Rate = "4.6",
+                            WorkingHours = "From 11:00 AM To 02:15 AM"
+                        });
                 });
 
             modelBuilder.Entity("CategoryRestaurant", b =>

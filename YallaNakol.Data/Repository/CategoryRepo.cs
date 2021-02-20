@@ -4,6 +4,7 @@ using System.Text;
 using YallaNakol.Data.Models;
 using YallaNakol.Data.Services;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace YallaNakol.Data.Repository
 {
@@ -15,7 +16,15 @@ namespace YallaNakol.Data.Repository
         {
             this._applicationDbContext = applicationDbContext;
         }
-        public IEnumerable<Category> AllCategories => _applicationDbContext.Categories;
+        public IEnumerable<Category> AllCategories => 
+            _applicationDbContext.Categories
+                                 .AsNoTracking()
+                                 .ToList();
+
+        private object AsNoTracking()
+        {
+            throw new NotImplementedException();
+        }
 
         public Category GetCategoryById(int CategoryId) =>
             _applicationDbContext.Categories.FirstOrDefault(I => I.Id == CategoryId);

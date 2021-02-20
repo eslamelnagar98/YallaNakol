@@ -4,18 +4,22 @@ using System.Text;
 using YallaNakol.Data.Models;
 using YallaNakol.Data.Services;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace YallaNakol.Data.Repository
 {
-    public class ResturantRepo : IRestaurant
+    public class RestaurantRepo : IRestaurant
     {
         private readonly ApplicationDbContext _applicationDbContext;
 
-        public ResturantRepo(ApplicationDbContext applicationDbContext)
+        public RestaurantRepo(ApplicationDbContext applicationDbContext)
         {
             this._applicationDbContext = applicationDbContext;
         }
-        public IEnumerable<Restaurant> AllRestaurants => _applicationDbContext.Restaurants.ToList();
+        public IEnumerable<Restaurant> AllRestaurants =>
+            _applicationDbContext.Restaurants
+                                 .AsNoTracking()
+                                 .ToList();
 
         public Restaurant GetRestaurantById(int? restaurantId) =>
             _applicationDbContext.Restaurants.FirstOrDefault(I => I.Id == restaurantId);

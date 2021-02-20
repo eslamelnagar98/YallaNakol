@@ -4,6 +4,7 @@ using System.Text;
 using YallaNakol.Data.Models;
 using YallaNakol.Data.Services;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace YallaNakol.Data.Repository
 {
@@ -15,9 +16,11 @@ namespace YallaNakol.Data.Repository
             this._applicationDbContext = applicationDbContext;
         }
 
-        public IEnumerable<Dish> AllDishes => _applicationDbContext.Dishes;
+        public IEnumerable<Dish> AllDishes => 
+            _applicationDbContext.Dishes
+                                 .AsNoTracking()
+                                 .ToList();
         public Dish GetDishById(int dishId) =>
-            _applicationDbContext.Dishes.FirstOrDefault(I => I.Id == dishId);
-       
+            _applicationDbContext.Dishes.FirstOrDefault(I => I.Id == dishId); 
     }
 }

@@ -4,18 +4,20 @@ using System.Text;
 using YallaNakol.Data.Models;
 using YallaNakol.Data.Services;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace YallaNakol.Data.Repository
 {
     public class DishRepo : IDish
     {
         private readonly ApplicationDbContext _applicationDbContext;
-
+ 
         public DishRepo(ApplicationDbContext applicationDbContext)
         {
             this._applicationDbContext = applicationDbContext;
         }
-        public IEnumerable<Dish> AllDishes => _applicationDbContext.Dishes.ToList();
+        public IEnumerable<Dish> AllDishes => 
+            _applicationDbContext.Dishes.AsNoTracking().ToList();
 
         public Dish GetDishById(int? DishId) =>
             _applicationDbContext.Dishes.FirstOrDefault(I => I.Id == DishId);
@@ -38,5 +40,8 @@ namespace YallaNakol.Data.Repository
         {
             return _applicationDbContext.Dishes.Any(e => e.Id == id);
         }
+
+
+
     }
 }

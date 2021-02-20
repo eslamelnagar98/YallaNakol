@@ -6,14 +6,15 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using YallaNakol.Data.Models;
+using YallaNakol.Data.Services;
 
 namespace YallaNakol.UI.Controllers
 {
     public class DishesController : Controller
     {
-        private readonly ApplicationDbContext _repo;
+        private readonly IDish _repo;
 
-        public DishesController(ApplicationDbContext context)
+        public DishesController(IDish context)
         {
             _repo = context;
         }

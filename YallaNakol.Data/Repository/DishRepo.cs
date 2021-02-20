@@ -7,36 +7,36 @@ using System.Linq;
 
 namespace YallaNakol.Data.Repository
 {
-    public class ResturantRepo : IRestaurant
+    public class DishRepo : IDish
     {
         private readonly ApplicationDbContext _applicationDbContext;
 
-        public ResturantRepo(ApplicationDbContext applicationDbContext)
+        public DishRepo(ApplicationDbContext applicationDbContext)
         {
             this._applicationDbContext = applicationDbContext;
         }
-        public IEnumerable<Restaurant> AllRestaurants => _applicationDbContext.Restaurants.ToList();
+        public IEnumerable<Dish> AllDishes => _applicationDbContext.Dishes.ToList();
 
-        public Restaurant GetRestaurantById(int? restaurantId) =>
-            _applicationDbContext.Restaurants.FirstOrDefault(I => I.Id == restaurantId);
-        public void AddRestaurant(Restaurant restaurant)
+        public Dish GetDishById(int? DishId) =>
+            _applicationDbContext.Dishes.FirstOrDefault(I => I.Id == DishId);
+        public void AddDish(Dish Dish)
         {
-            _applicationDbContext.Restaurants.Add(restaurant);
+            _applicationDbContext.Dishes.Add(Dish);
             _applicationDbContext.SaveChanges();
         }
-        public void UpdateRestaurant(Restaurant restaurant)
+        public void UpdateDish(Dish Dish)
         {
-            _applicationDbContext.Update(restaurant);
+            _applicationDbContext.Update(Dish);
             _applicationDbContext.SaveChanges();
         }
-        public void DeleteRestaurant(Restaurant restaurant)
+        public void DeleteDish(Dish Dish)
         {
-            _applicationDbContext.Remove(restaurant);
+            _applicationDbContext.Remove(Dish);
             _applicationDbContext.SaveChanges();
         }
-        public bool RestaurantExists(int id)
+        public bool DishExists(int id)
         {
-            return _applicationDbContext.Restaurants.Any(e => e.Id == id);
+            return _applicationDbContext.Dishes.Any(e => e.Id == id);
         }
     }
 }

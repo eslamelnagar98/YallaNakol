@@ -21,25 +21,23 @@ namespace YallaNakol.Data.Repository
 
         public Dish GetDishById(int? DishId) =>
             _applicationDbContext.Dishes.FirstOrDefault(I => I.Id == DishId);
-        public void AddDish(Dish Dish)
-        {
+        public void AddDish(Dish Dish) =>
+        
             _applicationDbContext.Dishes.Add(Dish);
-            _applicationDbContext.SaveChanges();
-        }
-        public void UpdateDish(Dish Dish)
-        {
+        
+        public void UpdateDish(Dish Dish) =>
+        
             _applicationDbContext.Update(Dish);
-            _applicationDbContext.SaveChanges();
-        }
-        public void DeleteDish(Dish Dish)
-        {
+        
+        public void DeleteDish(Dish Dish) =>
+        
             _applicationDbContext.Remove(Dish);
-            _applicationDbContext.SaveChanges();
-        }
-        public bool DishExists(int id)
-        {
-            return _applicationDbContext.Dishes.Any(e => e.Id == id);
-        }
+        
+        public bool DishExists(int id) =>
+        
+             _applicationDbContext.Dishes.Any(e => e.Id == id);
+        
+        public int SaveChanges() => _applicationDbContext.SaveChanges();
 
 
 

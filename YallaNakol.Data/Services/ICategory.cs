@@ -11,5 +11,6 @@ namespace YallaNakol.Data.Services
         void UpdateCategory(Category category);
         void DeleteCategory(Category category);
         bool CategoryExists(int id);
+        int SaveChanges();
     }
 }

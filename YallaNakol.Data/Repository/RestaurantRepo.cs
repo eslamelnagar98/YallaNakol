@@ -23,24 +23,25 @@ namespace YallaNakol.Data.Repository
 
         public Restaurant GetRestaurantById(int? restaurantId) =>
             _applicationDbContext.Restaurants.FirstOrDefault(I => I.Id == restaurantId);
-        public void AddRestaurant(Restaurant restaurant)
-        {
+        public void AddRestaurant(Restaurant restaurant) =>
+        
             _applicationDbContext.Restaurants.Add(restaurant);
-            _applicationDbContext.SaveChanges();
-        }
-        public void UpdateRestaurant(Restaurant restaurant)
-        {
+        
+        public void UpdateRestaurant(Restaurant restaurant) =>
+        
             _applicationDbContext.Update(restaurant);
-            _applicationDbContext.SaveChanges();
-        }
-        public void DeleteRestaurant(Restaurant restaurant)
-        {
+        
+        public void DeleteRestaurant(Restaurant restaurant) =>
+        
             _applicationDbContext.Remove(restaurant);
+        
+        public bool RestaurantExists(int id) =>
+        
+             _applicationDbContext.Restaurants.Any(e => e.Id == id);
+        
+        public int SaveChanges() =>
+        
             _applicationDbContext.SaveChanges();
-        }
-        public bool RestaurantExists(int id)
-        {
-            return _applicationDbContext.Restaurants.Any(e => e.Id == id);
-        }
+        
     }
 }

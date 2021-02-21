@@ -16,11 +16,31 @@ namespace YallaNakol.Data.Repository
             this._applicationDbContext = applicationDbContext;
         }
 
-        public IEnumerable<Dish> AllDishes => 
-            _applicationDbContext.Dishes
+        public IEnumerable<Menu> AllMenus => 
+            _applicationDbContext.Menus
                                  .AsNoTracking()
                                  .ToList();
-        public Dish GetDishById(int dishId) =>
-            _applicationDbContext.Dishes.FirstOrDefault(I => I.Id == dishId); 
+        public Menu GetMenuById(int? menuId) => 
+            _applicationDbContext.Menus.FirstOrDefault(I => I.Id == menuId);
+
+        public void AddMenu(Menu Menu)
+        {
+            _applicationDbContext.Menus.Add(Menu);
+            _applicationDbContext.SaveChanges();
+        }
+        public void UpdateMenu(Menu Menu)
+        {
+            _applicationDbContext.Update(Menu);
+            _applicationDbContext.SaveChanges();
+        }
+        public void DeleteMenu(Menu Menu)
+        {
+            _applicationDbContext.Remove(Menu);
+            _applicationDbContext.SaveChanges();
+        }
+        public bool MenuExists(int id)
+        {
+            return _applicationDbContext.Menus.Any(e => e.Id == id);
+        }
     }
 }

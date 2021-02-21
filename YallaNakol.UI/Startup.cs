@@ -33,6 +33,7 @@ namespace YallaNakol.UI
                     Configuration.GetConnectionString("MyConn")));
             services.AddScoped<ICategory,CategoryRepo>();
             services.AddScoped<IMenu,MenuRepo>();
+            services.AddScoped<IDish, DishRepo>();
             services.AddScoped<IRestaurant,RestaurantRepo>();
             
             services.AddDatabaseDeveloperPageExceptionFilter();

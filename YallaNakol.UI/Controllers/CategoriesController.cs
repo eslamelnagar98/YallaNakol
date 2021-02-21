@@ -57,6 +57,7 @@ namespace YallaNakol.UI.Controllers
             if (ModelState.IsValid)
             {
                 _repo.AddCategory(category);
+                _repo.SaveChanges();
                 return RedirectToAction(nameof(Index));
             }
             return View(category);
@@ -95,6 +96,7 @@ namespace YallaNakol.UI.Controllers
                 try
                 {
                     _repo.UpdateCategory(category);
+                    _repo.SaveChanges();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -138,6 +140,7 @@ namespace YallaNakol.UI.Controllers
         {
             var category = _repo.GetCategoryById(id);
             _repo.DeleteCategory(category);
+            _repo.SaveChanges();
 
             return RedirectToAction(nameof(Index));
         }

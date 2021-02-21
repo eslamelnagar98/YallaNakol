@@ -57,6 +57,7 @@ namespace YallaNakol.UI.Controllers
             if (ModelState.IsValid)
             {
                 _repo.AddMenu(menu);
+                _repo.SaveChanges();
                 return RedirectToAction(nameof(Index));
             }
             return View(menu);
@@ -95,6 +96,7 @@ namespace YallaNakol.UI.Controllers
                 try
                 {
                     _repo.UpdateMenu(menu);
+                    _repo.SaveChanges();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -137,8 +139,10 @@ namespace YallaNakol.UI.Controllers
         public  IActionResult DeleteConfirmed(int id)
         {
             var menu = _repo.GetMenuById(id);
+
             _repo.DeleteMenu(menu);
-            
+            _repo.SaveChanges();
+
             return RedirectToAction(nameof(Index));
         }
 

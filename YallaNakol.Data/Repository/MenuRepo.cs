@@ -23,24 +23,22 @@ namespace YallaNakol.Data.Repository
         public Menu GetMenuById(int? menuId) => 
             _applicationDbContext.Menus.FirstOrDefault(I => I.Id == menuId);
 
-        public void AddMenu(Menu Menu)
-        {
+        public void AddMenu(Menu Menu) =>
+        
             _applicationDbContext.Menus.Add(Menu);
-            _applicationDbContext.SaveChanges();
-        }
-        public void UpdateMenu(Menu Menu)
-        {
+        
+        public void UpdateMenu(Menu Menu) =>
+        
             _applicationDbContext.Update(Menu);
-            _applicationDbContext.SaveChanges();
-        }
-        public void DeleteMenu(Menu Menu)
-        {
+        
+        public void DeleteMenu(Menu Menu) =>
+        
             _applicationDbContext.Remove(Menu);
-            _applicationDbContext.SaveChanges();
-        }
-        public bool MenuExists(int id)
-        {
-            return _applicationDbContext.Menus.Any(e => e.Id == id);
-        }
+        
+        public bool MenuExists(int id) =>
+        
+             _applicationDbContext.Menus.Any(e => e.Id == id);
+        
+        public int SaveChanges() => _applicationDbContext.SaveChanges();
     }
 }

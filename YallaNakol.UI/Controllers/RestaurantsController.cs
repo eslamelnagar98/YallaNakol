@@ -55,6 +55,7 @@ namespace YallaNakol.UI.Controllers
             if (ModelState.IsValid)
             {
                 _repo.AddRestaurant(restaurant);
+                _repo.SaveChanges();
                 return RedirectToAction(nameof(Index));
             }
             return View(restaurant);
@@ -92,6 +93,7 @@ namespace YallaNakol.UI.Controllers
                 try
                 {
                     _repo.UpdateRestaurant(restaurant);
+                    _repo.SaveChanges();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -133,6 +135,7 @@ namespace YallaNakol.UI.Controllers
         {
             var restaurant = _repo.GetRestaurantById(id);
              _repo.DeleteRestaurant(restaurant);
+            _repo.SaveChanges();
             return RedirectToAction(nameof(Index));
         }
     }

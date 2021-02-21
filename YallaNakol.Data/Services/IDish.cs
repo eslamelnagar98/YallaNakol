@@ -13,5 +13,6 @@ namespace YallaNakol.Data.Services
         void UpdateDish(Dish dish);
         void DeleteDish(Dish dish);
         bool DishExists(int id);
+        int SaveChanges();
     }
 }

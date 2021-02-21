@@ -13,5 +13,6 @@ namespace YallaNakol.Data.Services
         void UpdateRestaurant(Restaurant restaurant);
         void DeleteRestaurant(Restaurant restaurant);
         bool RestaurantExists(int id);
+        int SaveChanges();
     }
 }

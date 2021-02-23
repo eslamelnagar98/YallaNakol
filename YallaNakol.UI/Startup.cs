@@ -50,6 +50,7 @@ namespace YallaNakol.UI
             services.AddHttpContextAccessor();
             services.AddSession();
             services.AddControllersWithViews();
+            services.AddRazorPages();
             //services.AddAuthentication()
             //.AddMicrosoftAccount(microsoftOptions => { })
             //.AddGoogle(googleOptions => {  })

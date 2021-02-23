@@ -20,6 +20,7 @@ namespace YallaNakol.Data.Models
         public DbSet<Dish> Dishes { get; set; }
         public DbSet<Menu> Menus { get; set; }
         public DbSet<Restaurant> Restaurants { get; set; }
+        public DbSet<ShoppingCartItem> shoppingCartItems { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

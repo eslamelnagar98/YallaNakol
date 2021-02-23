@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using YallaNakol.Data.Models;
 using YallaNakol.Data.Services;
 using YallaNakol.Data.Repository;
+using Microsoft.AspNetCore.Http;
 
 namespace YallaNakol.UI
 {
@@ -28,16 +29,23 @@ namespace YallaNakol.UI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("MyConn")));
+
+            services.AddScoped<IShoppingCart, ShoppingCart>(sp => {
+                var dbContext = sp.GetRequiredService<ApplicationDbContext>();
+                var httpContextAccessor = sp.GetRequiredService<IHttpContextAccessor>();
+                return ShoppingCart.GetCart(dbContext, httpContextAccessor);
+            });
+
             services.AddScoped<ICategory,CategoryRepo>();
             services.AddScoped<IMenu,MenuRepo>();
             services.AddScoped<IDish, DishRepo>();
             services.AddScoped<IRestaurant,RestaurantRepo>();
             
             services.AddDatabaseDeveloperPageExceptionFilter();
-
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();

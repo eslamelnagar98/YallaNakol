@@ -10,8 +10,8 @@ using YallaNakol.Data.Models;
 namespace YallaNakol.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210220213351_initialMigration")]
-    partial class initialMigration
+    [Migration("20210223150824_InitialMigration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -427,6 +427,38 @@ namespace YallaNakol.Data.Migrations
                         });
                 });
 
+            modelBuilder.Entity("YallaNakol.Data.Models.ShoppingCartItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("Amount")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("DishId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ShoppingCartId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DishId");
+
+                    b.ToTable("shoppingCartItems");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Amount = 3,
+                            ShoppingCartId = "30377b50-77fc-4e43-81d0-bbdc0e188ccb"
+                        });
+                });
+
             modelBuilder.Entity("CategoryRestaurant", b =>
                 {
                     b.HasOne("YallaNakol.Data.Models.Category", null)
@@ -522,6 +554,15 @@ namespace YallaNakol.Data.Migrations
                         .HasForeignKey("MenuId");
 
                     b.Navigation("Menu");
+                });
+
+            modelBuilder.Entity("YallaNakol.Data.Models.ShoppingCartItem", b =>
+                {
+                    b.HasOne("YallaNakol.Data.Models.Dish", "Dish")
+                        .WithMany()
+                        .HasForeignKey("DishId");
+
+                    b.Navigation("Dish");
                 });
 
             modelBuilder.Entity("YallaNakol.Data.Models.Category", b =>

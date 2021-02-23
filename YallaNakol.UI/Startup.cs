@@ -33,13 +33,11 @@ namespace YallaNakol.UI
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("MyConn")));
-
             services.AddScoped<IShoppingCart, ShoppingCart>(sp => {
                 var dbContext = sp.GetRequiredService<ApplicationDbContext>();
                 var httpContextAccessor = sp.GetRequiredService<IHttpContextAccessor>();
                 return ShoppingCart.GetCart(dbContext, httpContextAccessor);
             });
-
             services.AddScoped<ICategory,CategoryRepo>();
             services.AddScoped<IMenu,MenuRepo>();
             services.AddScoped<IDish, DishRepo>();
@@ -48,6 +46,9 @@ namespace YallaNakol.UI
             services.AddDatabaseDeveloperPageExceptionFilter();
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            services.AddHttpContextAccessor();
+            services.AddSession();
             services.AddControllersWithViews();
             //services.AddAuthentication()
             //.AddMicrosoftAccount(microsoftOptions => { })
@@ -73,7 +74,7 @@ namespace YallaNakol.UI
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
+            app.UseSession();
             app.UseRouting();
 
             app.UseAuthentication();
@@ -83,7 +84,7 @@ namespace YallaNakol.UI
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=ShoppingCart}/{action=Index}/{id?}");
                endpoints.MapRazorPages();
             });
         }

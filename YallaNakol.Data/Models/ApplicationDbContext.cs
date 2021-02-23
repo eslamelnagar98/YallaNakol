@@ -26,6 +26,15 @@ namespace YallaNakol.Data.Models
         {
             base.OnModelCreating(builder);
 
+            builder.Entity<ShoppingCartItem>().HasData(
+                new ShoppingCartItem
+                {
+                    Id=1,
+                    Amount = 3,
+                    ShoppingCartId= "30377b50-77fc-4e43-81d0-bbdc0e188ccb",
+                   
+
+                });
 
             builder.Entity<Category>().HasData(
                new Category

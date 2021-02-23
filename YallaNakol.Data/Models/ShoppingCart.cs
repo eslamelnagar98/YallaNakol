@@ -29,12 +29,12 @@ namespace YallaNakol.Data.Models
 
         public static ShoppingCart GetCart(ApplicationDbContext applicationDbContext,IHttpContextAccessor httpContextAccessor)
         {
-            ISession session = httpContextAccessor.HttpContext.Session;
             var context = applicationDbContext;
+            ISession session = httpContextAccessor.HttpContext.Session;
             string cartId = session.GetString("CartId");
             if (cartId is null)
             {
-                Guid.NewGuid().ToString();
+                cartId= Guid.NewGuid().ToString();
                 session.SetString("CartId", cartId);
             }
             return new ShoppingCart(context) { CartId = cartId };

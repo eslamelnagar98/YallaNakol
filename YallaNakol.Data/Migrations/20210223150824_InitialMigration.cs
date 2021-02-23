@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace YallaNakol.Data.Migrations
 {
-    public partial class initialMigration : Migration
+    public partial class InitialMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -229,6 +229,27 @@ namespace YallaNakol.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "shoppingCartItems",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    DishId = table.Column<int>(type: "int", nullable: true),
+                    Amount = table.Column<int>(type: "int", nullable: false),
+                    ShoppingCartId = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_shoppingCartItems", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_shoppingCartItems_Dishes_DishId",
+                        column: x => x.DishId,
+                        principalTable: "Dishes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Restaurants",
                 columns: table => new
                 {
@@ -280,6 +301,11 @@ namespace YallaNakol.Data.Migrations
                 table: "Restaurants",
                 columns: new[] { "Id", "Address", "DeliveryAreas", "Description", "ImageUrl", "MenuId", "Name", "PhoneNumber", "Rate", "WorkingHours" },
                 values: new object[] { 1, "39 Abbas El Akkad StreetAbbas El Akkad Nasr City", 4, "McDonald's Corporation is an American fast food company, founded in 1940 as a restaurant operated by Richard and Maurice McDonald, in San Bernardino, California, United States. They rechristened their business as a hamburger stand, and later turned the company into a franchise, with the Golden Arches logo being introduced in 1953 at a location in Phoenix, Arizona. In 1955, Ray Kroc, a businessman, joined the company as a franchise agent and proceeded to purchase the chain from the McDonald brothers. McDonald's had its previous headquarters in Oak Brook, Illinois, but moved its global headquarters to Chicago in June 2018", "https://www.nrn.com/sites/nrn.com/files/styles/article_featured_standard/public/mcdonalds-logo.gif?itok=U_TliriA", null, "McDonalds", "19991", "4.6", "From 11:00 AM To 02:15 AM" });
+
+            migrationBuilder.InsertData(
+                table: "shoppingCartItems",
+                columns: new[] { "Id", "Amount", "DishId", "ShoppingCartId" },
+                values: new object[] { 1, 3, null, "30377b50-77fc-4e43-81d0-bbdc0e188ccb" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -345,6 +371,11 @@ namespace YallaNakol.Data.Migrations
                 table: "Restaurants",
                 column: "MenuId");
 
+            migrationBuilder.CreateIndex(
+                name: "IX_shoppingCartItems_DishId",
+                table: "shoppingCartItems",
+                column: "DishId");
+
             migrationBuilder.AddForeignKey(
                 name: "FK_CategoryRestaurant_Restaurants_RestaurantsId",
                 table: "CategoryRestaurant",
@@ -389,6 +420,9 @@ namespace YallaNakol.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "CategoryRestaurant");
+
+            migrationBuilder.DropTable(
+                name: "shoppingCartItems");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

@@ -269,7 +269,7 @@ namespace YallaNakol.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("CategoryId")
+                    b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
                     b.Property<string>("Description")
@@ -282,7 +282,7 @@ namespace YallaNakol.Data.Migrations
                     b.Property<bool>("InStock")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("MenuId")
+                    b.Property<int>("MenuId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -305,36 +305,44 @@ namespace YallaNakol.Data.Migrations
                         new
                         {
                             Id = 1,
+                            CategoryId = 1,
                             Description = "Juicy beef patty smothered in three extraordinary slices of Emmental cheese and topped with sliced tomato, shredded lettuce, onions and that special Big Tasty sauce",
                             ImageUrl = "https://s3-eu-west-1.amazonaws.com/elmenusv5-stg/Normal/a660c55e-d9ea-4c0d-be33-4d0cc5d0a7b4.jpg",
                             InStock = true,
+                            MenuId = 1,
                             Name = "Big Tasty",
                             Price = 100m
                         },
                         new
                         {
                             Id = 2,
+                            CategoryId = 1,
                             Description = "Two beef patties, that unbeatably tasty Big Mac sauce, melting signature cheese, crisp shredded lettuce, onions, pickles and a bun in the middle all between a toasted sesame seed bun",
                             ImageUrl = "https://s3-eu-west-1.amazonaws.com/elmenusv5-stg/Normal/298f37b4-f9f7-44ea-a297-02cda66bd50b.jpg",
                             InStock = true,
+                            MenuId = 1,
                             Name = "Big Mac",
                             Price = 60m
                         },
                         new
                         {
                             Id = 3,
+                            CategoryId = 1,
                             Description = "Two Juicy beef patty smothered in three extraordinary slices of Emmental cheese and topped with sliced tomato, shredded lettuce, onions and that special Big Tasty sauce",
                             ImageUrl = "https://s3-eu-west-1.amazonaws.com/elmenusv5-stg/Normal/b7d655fd-9cee-4a79-89f7-8a4b6a28ab00.jpg",
                             InStock = true,
+                            MenuId = 1,
                             Name = "Double Big Tasty",
                             Price = 110m
                         },
                         new
                         {
                             Id = 4,
+                            CategoryId = 1,
                             Description = "A delicious combination of breaded chicken patties, crisp lettuce, melting cheese, onions, pickles, and our special sauce, all framed between a toasted sesame seed bun",
                             ImageUrl = "https://s3-eu-west-1.amazonaws.com/elmenusv5-stg/Thumbnail/0e13cb43-dacb-4788-8c7d-2c0ab72c23e9.jpg",
                             InStock = true,
+                            MenuId = 1,
                             Name = "Chicken Mac",
                             Price = 90m
                         });
@@ -346,6 +354,9 @@ namespace YallaNakol.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("DishId")
+                        .HasColumnType("int");
 
                     b.Property<int?>("DishOfTheWeekId")
                         .HasColumnType("int");
@@ -359,7 +370,8 @@ namespace YallaNakol.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 1
+                            Id = 1,
+                            DishId = 0
                         });
                 });
 
@@ -384,7 +396,7 @@ namespace YallaNakol.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("MenuId")
+                    b.Property<int>("MenuId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -418,6 +430,7 @@ namespace YallaNakol.Data.Migrations
                             DeliveryAreas = 4,
                             Description = "McDonald's Corporation is an American fast food company, founded in 1940 as a restaurant operated by Richard and Maurice McDonald, in San Bernardino, California, United States. They rechristened their business as a hamburger stand, and later turned the company into a franchise, with the Golden Arches logo being introduced in 1953 at a location in Phoenix, Arizona. In 1955, Ray Kroc, a businessman, joined the company as a franchise agent and proceeded to purchase the chain from the McDonald brothers. McDonald's had its previous headquarters in Oak Brook, Illinois, but moved its global headquarters to Chicago in June 2018",
                             ImageUrl = "https://www.nrn.com/sites/nrn.com/files/styles/article_featured_standard/public/mcdonalds-logo.gif?itok=U_TliriA",
+                            MenuId = 1,
                             Name = "McDonalds",
                             PhoneNumber = "19991",
                             Rate = "4.6",
@@ -435,7 +448,7 @@ namespace YallaNakol.Data.Migrations
                     b.Property<int>("Amount")
                         .HasColumnType("int");
 
-                    b.Property<int?>("DishId")
+                    b.Property<int>("DishId")
                         .HasColumnType("int");
 
                     b.Property<string>("ShoppingCartId")
@@ -453,6 +466,7 @@ namespace YallaNakol.Data.Migrations
                         {
                             Id = 1,
                             Amount = 3,
+                            DishId = 1,
                             ShoppingCartId = "30377b50-77fc-4e43-81d0-bbdc0e188ccb"
                         });
                 });
@@ -527,11 +541,15 @@ namespace YallaNakol.Data.Migrations
                 {
                     b.HasOne("YallaNakol.Data.Models.Category", "Category")
                         .WithMany("Dishes")
-                        .HasForeignKey("CategoryId");
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("YallaNakol.Data.Models.Menu", null)
                         .WithMany("Dishes")
-                        .HasForeignKey("MenuId");
+                        .HasForeignKey("MenuId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Category");
                 });
@@ -549,7 +567,9 @@ namespace YallaNakol.Data.Migrations
                 {
                     b.HasOne("YallaNakol.Data.Models.Menu", "Menu")
                         .WithMany()
-                        .HasForeignKey("MenuId");
+                        .HasForeignKey("MenuId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Menu");
                 });
@@ -558,7 +578,9 @@ namespace YallaNakol.Data.Migrations
                 {
                     b.HasOne("YallaNakol.Data.Models.Dish", "Dish")
                         .WithMany()
-                        .HasForeignKey("DishId");
+                        .HasForeignKey("DishId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Dish");
                 });

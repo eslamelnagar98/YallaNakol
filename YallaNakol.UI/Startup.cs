@@ -84,7 +84,7 @@ namespace YallaNakol.UI
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=ShoppingCart}/{action=Index}/{id?}");
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
                endpoints.MapRazorPages();
             });
         }

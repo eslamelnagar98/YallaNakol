@@ -19,7 +19,7 @@ namespace YallaNakol.UI.Controllers
         // GET: ShoppingCartController
         public ActionResult Index()
         {
-
+            
             return View(_shoppingCart);
         }
 

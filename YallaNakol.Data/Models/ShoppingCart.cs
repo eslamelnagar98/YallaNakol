@@ -16,7 +16,7 @@ namespace YallaNakol.Data.Models
 
         public IEnumerable<ShoppingCartItem> ShoppingCartItems
         {
-            get => _applicationDbContext.shoppingCartItems
+            get => _applicationDbContext.ShoppingCartItems
                                         .Include(D => D.Dish)
                                         .Where(D => D.ShoppingCartId == CartId)
                                         .ToList();
@@ -43,7 +43,7 @@ namespace YallaNakol.Data.Models
 
         public void AddDish(Dish dish, int amount)
         {
-            var shoppingCartItem = _applicationDbContext.shoppingCartItems
+            var shoppingCartItem = _applicationDbContext.ShoppingCartItems
                                                         .SingleOrDefault(D => D.Dish.Id == dish.Id && D.ShoppingCartId == CartId);
             if (shoppingCartItem != null)
             {
@@ -51,7 +51,7 @@ namespace YallaNakol.Data.Models
             }
             else
             {
-                _applicationDbContext.shoppingCartItems.Add(
+                _applicationDbContext.ShoppingCartItems.Add(
                     new ShoppingCartItem
                     {
                         Dish = dish,
@@ -64,14 +64,14 @@ namespace YallaNakol.Data.Models
 
         public void RemoveDish(Dish dish)
         {
-            var shoppingCartItem = _applicationDbContext.shoppingCartItems
+            var shoppingCartItem = _applicationDbContext.ShoppingCartItems
                                                         .SingleOrDefault(D => D.Id == dish.Id && D.ShoppingCartId == CartId);
             if (shoppingCartItem is not null)
             {
                 if (shoppingCartItem.Amount > 1)
                     shoppingCartItem.Amount--;
                 else
-                    _applicationDbContext.shoppingCartItems.Remove(shoppingCartItem);
+                    _applicationDbContext.ShoppingCartItems.Remove(shoppingCartItem);
             }
 
         }

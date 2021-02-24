@@ -1,6 +1,7 @@
 ﻿@model Dish 
+@{ string c = Model.Category.Name;}
  
-<div class="col-sm-6 col-md-4 @Model.Name ">
+<div class="col-sm-6 col-md-4  @c">
     <div class="portfolio-item">
         <div class="hover-bg">
             <div class="hover-text">

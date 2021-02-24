@@ -15,6 +15,8 @@ using YallaNakol.Data.Models;
 using YallaNakol.Data.Services;
 using YallaNakol.Data.Repository;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.AspNetCore.Http;
+
 
 namespace YallaNakol.UI
 {
@@ -29,9 +31,17 @@ namespace YallaNakol.UI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("MyConn")));
+
+            services.AddScoped<IShoppingCart, ShoppingCart>(sp => {
+                var dbContext = sp.GetRequiredService<ApplicationDbContext>();
+                var httpContextAccessor = sp.GetRequiredService<IHttpContextAccessor>();
+                return ShoppingCart.GetCart(dbContext, httpContextAccessor);
+            });
+
             services.AddScoped<ICategory,CategoryRepo>();
             services.AddScoped<IMenu,MenuRepo>();
             services.AddScoped<IDish, DishRepo>();
@@ -42,15 +52,31 @@ namespace YallaNakol.UI
 
             services.AddDatabaseDeveloperPageExceptionFilter();
 
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            services.AddDefaultIdentity<ApplicationUser>(
+                //options => options.SignIn.RequireConfirmedAccount = true
+                options =>
+                {
+                    options.SignIn.RequireConfirmedEmail = false;
+                    options.Password.RequireDigit = false;
+                    options.Password.RequiredUniqueChars = 0;
+                    options.Password.RequireUppercase = false;
+                    options.Password.RequireNonAlphanumeric = false;
+                    options.User.RequireUniqueEmail = true;
+                })
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            services.AddHttpContextAccessor();
+            services.AddSession();
             services.AddControllersWithViews();
+
             services.AddAuthentication()
             .AddMicrosoftAccount(microsoftOptions =>
             {
                 microsoftOptions.ClientId = "51217d7a-4861-45fe-8134-febfeebb8ec8";
                 microsoftOptions.ClientSecret = "_4DNh8j._XAF~1e1kB67g._zilRSSx1TxK";
             });
+
+
             //.AddGoogle(googleOptions => {  })
             //.AddTwitter(twitterOptions => {  })
             //.AddFacebook(facebookOptions => {  });
@@ -73,8 +99,17 @@ namespace YallaNakol.UI
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
             app.UseRouting();
+
+            var sessionOptions = new SessionOptions()
+            {
+                Cookie = new CookieBuilder()
+                {
+                    Name = "MVCSID",
+                    Expiration = TimeSpan.FromMinutes(30),
+                }
+            };
+            app.UseSession(sessionOptions);
 
             app.UseAuthentication();
             app.UseAuthorization();

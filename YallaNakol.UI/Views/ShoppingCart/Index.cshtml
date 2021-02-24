@@ -1,0 +1,41 @@
+﻿@model ShoppingCart
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<div>
+    <h4>ShoppingCart</h4>
+    <hr />
+    <h2>@Model.CartId</h2>
+</div>
+<div class="row d-flex justify-content-center">
+    <div class="col-md-9">
+        <table class="table table-striped">
+            <thead>
+                <tr class="row">
+                    <th class="col-md-4" scope="col">Dish</th>
+                    <th class="col-md-3" scope="col">Amount</th>
+                    <th class="col-md-3" scope="col">Total Cost</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.ShoppingCartItems)
+                {
+                    <tr class="row">
+                        <td class="col-md-4">@item.Dish.Name</td>
+                        <td class="col-md-3">@item.Amount</td>
+                        <td class="col-md-3">@(item.Amount*item.Dish.Price)$</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    <a asp-action="Index">Back to List</a>
+</div>

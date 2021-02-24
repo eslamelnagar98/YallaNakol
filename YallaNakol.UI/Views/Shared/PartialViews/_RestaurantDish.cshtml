@@ -1,17 +1,15 @@
-﻿@model Restaurant 
-
-@{ string b = "breakfast"; }
-
-<div class="col-sm-6 col-md-4  @b">
+﻿@model Dish 
+ 
+<div class="col-sm-6 col-md-4 @Model.Name ">
     <div class="portfolio-item">
         <div class="hover-bg">
             <div class="hover-text">
-                <a asp-action="CustomerDetails" asp-controller="Restaurants" asp-route-id="@Model.Id">Dets</a>
+                <a asp-action="Details" asp-controller="Dishes" asp-route-id="@Model.Id">Dets</a>
             </div>
             <img src="@Model.ImageUrl" class="img-responsive" alt="Project Title">
             <p class="text-secondary"> @Model.Description</p>
-          
-          
+
+
         </div>
     </div>
 </div>

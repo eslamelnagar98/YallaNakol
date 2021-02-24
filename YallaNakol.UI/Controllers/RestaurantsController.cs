@@ -7,16 +7,24 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using YallaNakol.Data.Models;
 using YallaNakol.Data.Services;
+using YallaNakol.Data.ViewModel;
 
 namespace YallaNakol.UI.Controllers
 {
     public class RestaurantsController : Controller
     {
-        private readonly IRestaurant _repo;
+        private readonly IRestaurant _repo; 
+        private readonly IDish dish;
+        private readonly ICategory cat;
 
-        public RestaurantsController(IRestaurant context)
+
+
+        public RestaurantsController(IRestaurant context,IDish dish, ICategory cat)
         {
             _repo = context;
+            this.dish = dish;
+            this.cat = cat;
+
         }
 
         public IActionResult Index()
@@ -25,6 +33,28 @@ namespace YallaNakol.UI.Controllers
         }
         
         // GET: Restaurants/Details/5
+        public IActionResult CustomerDetails(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var restaurant = _repo.GetRestaurantById(id);
+            if (restaurant == null)
+            {
+                return NotFound();
+            }
+
+            var restaurantMenu = new RestaurantMenu
+            {
+                Dishes = dish.AllDishes.Where(m => m.MenuId == restaurant.MenuId),
+                Category = cat.AllCategories,
+                 Restaurant = restaurant
+
+            };
+            
+            return View(restaurantMenu);
+        }
         public IActionResult Details(int? id)
         {
             if (id == null)
@@ -36,9 +66,10 @@ namespace YallaNakol.UI.Controllers
             {
                 return NotFound();
             }
+
+          
             return View(restaurant);
         }
-        
         // GET: Restaurants/Create
         public IActionResult Create()
         {

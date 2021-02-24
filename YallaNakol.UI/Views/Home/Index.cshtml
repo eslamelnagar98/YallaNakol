@@ -1,5 +1,25 @@
 ﻿@model HomeViewModel
+@section header {
+    <header id="header">
+        <div class="intro">
+            <div class="overlay">
+                <div class="container">
+                    <div class="row">
+                        <div class="intro-text">
+                            <h1>Yalla Nakol</h1>
+                            <p>High Quality Restraunts </p>
+                            <a href="#about" class="btn btn-custom btn-lg page-scroll">Discover Story</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style="height:30px">
 
+        </div>
+    </header>
+}
+@section filter {
 <div class="row">
     <div class="categories">
         <ul class="cat">
@@ -15,6 +35,8 @@
         <div class="clearfix"></div>
     </div>
 </div>
+}
+
 <div class="row">
     <div class="portfolio-items">
         @foreach (var item in Model.Restaurants)

@@ -9,20 +9,20 @@
 
     <!-- Favicons
         ================================================== -->
-    <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
-    <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="img/apple-touch-icon-72x72.png">
-    <link rel="apple-touch-icon" sizes="114x114" href="img/apple-touch-icon-114x114.png">
+    <link rel="shortcut icon" href="~/img/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" href="~/img/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="~/img/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="~/img/apple-touch-icon-114x114.png">
 
     <!-- Bootstrap -->
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
-    <link rel="stylesheet" type="text/css" href="fonts/font-awesome/css/font-awesome.css">
+    <link rel="stylesheet" type="text/css" href="~/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="~/fonts/font-awesome/css/font-awesome.css">
 
     <!-- Stylesheet
         ================================================== -->
-    <link rel="stylesheet" type="text/css" href="css/style.css">
-    <link rel="stylesheet" type="text/css" href="css/nivo-lightbox/nivo-lightbox.css">
-    <link rel="stylesheet" type="text/css" href="css/nivo-lightbox/default.css">
+    <link rel="stylesheet" type="text/css" href="~/css/style.css">
+    <link rel="stylesheet" type="text/css" href="~/css/nivo-lightbox/nivo-lightbox.css">
+    <link rel="stylesheet" type="text/css" href="~/css/nivo-lightbox/default.css">
     <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,500,600,700" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Dancing+Script:400,700" rel="stylesheet">
@@ -59,24 +59,24 @@
         </div>
     </nav>
     <!-- Header -->
-    <header id="header">
-        <div class="intro">
-            <div class="overlay">
-                <div class="container">
-                    <div class="row">
-                        <div class="intro-text">
-                            <h1>Touché</h1>
-                            <p>Restaurant / Coffee / Pub</p>
-                            <a href="#about" class="btn btn-custom btn-lg page-scroll">Discover Story</a>
+    @RenderSection("header", required: false)
+    @*<header id="header">
+            <div class="intro" >
+                <div class="overlay">
+                    <div class="container">
+                        <div class="row">
+                            <div class="intro-text">
+                                <h1>Yalla Nakol</h1>
+                                <p>High Quality Restraunts </p>
+                                <a href="#about" class="btn btn-custom btn-lg page-scroll">Discover Story</a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </header>
-    <div style="height:30px">
+        </header>*@
 
-    </div>
+
 
     <!-- Restaurant Menu Section -->
     <div id="restaurant-menu">
@@ -88,6 +88,7 @@
             </div>
         </div>
     </div>
+    @RenderSection("filter", required: false)
     <div class="container">
         @RenderBody()
     </div>
@@ -138,7 +139,7 @@
             <h2>Want to make a reservation? Call <strong>1-887-654-3210</strong></h2>
         </div>
     </div>
-    
+
 
     <div id="footer">
         <div class="container text-center">
@@ -177,14 +178,14 @@
             </div>
         </div>
     </div>
-    <script type="text/javascript" src="js/jquery.1.11.1.js"></script>
-    <script type="text/javascript" src="js/bootstrap.js"></script>
-    <script type="text/javascript" src="js/SmoothScroll.js"></script>
-    <script type="text/javascript" src="js/nivo-lightbox.js"></script>
-    <script type="text/javascript" src="js/jquery.isotope.js"></script>
-    <script type="text/javascript" src="js/jqBootstrapValidation.js"></script>
-    <script type="text/javascript" src="js/contact_me.js"></script>
-    <script type="text/javascript" src="js/main.js"></script>
+    <script type="text/javascript" src="~/js/jquery.1.11.1.js"></script>
+    <script type="text/javascript" src="~/js/bootstrap.js"></script>
+    <script type="text/javascript" src="~/js/SmoothScroll.js"></script>
+    <script type="text/javascript" src="~/js/nivo-lightbox.js"></script>
+    <script type="text/javascript" src="~/js/jquery.isotope.js"></script>
+    <script type="text/javascript" src="~/js/jqBootstrapValidation.js"></script>
+    <script type="text/javascript" src="~/js/contact_me.js"></script>
+    <script type="text/javascript" src="~/js/main.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 
 </body>

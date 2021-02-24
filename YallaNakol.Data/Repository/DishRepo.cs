@@ -17,7 +17,7 @@ namespace YallaNakol.Data.Repository
             this._applicationDbContext = applicationDbContext;
         }
         public IEnumerable<Dish> AllDishes => 
-            _applicationDbContext.Dishes.AsNoTracking().ToList();
+            _applicationDbContext.Dishes.Include(c=>c.Category).AsNoTracking().ToList();
 
         public Dish GetDishById(int? DishId) =>
             _applicationDbContext.Dishes.FirstOrDefault(I => I.Id == DishId);

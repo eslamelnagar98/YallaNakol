@@ -18,6 +18,7 @@ namespace YallaNakol.UI.Areas.Identity.Pages.Account
     [AllowAnonymous]
     public class LoginModel : PageModel
     {
+
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly ILogger<LoginModel> _logger;
@@ -25,6 +26,7 @@ namespace YallaNakol.UI.Areas.Identity.Pages.Account
         public LoginModel(SignInManager<ApplicationUser> signInManager, 
             ILogger<LoginModel> logger,
             UserManager<ApplicationUser> userManager)
+
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -72,7 +74,7 @@ namespace YallaNakol.UI.Areas.Identity.Pages.Account
             ReturnUrl = returnUrl;
         }
 
-       
+
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
             returnUrl ??= Url.Content("~/");

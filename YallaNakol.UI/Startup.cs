@@ -14,7 +14,9 @@ using System.Threading.Tasks;
 using YallaNakol.Data.Models;
 using YallaNakol.Data.Services;
 using YallaNakol.Data.Repository;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Http;
+
 
 namespace YallaNakol.UI
 {
@@ -44,7 +46,10 @@ namespace YallaNakol.UI
             services.AddScoped<IMenu,MenuRepo>();
             services.AddScoped<IDish, DishRepo>();
             services.AddScoped<IRestaurant,RestaurantRepo>();
-            
+
+            services.AddTransient<IEmailSender, EmailSender>();
+            services.Configure<AuthMessageSenderOptions>(Configuration);
+
             services.AddDatabaseDeveloperPageExceptionFilter();
 
             services.AddDefaultIdentity<ApplicationUser>(
@@ -64,9 +69,14 @@ namespace YallaNakol.UI
             services.AddSession();
             services.AddControllersWithViews();
 
+            services.AddAuthentication()
+            .AddMicrosoftAccount(microsoftOptions =>
+            {
+                microsoftOptions.ClientId = "51217d7a-4861-45fe-8134-febfeebb8ec8";
+                microsoftOptions.ClientSecret = "_4DNh8j._XAF~1e1kB67g._zilRSSx1TxK";
+            });
 
-            //services.AddAuthentication()
-            //.AddMicrosoftAccount(microsoftOptions => { })
+
             //.AddGoogle(googleOptions => {  })
             //.AddTwitter(twitterOptions => {  })
             //.AddFacebook(facebookOptions => {  });

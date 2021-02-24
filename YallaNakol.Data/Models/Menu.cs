@@ -11,6 +11,7 @@ namespace YallaNakol.Data.Models
         public Menu() => Dishes = new HashSet<Dish>();
         [Key]
         public int Id { get; set; }
+        public int DishId { get; set; }
         public Dish DishOfTheWeek { get; set; }
         public virtual ICollection<Dish> Dishes { get; set; }
     }

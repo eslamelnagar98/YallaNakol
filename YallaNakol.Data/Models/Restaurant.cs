@@ -29,6 +29,7 @@ namespace YallaNakol.Data.Models
         public string PhoneNumber { get; set; }
         [Required]
         public string WorkingHours { get; set; }
+        public int MenuId { get; set; }
         public Menu Menu { get; set; }
         [Required]
         public DeliveryAreas DeliveryAreas { get; set; }

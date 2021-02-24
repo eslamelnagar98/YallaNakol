@@ -10,7 +10,8 @@ namespace YallaNakol.Data.Models
     {
         [Key]
         public int Id { get; set; }
-                                        
+
+        public int DishId { get; set; }
         public virtual Dish Dish { get; set; }
 
         [Range(0,int.MaxValue,ErrorMessage ="Amount Cant not be Less Than one")]

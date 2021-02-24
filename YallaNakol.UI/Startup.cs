@@ -30,9 +30,9 @@ namespace YallaNakol.UI
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(
-                    Configuration.GetConnectionString("MyConn")));
+            //services.AddDbContext<ApplicationDbContext>(options =>
+            //    options.UseSqlServer(
+            //        Configuration.GetConnectionString("MyConn")));
             services.AddScoped<IShoppingCart, ShoppingCart>(sp => {
                 var dbContext = sp.GetRequiredService<ApplicationDbContext>();
                 var httpContextAccessor = sp.GetRequiredService<IHttpContextAccessor>();
@@ -44,8 +44,8 @@ namespace YallaNakol.UI
             services.AddScoped<IRestaurant,RestaurantRepo>();
             
             services.AddDatabaseDeveloperPageExceptionFilter();
-            services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+            //services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            //        .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddHttpContextAccessor();
             services.AddSession();

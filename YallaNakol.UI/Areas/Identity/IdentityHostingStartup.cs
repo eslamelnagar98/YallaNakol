@@ -19,8 +19,8 @@ namespace YallaNakol.UI.Areas.Identity
                 services.AddDbContext<ApplicationDbContext>(options =>
                    options.UseSqlServer(
                        context.Configuration.GetConnectionString("MyConn")));
-                //services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                //        .AddEntityFrameworkStores<ApplicationDbContext>();
+                services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                        .AddEntityFrameworkStores<ApplicationDbContext>();
             });
         }
     }

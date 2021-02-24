@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using YallaNakol.Data.Services;
@@ -11,10 +12,13 @@ namespace YallaNakol.UI.Controllers
     public class ShoppingCartController : Controller
     {
         private readonly IShoppingCart _shoppingCart;
+        private readonly IDish _dish;
 
-        public ShoppingCartController(IShoppingCart shoppingCart)
+        public ShoppingCartController(IShoppingCart shoppingCart,
+                                      IDish dish)
         {
             this._shoppingCart = shoppingCart;
+            _dish = dish;
         }
         // GET: ShoppingCartController
         public ActionResult Index()
@@ -23,73 +27,32 @@ namespace YallaNakol.UI.Controllers
             return View(_shoppingCart);
         }
 
-        // GET: ShoppingCartController/Details/5
-        public ActionResult Details(int id)
+        [Route("ShoppingCart/AddToCart/dishId")]
+        public ActionResult AddToCart(int dishId)
         {
-            return View();
+
+            var addedDish = _dish.GetDishById(dishId);
+            if (addedDish != null)
+            {
+
+                _shoppingCart.AddDish(addedDish, 1);
+                _shoppingCart.SaveChanges();
+
+            }
+            return RedirectToAction("Index");
         }
 
-        // GET: ShoppingCartController/Create
-        public ActionResult Create()
+        [Route("ShoppingCart/RemoveFromCart/dishId")]
+        public ActionResult RemoveFromCart(int dishId )
         {
-            return View();
-        }
+            var removedDish = _dish.GetDishById(dishId);
+            if (removedDish != null)
+            {
+                _shoppingCart.RemoveDish(removedDish);
+                _shoppingCart.SaveChanges();
+            }
 
-        // POST: ShoppingCartController/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: ShoppingCartController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: ShoppingCartController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: ShoppingCartController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: ShoppingCartController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            return RedirectToAction("Index");
         }
     }
 }

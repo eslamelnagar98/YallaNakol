@@ -5,6 +5,9 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using YallaNakol.Data.Models;
+using YallaNakol.Data.Services;
+using YallaNakol.Data.ViewModel;
 using YallaNakol.UI.Models;
 
 namespace YallaNakol.UI.Controllers
@@ -12,15 +15,23 @@ namespace YallaNakol.UI.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly IRestaurant _restaurant;
+       
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger,IRestaurant restaurant)
         {
             _logger = logger;
+            this._restaurant = restaurant;
+         
         }
 
         public IActionResult Index()
         {
-            return View();
+            var homeViewModel = new HomeViewModel
+            {
+                Restaurants = _restaurant.AllRestaurants
+            };
+            return View(homeViewModel);
         }
 
         public IActionResult Privacy()

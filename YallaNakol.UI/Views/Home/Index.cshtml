@@ -1,8 +1,49 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model HomeViewModel
+@section header {
+    <header id="header">
+        <div class="intro">
+            <div class="overlay">
+                <div class="container">
+                    <div class="row">
+                        <div class="intro-text">
+                            <h1>Yalla Nakol</h1>
+                            <p>High Quality Restraunts </p>
+                            <a href="#about" class="btn btn-custom btn-lg page-scroll">Discover Story</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style="height:30px">
+
+        </div>
+    </header>
+}
+@section filter {
+<div class="row">
+    <div class="categories">
+        <ul class="cat">
+            <li>
+                <ol class="type">
+                    <li><a href="#" data-filter="*" class="active">All</a></li>
+                    <li><a href="#" data-filter=".breakfast">Breakfast</a></li>
+                    <li><a href="#" data-filter=".lunch">Lunch</a></li>
+                    <li><a href="#" data-filter=".dinner">Dinner</a></li>
+                </ol>
+            </li>
+        </ul>
+        <div class="clearfix"></div>
+    </div>
+</div>
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="row">
+    <div class="portfolio-items">
+        @foreach (var item in Model.Restaurants)
+        {
+            <partial name="PartialViews/_Restaurant" model="item" />
+        }
+    </div>
 </div>
+
+

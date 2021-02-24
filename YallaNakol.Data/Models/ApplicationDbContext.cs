@@ -63,7 +63,73 @@ namespace YallaNakol.Data.Models
                   ImageUrl= "https://www.nrn.com/sites/nrn.com/files/styles/article_featured_standard/public/mcdonalds-logo.gif?itok=U_TliriA",
                   MenuId=1
                   
+                },
+                new Restaurant 
+                { Id = 2,
+                  Name = "McDonalds", 
+                  Address = "39 Abbas El Akkad StreetAbbas El Akkad Nasr City",
+                  DeliveryAreas = DeliveryAreas.NasrCity,
+                  PhoneNumber = "19991",
+                  Description="McDonald's Corporation is an American fast food company, founded in 1940 as a restaurant operated by Richard and Maurice McDonald, in San Bernardino, California, United States. They rechristened their business as a hamburger stand, and later turned the company into a franchise, with the Golden Arches logo being introduced in 1953 at a location in Phoenix, Arizona. In 1955, Ray Kroc, a businessman, joined the company as a franchise agent and proceeded to purchase the chain from the McDonald brothers. McDonald's had its previous headquarters in Oak Brook, Illinois, but moved its global headquarters to Chicago in June 2018",
+                  Rate="4.6",
+                  WorkingHours="From 11:00 AM To 02:15 AM",
+                  ImageUrl= "https://www.nrn.com/sites/nrn.com/files/styles/article_featured_standard/public/mcdonalds-logo.gif?itok=U_TliriA",
+                  MenuId=1
+                  
+                },
+                new Restaurant 
+                { Id = 3,
+                  Name = "McDonalds", 
+                  Address = "39 Abbas El Akkad StreetAbbas El Akkad Nasr City",
+                  DeliveryAreas = DeliveryAreas.NasrCity,
+                  PhoneNumber = "19991",
+                  Description="McDonald's Corporation is an American fast food company, founded in 1940 as a restaurant operated by Richard and Maurice McDonald, in San Bernardino, California, United States. They rechristened their business as a hamburger stand, and later turned the company into a franchise, with the Golden Arches logo being introduced in 1953 at a location in Phoenix, Arizona. In 1955, Ray Kroc, a businessman, joined the company as a franchise agent and proceeded to purchase the chain from the McDonald brothers. McDonald's had its previous headquarters in Oak Brook, Illinois, but moved its global headquarters to Chicago in June 2018",
+                  Rate="4.6",
+                  WorkingHours="From 11:00 AM To 02:15 AM",
+                  ImageUrl= "https://www.nrn.com/sites/nrn.com/files/styles/article_featured_standard/public/mcdonalds-logo.gif?itok=U_TliriA",
+                  MenuId=1
+                  
+                },
+                new Restaurant 
+                { Id = 4,
+                  Name = "McDonalds", 
+                  Address = "39 Abbas El Akkad StreetAbbas El Akkad Nasr City",
+                  DeliveryAreas = DeliveryAreas.NasrCity,
+                  PhoneNumber = "19991",
+                  Description="McDonald's Corporation is an American fast food company, founded in 1940 as a restaurant operated by Richard and Maurice McDonald, in San Bernardino, California, United States. They rechristened their business as a hamburger stand, and later turned the company into a franchise, with the Golden Arches logo being introduced in 1953 at a location in Phoenix, Arizona. In 1955, Ray Kroc, a businessman, joined the company as a franchise agent and proceeded to purchase the chain from the McDonald brothers. McDonald's had its previous headquarters in Oak Brook, Illinois, but moved its global headquarters to Chicago in June 2018",
+                  Rate="4.6",
+                  WorkingHours="From 11:00 AM To 02:15 AM",
+                  ImageUrl= "https://www.nrn.com/sites/nrn.com/files/styles/article_featured_standard/public/mcdonalds-logo.gif?itok=U_TliriA",
+                  MenuId=1
+                  
+                },
+                new Restaurant 
+                { 
+                  Id = 5,
+                  Name = "McDonalds", 
+                  Address = "39 Abbas El Akkad StreetAbbas El Akkad Nasr City",
+                  DeliveryAreas = DeliveryAreas.NasrCity,
+                  PhoneNumber = "19991",
+                  Description="McDonald's Corporation is an American fast food company, founded in 1940 as a restaurant operated by Richard and Maurice McDonald, in San Bernardino, California, United States. They rechristened their business as a hamburger stand, and later turned the company into a franchise, with the Golden Arches logo being introduced in 1953 at a location in Phoenix, Arizona. In 1955, Ray Kroc, a businessman, joined the company as a franchise agent and proceeded to purchase the chain from the McDonald brothers. McDonald's had its previous headquarters in Oak Brook, Illinois, but moved its global headquarters to Chicago in June 2018",
+                  Rate="4.6",
+                  WorkingHours="From 11:00 AM To 02:15 AM",
+                  ImageUrl= "https://www.nrn.com/sites/nrn.com/files/styles/article_featured_standard/public/mcdonalds-logo.gif?itok=U_TliriA",
+                  MenuId=1
+                },new Restaurant 
+                { 
+                  Id = 6,
+                  Name = "McDonalds", 
+                  Address = "39 Abbas El Akkad StreetAbbas El Akkad Nasr City",
+                  DeliveryAreas = DeliveryAreas.NasrCity,
+                  PhoneNumber = "19991",
+                  Description="McDonald's Corporation is an American fast food company, founded in 1940 as a restaurant operated by Richard and Maurice McDonald, in San Bernardino, California, United States. They rechristened their business as a hamburger stand, and later turned the company into a franchise, with the Golden Arches logo being introduced in 1953 at a location in Phoenix, Arizona. In 1955, Ray Kroc, a businessman, joined the company as a franchise agent and proceeded to purchase the chain from the McDonald brothers. McDonald's had its previous headquarters in Oak Brook, Illinois, but moved its global headquarters to Chicago in June 2018",
+                  Rate="4.6",
+                  WorkingHours="From 11:00 AM To 02:15 AM",
+                  ImageUrl= "https://www.nrn.com/sites/nrn.com/files/styles/article_featured_standard/public/mcdonalds-logo.gif?itok=U_TliriA",
+                  MenuId=1
                 });
+
+
 
             builder.Entity<Dish>().HasData(
               new Dish

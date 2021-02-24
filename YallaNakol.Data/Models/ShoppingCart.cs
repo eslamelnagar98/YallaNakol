@@ -32,36 +32,52 @@ namespace YallaNakol.Data.Models
             var context = applicationDbContext;
             ISession session = httpContextAccessor.HttpContext.Session;
 
-            // retrive CartID from Session
+
+
             string cartId = session.GetString("CartId");
 
-            // if no cart id  is assigned to session
-            if (cartId is null)
+            if(cartId == null)
             {
-                bool clientHasCookie = httpContextAccessor.HttpContext.Request.Cookies.ContainsKey("CartId");
-
-                if (clientHasCookie)
-                {
-                    // 1: read from cookie 
-                    // 2: save into session
-                    cartId = httpContextAccessor.HttpContext.Request.Cookies["CartId"];
-                    session.SetString("CartId", cartId);
-                }
-
-                else
-                {
-                    cartId = Guid.NewGuid().ToString();
-                    CookieOptions cookieOptions = new CookieOptions
-                    {
-                        Expires = DateTime.Now.AddMinutes(30),
-                        Secure = true,
-                        HttpOnly = true
-                    };
-
-                    httpContextAccessor.HttpContext.Response.Cookies.Append("cartId", cartId, cookieOptions);
-                    session.SetString("CartId", cartId);
-                }
+                cartId = Guid.NewGuid().ToString();
             }
+            session.SetString("CartId", cartId);
+
+            #region OldWay,usingNewCookie
+
+            //// retrive CartID from Session
+            //string cartId = session.GetString("CartId");
+
+            //// if no cart id  is assigned to session
+            //if (cartId is null)
+            //{
+            //    bool clientHasCookie = httpContextAccessor.HttpContext.Request.Cookies.ContainsKey("CartId");
+
+            //    if (clientHasCookie)
+            //    {
+            //        // 1: read from cookie 
+            //        // 2: save into session
+            //        cartId = httpContextAccessor.HttpContext.Request.Cookies["CartId"];
+            //        session.SetString("CartId", cartId);
+            //    }
+
+            //    else
+            //    {
+            //        cartId = Guid.NewGuid().ToString();
+            //        CookieOptions cookieOptions = new CookieOptions
+            //        {
+            //            Expires = DateTime.Now.AddMinutes(30),
+            //            Secure = true,
+            //            HttpOnly = true
+            //        };
+
+            //        httpContextAccessor.HttpContext.Response.Cookies.Append("cartId", cartId, cookieOptions);
+            //        session.SetString("CartId", cartId);
+            //    }
+            //}
+
+            #endregion
+
+
             return new ShoppingCart(context) { CartId = cartId };
 
         }

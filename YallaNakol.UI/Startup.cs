@@ -75,7 +75,16 @@ namespace YallaNakol.UI
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseRouting();
-            app.UseSession();
+
+            var sessionOptions = new SessionOptions()
+            {
+                Cookie = new CookieBuilder()
+                {
+                    Name = "MVCSID",
+                    Expiration = TimeSpan.FromMinutes(30),
+                }
+            };
+            app.UseSession(sessionOptions);
 
             app.UseAuthentication();
             app.UseAuthorization();

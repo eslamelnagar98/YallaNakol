@@ -6,13 +6,20 @@ using System.Text;
 
 namespace YallaNakol.Data.Models
 {
-    public class Menu
+    public class ShoppingCartItem
     {
-        public Menu() => Dishes = new HashSet<Dish>();
         [Key]
         public int Id { get; set; }
+
         public int DishId { get; set; }
-        public Dish DishOfTheWeek { get; set; }
-        public virtual ICollection<Dish> Dishes { get; set; }
+        public virtual Dish Dish { get; set; }
+
+        [Range(0,int.MaxValue,ErrorMessage ="Amount Cant not be Less Than one")]
+        public int Amount { get; set; }
+
+        [Required]
+        public string ShoppingCartId { get; set; }
+
+
     }
 }

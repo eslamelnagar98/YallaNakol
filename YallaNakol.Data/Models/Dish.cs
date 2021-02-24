@@ -9,7 +9,6 @@ namespace YallaNakol.Data.Models
     public class Dish
     {
         [Key]
-
         public int Id { get; set; }
 
         [Required, Display(Name = "Dish Name")]
@@ -24,6 +23,8 @@ namespace YallaNakol.Data.Models
         public string ImageUrl { get; set; }
         [Required]
         public bool InStock { get; set; }
+        public int MenuId { get; set; }
+        public int CategoryId { get; set; }
         public virtual Category Category { get; set; }
 
     }

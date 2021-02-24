@@ -33,23 +33,38 @@ namespace YallaNakol.UI
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("MyConn")));
+
             services.AddScoped<IShoppingCart, ShoppingCart>(sp => {
                 var dbContext = sp.GetRequiredService<ApplicationDbContext>();
                 var httpContextAccessor = sp.GetRequiredService<IHttpContextAccessor>();
                 return ShoppingCart.GetCart(dbContext, httpContextAccessor);
             });
+
             services.AddScoped<ICategory,CategoryRepo>();
             services.AddScoped<IMenu,MenuRepo>();
             services.AddScoped<IDish, DishRepo>();
             services.AddScoped<IRestaurant,RestaurantRepo>();
             
             services.AddDatabaseDeveloperPageExceptionFilter();
-            services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+
+            services.AddDefaultIdentity<ApplicationUser>(
+                //options => options.SignIn.RequireConfirmedAccount = true
+                options =>
+                {
+                    options.SignIn.RequireConfirmedEmail = false;
+                    options.Password.RequireDigit = false;
+                    options.Password.RequiredUniqueChars = 0;
+                    options.Password.RequireUppercase = false;
+                    options.Password.RequireNonAlphanumeric = false;
+                    options.User.RequireUniqueEmail = true;
+                })
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddHttpContextAccessor();
             services.AddSession();
             services.AddControllersWithViews();
+
+
             //services.AddAuthentication()
             //.AddMicrosoftAccount(microsoftOptions => { })
             //.AddGoogle(googleOptions => {  })

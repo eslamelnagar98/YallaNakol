@@ -96,7 +96,6 @@ namespace YallaNakol.UI.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-
                 var user = new ApplicationUser { 
                     UserName = Input.UserName,
                     Email = Input.Email,
@@ -107,8 +106,9 @@ namespace YallaNakol.UI.Areas.Identity.Pages.Account
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
-                    _logger.LogInformation("User created a new account with password.");
-
+                    _logger.LogInformation($"User name {user.FirstName} {user.LastName} with user name:" +
+                                          $" {user.UserName} created a new account with password. His email is " +
+                                          $"{user.Email}.");
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
                     var callbackUrl = Url.Page(

@@ -1,0 +1,3 @@
+2021-02-25 20:47:01.3649|INFO|YallaNakol.UI.Controllers.HomeController|eslam
+2021-02-25 21:22:15.4441|INFO|YallaNakol.UI.Areas.Identity.Pages.Account.RegisterModel|User name Islam Naggar with user name: dasdasd@nfsdb.com created a new account with password. His email is dasdasd@nfsdb.com.
+2021-02-25 23:10:17.2022|ERROR|YallaNakol.UI.Controllers.HomeController|UserID:c88e9fc2-8d10-456a-9bf5-94d9523af257|User Mail:dasdasd@nfsdb.com | ErrorPath:/Restaurants | Exeption:Object reference not set to an instance of an object.

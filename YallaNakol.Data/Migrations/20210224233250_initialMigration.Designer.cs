@@ -10,8 +10,8 @@ using YallaNakol.Data.Models;
 namespace YallaNakol.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210224190051_AddNewResturant")]
-    partial class AddNewResturant
+    [Migration("20210224233250_initialMigration")]
+    partial class initialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

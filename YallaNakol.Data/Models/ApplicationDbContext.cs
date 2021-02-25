@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using static YallaNakol.Data.Models.Order;
 
 namespace YallaNakol.Data.Models
 {
@@ -20,6 +21,8 @@ namespace YallaNakol.Data.Models
         public DbSet<Menu> Menus { get; set; }
         public DbSet<Restaurant> Restaurants { get; set; }
         public DbSet<ShoppingCartItem> ShoppingCartItems { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderDetail> OrdersDetails { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

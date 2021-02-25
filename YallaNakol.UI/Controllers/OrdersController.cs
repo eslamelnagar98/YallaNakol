@@ -62,7 +62,6 @@ namespace YallaNakol.UI.Controllers
         }
 
         [HttpPost]
-
         [Route("Orders/Pay")]
         [ValidateAntiForgeryToken]
         public IActionResult PaymentComplete(int placeHolder)

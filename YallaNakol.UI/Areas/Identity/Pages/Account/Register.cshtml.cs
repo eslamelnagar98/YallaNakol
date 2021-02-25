@@ -135,6 +135,7 @@ namespace YallaNakol.UI.Areas.Identity.Pages.Account
                     ModelState.AddModelError(string.Empty, error.Description);
                 }
             }
+            ModelState.AddModelError("XX","ZZ");
 
             // If we got this far, something failed, redisplay form
             return Page();

@@ -32,10 +32,18 @@
                 }
             </tbody>
         </table>
+        @if (!Model.IsEmpty)
+        {
+            @*<form asp-action="Checkout" asp-controller="Orders">
+                @Html.AntiForgeryToken();
+                <input type="submit" class="btn btn-primary" value="Checkout"/>
+            </form>*@
+
+            <a asp-action="Checkout" asp-controller="Orders" class="btn btn-primary">Checkout</a>
+        }
     </div>
 </div>
 
 <div>
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
     <a asp-action="Index">Back to List</a>
 </div>

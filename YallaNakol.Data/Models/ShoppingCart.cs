@@ -22,6 +22,9 @@ namespace YallaNakol.Data.Models
                                         .ToList();
         }
         public string CartId { get; set; }
+
+        public bool IsEmpty => ShoppingCartItems.Count() == 0;
+
         private ShoppingCart(ApplicationDbContext applicationDbContext)
         {
             this._applicationDbContext = applicationDbContext;

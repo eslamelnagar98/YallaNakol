@@ -12,9 +12,9 @@ namespace YallaNakol.Data.Repository
     public class OrderRepo : IOrder
     {
         private readonly ApplicationDbContext dbContext;
-        private readonly ShoppingCart shoppingCart;
+        private readonly IShoppingCart shoppingCart;
 
-        public OrderRepo(ApplicationDbContext dbContext, ShoppingCart shoppingCart)
+        public OrderRepo(ApplicationDbContext dbContext, IShoppingCart shoppingCart)
         {
             this.dbContext = dbContext;
             this.shoppingCart = shoppingCart;

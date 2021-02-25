@@ -23,14 +23,30 @@ namespace YallaNakol.UI.Controllers
         // GET: ShoppingCartController
         public ActionResult Index()
         {
-            
+            // TEST DATA ONLY 
+            // START OF TEST DATA
+            var addedDish1 = _dish.GetDishById(1);
+            var addedDish2 = _dish.GetDishById(2);
+            var addedDish3 = _dish.GetDishById(3);
+
+            _shoppingCart.AddDish(addedDish1, 1);
+            _shoppingCart.AddDish(addedDish2, 3);
+            _shoppingCart.AddDish(addedDish3, 2);
+            _shoppingCart.SaveChanges();
+            // END OF TEST DATA
+
+
+            // Redirect To Home If Empty Cart
+            if (_shoppingCart.IsEmpty)
+                return LocalRedirect("/Home");
+
+
             return View(_shoppingCart);
         }
 
         [Route("ShoppingCart/AddToCart/dishId")]
         public ActionResult AddToCart(int dishId)
         {
-
             var addedDish = _dish.GetDishById(dishId);
             if (addedDish != null)
             {

@@ -70,9 +70,11 @@ namespace YallaNakol.UI.Controllers
             //TODO: show payment form here
             bool isLocalRedirect = TempData.ContainsKey("LocalRedirect");
 
-
+            TempData.Keep("Order");
             if (!isLocalRedirect)
                 return LocalRedirect("~/Home");
+
+            
 
             return View();
         }
@@ -82,13 +84,15 @@ namespace YallaNakol.UI.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult PaymentComplete(int placeHolder)
         {
+            //Retrieve object from temp data
             var orderToPlace = JsonSerializer.Deserialize<Order>((string)TempData["Order"]);
 
-            // if Payment succesfull
+            // if Payment Successfull
             orderRepo.CreateOrder(orderToPlace); // place order
             shoppingCart.ClearItems(); // clear cart items
             orderRepo.SaveChanges(); // save order changes
             shoppingCart.SaveChanges(); // save cart changes
+
             return View();
         }
 

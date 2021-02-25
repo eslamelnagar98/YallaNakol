@@ -43,6 +43,8 @@ namespace YallaNakol.Data.Models
         public decimal OrderTotal { get; set; }
         [BindNever]
         public DateTime OrderPlaced { get; set; }
+        [BindNever]
+        public string TrackingID { get; set; }
     }
 
 }

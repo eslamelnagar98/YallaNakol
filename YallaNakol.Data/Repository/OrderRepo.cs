@@ -41,8 +41,9 @@ namespace YallaNakol.Data.Repository
 
                 dbContext.OrdersDetails.Add(orderDetail);
             }
-
-            dbContext.SaveChanges();
         }
+
+        public void SaveChanges() => dbContext.SaveChanges();
+
     }
 }

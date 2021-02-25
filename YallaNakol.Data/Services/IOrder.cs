@@ -10,5 +10,6 @@ namespace YallaNakol.Data.Services
     public interface IOrder
     {
         void CreateOrder(Order order);
+        void SaveChanges();
     }
 }

@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,22 +11,36 @@ using YallaNakol.Data.Services;
 
 namespace YallaNakol.UI.Controllers
 {
+    [Authorize]
     public class OrdersController : Controller
     {
         private readonly IOrder orderRepo;
         private readonly IShoppingCart shoppingCart;
+        private readonly UserManager<ApplicationUser> userManager;
 
-        public OrdersController(IOrder orderRepo, IShoppingCart shoppingCart)
+        public OrdersController(IOrder orderRepo, IShoppingCart shoppingCart, UserManager<ApplicationUser> userManager)
         {
             this.orderRepo = orderRepo;
             this.shoppingCart = shoppingCart;
+            this.userManager = userManager;
         }
 
 
-
-        public IActionResult Checkout()
+        public async Task<IActionResult> Checkout()
         {
-            return View();
+            System.Security.Claims.ClaimsPrincipal currentUser = this.User;
+
+            var user = await userManager.GetUserAsync(User);
+
+            var order = new Order()
+            {
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                PhoneNumber = user.PhoneNumber,
+                Email = user.Email
+            };
+
+            return View(order);
         }
 
         [HttpPost]
@@ -67,12 +83,13 @@ namespace YallaNakol.UI.Controllers
         public IActionResult PaymentComplete(int placeHolder)
         {
             var orderToPlace = JsonSerializer.Deserialize<Order>((string)TempData["Order"]);
-            // Payment succesfull
 
-            orderRepo.CreateOrder(orderToPlace);
-
+            // if Payment succesfull
+            orderRepo.CreateOrder(orderToPlace); // place order
+            shoppingCart.ClearItems(); // clear cart items
+            orderRepo.SaveChanges(); // save order changes
+            shoppingCart.SaveChanges(); // save cart changes
             return View();
-
         }
 
     }

@@ -49,8 +49,7 @@ namespace YallaNakol.UI.Controllers
             {
                 Dishes = dish.AllDishes.Where(m => m.MenuId == restaurant.MenuId),
                 Category = cat.AllCategories,
-                 Restaurant = restaurant
-
+                Restaurant = restaurant
             };
             
             return View(restaurantMenu);

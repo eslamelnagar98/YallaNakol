@@ -53,9 +53,9 @@ namespace YallaNakol.UI
             services.AddDatabaseDeveloperPageExceptionFilter();
 
             services.AddDefaultIdentity<ApplicationUser>(
-                //options => options.SignIn.RequireConfirmedAccount = true
                 options =>
                 {
+                    options.SignIn.RequireConfirmedAccount = true;
                     options.SignIn.RequireConfirmedEmail = false;
                     options.Password.RequireDigit = false;
                     options.Password.RequiredUniqueChars = 0;

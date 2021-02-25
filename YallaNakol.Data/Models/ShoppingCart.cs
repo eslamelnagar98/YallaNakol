@@ -120,22 +120,29 @@ namespace YallaNakol.Data.Models
 
         }
 
-        public decimal TotalCost()
-        {
-            //First Trial
-            //decimal TotalCoast= ShoppingCartItems.Select(D => D.Dish.Price * D.Amount)
-            //                                     .Sum();
-            ///Second Trial (The Worst One By The Way)
-            //foreach (var item in ShoppingCartItems)
-            //{
-            //    TotalCoast += item.Dish.Price*item.Amount;
-            //}
-
-            return ShoppingCartItems.Select(D => D.Dish.Price * D.Amount)
-                                                 .Sum();
-        }
+        public decimal TotalCost() => ShoppingCartItems.Select(D => D.Dish.Price * D.Amount)
+                                                       .Sum();
+    //    {
+    //        First Trial
+    //        decimal TotalCoast = ShoppingCartItems.Select(D => D.Dish.Price * D.Amount)
+    //                                             .Sum();
+    //        /Second Trial(The Worst One By The Way)
+    //        foreach (var item in ShoppingCartItems)
+    //        {
+    //            TotalCoast += item.Dish.Price* item.Amount;
+    //        }
+    //         second  
+    //        return ShoppingCartItems.Select(D => D.Dish.Price* D.Amount)
+    //                                             .Sum();
+    //  }
 
         public void SaveChanges() => _applicationDbContext.SaveChanges();
 
+        public void ClearItems()
+        {
+            var cartItemsToRemove = _applicationDbContext.ShoppingCartItems.Where(sh => sh.ShoppingCartId == this.CartId);
+
+            _applicationDbContext.ShoppingCartItems.RemoveRange( cartItemsToRemove);
+        }
     }
 }

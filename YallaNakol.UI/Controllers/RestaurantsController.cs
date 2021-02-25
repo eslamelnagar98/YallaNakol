@@ -29,6 +29,8 @@ namespace YallaNakol.UI.Controllers
 
         public IActionResult Index()
         {
+            string y = null;
+            var x = y.Length;
             return View(_repo.AllRestaurants);
         }
         

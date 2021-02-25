@@ -1,8 +1,13 @@
 ﻿@model ErrorViewModel
+@using Microsoft.Extensions.Logging;
 @{
     ViewData["Title"] = "Error";
 }
+@inject ILogger<ErrorViewModel> logger
 
+@{
+    logger.LogInformation($"Error that occured {@Model.RequestId}");
+}
 <h1 class="text-danger">Error.</h1>
 <h2 class="text-danger">An error occurred while processing your request.</h2>
 

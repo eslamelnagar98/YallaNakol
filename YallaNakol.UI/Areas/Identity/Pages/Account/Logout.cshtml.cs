@@ -25,11 +25,11 @@ namespace YallaNakol.UI.Areas.Identity.Pages.Account
         public void OnGet()
         {
         }
-
+       
         public async Task<IActionResult> OnPost(string returnUrl = null)
         {
             await _signInManager.SignOutAsync();
-            _logger.LogInformation("User logged out.");
+            _logger.LogInformation($"User email{this.User.Identity.Name} logged out.");
             if (returnUrl != null)
             {
                 return LocalRedirect(returnUrl);

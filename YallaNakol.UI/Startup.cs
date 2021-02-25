@@ -16,7 +16,7 @@ using YallaNakol.Data.Services;
 using YallaNakol.Data.Repository;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Http;
-
+using Stripe;
 
 namespace YallaNakol.UI
 {
@@ -68,14 +68,13 @@ namespace YallaNakol.UI
             services.AddHttpContextAccessor();
             services.AddSession();
             services.AddControllersWithViews();
-
+            
             services.AddAuthentication()
             .AddMicrosoftAccount(microsoftOptions =>
             {
                 microsoftOptions.ClientId = "51217d7a-4861-45fe-8134-febfeebb8ec8";
                 microsoftOptions.ClientSecret = "_4DNh8j._XAF~1e1kB67g._zilRSSx1TxK";
             });
-
 
             //.AddGoogle(googleOptions => {  })
             //.AddTwitter(twitterOptions => {  })
@@ -89,6 +88,7 @@ namespace YallaNakol.UI
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                //app.UseExceptionHandler("/Home/Error");
                 app.UseMigrationsEndPoint();
             }
             else
@@ -113,7 +113,7 @@ namespace YallaNakol.UI
 
             app.UseAuthentication();
             app.UseAuthorization();
-
+            StripeConfiguration.ApiKey = Configuration["StripeSecret"];
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
@@ -124,3 +124,27 @@ namespace YallaNakol.UI
         }
     }
 }
+
+//https://app.pluralsight.com/library/courses/play-by-play-get-paid-dot-net-core-modern-payment-gateways/table-of-contents
+//steps for paypal account:
+//1-create account on https://www.paypal.com/mep/dashboard
+//2-go to https://developer.paypal.com/home
+//3-fo to dashboard
+//4-create new porject and generate ID and secret
+//5-go to visual studio and open nuget packages
+//6-install PayPal package and PayPalCoreSDK
+
+
+//steps for stripe paying
+//https://techtolia.medium.com/accept-payments-with-stripe-and-asp-net-c-83f285ed98e0
+//
+
+
+//steps for logging in an external file
+//https://www.youtube.com/watch?v=o5u4fE0t79k&list=PL6n9fhu94yhVkdrusLaQsfERmL_Jh4XmU&index=63
+//https://docs.microsoft.com/en-us/aspnet/core/fundamentals/logging/?view=aspnetcore-5.0
+//1-setup package NLog.Web.AspNetCore
+//2-add a text file named nlog.config for your project 
+//3- add these configrations from this site https://github.com/NLog/NLog/wiki/Configuration-file
+//4-right click on nlog.config file then properties and enable copy to output directly if newer
+//5-edit the Program.cs file where you override the ConfigureLogging function

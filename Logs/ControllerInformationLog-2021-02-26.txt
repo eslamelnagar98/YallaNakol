@@ -1,0 +1,12 @@
+2021-02-26 00:37:44.0965|INFO|YallaNakol.UI.Areas.Identity.Pages.Account.RegisterModel|User name anana howaowa with user name: test12345671 created a new account with password. His email is test1@gmail.com.
+2021-02-26 00:54:14.8199|INFO|YallaNakol.UI.Areas.Identity.Pages.Account.RegisterModel|User name abdasd asdasd with user name: pleaselogin@gmail.com created a new account with password. His email is pleaselogin@gmail.com.
+2021-02-26 00:54:19.2834|INFO|YallaNakol.UI.Areas.Identity.Pages.Account.LogoutModel|User emailpleaselogin@gmail.com logged out.
+2021-02-26 00:54:30.6105|INFO|YallaNakol.UI.Areas.Identity.Pages.Account.LoginModel|User email that logged in is pleaselogin@gmail.com, 
+2021-02-26 00:54:33.2375|INFO|YallaNakol.UI.Areas.Identity.Pages.Account.LogoutModel|User emailpleaselogin@gmail.com logged out.
+2021-02-26 00:58:01.9211|INFO|YallaNakol.UI.Areas.Identity.Pages.Account.LoginModel|User email that logged in is pleaselogin@gmail.com, 
+2021-02-26 00:58:04.2324|INFO|YallaNakol.UI.Areas.Identity.Pages.Account.LogoutModel|User emailpleaselogin@gmail.com logged out.
+2021-02-26 00:58:30.5912|INFO|YallaNakol.UI.Areas.Identity.Pages.Account.RegisterModel|User name asdasdasdas asdaasdddsd with user name: asdasdsadasd created a new account with password. His email is trial2@gmail.com.
+2021-02-26 00:58:33.8022|INFO|YallaNakol.UI.Areas.Identity.Pages.Account.LogoutModel|User emailasdasdsadasd logged out.
+2021-02-26 01:01:24.5963|INFO|YallaNakol.UI.Areas.Identity.Pages.Account.RegisterModel|User name asdasd asdasd with user name: trial3@gmail.com created a new account with password. His email is trial3@gmail.com.
+2021-02-26 01:01:27.1919|INFO|YallaNakol.UI.Areas.Identity.Pages.Account.LogoutModel|User emailtrial3@gmail.com logged out.
+2021-02-26 01:01:35.4329|INFO|YallaNakol.UI.Areas.Identity.Pages.Account.LoginModel|User email that logged in is trial3@gmail.com, 

@@ -16,7 +16,7 @@ using YallaNakol.Data.Services;
 using YallaNakol.Data.Repository;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Http;
-
+using Stripe;
 
 namespace YallaNakol.UI
 {
@@ -114,6 +114,8 @@ namespace YallaNakol.UI
             app.UseAuthentication();
             app.UseAuthorization();
 
+            StripeConfiguration.ApiKey = Configuration["StripeSecret"];
+            
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

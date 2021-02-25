@@ -1,7 +1,33 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
+@using Microsoft.Extensions.Configuration;
+
+@inject IConfiguration configration
+
 @{
 
     <h3>PAYMENT FORM</h3>
 }
+
+<div>
+    <form action="/Orders/Processing" method="POST">
+        <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                data-key=@configration["StripeApiKey"]
+                data-amount="@ViewBag.PaymentAmount"
+                data-name="YallaNakol"
+                data-description="Payment for your cart"
+                data-image="https://i.pinimg.com/236x/02/fd/5c/02fd5cc15841730936c0c5c555dae3a9.jpg"
+                data-locale="en"
+                data-zip-code="true"
+                data-label="Checkout">
+
+        </script>
+        <script>
+
+             document.querySelector("input").value = "@ViewBag.UserMail";
+        </script>
+        @Html.AntiForgeryToken()
+    </form>
+</div>
+

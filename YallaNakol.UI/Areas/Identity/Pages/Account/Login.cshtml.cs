@@ -97,7 +97,8 @@ namespace YallaNakol.UI.Areas.Identity.Pages.Account
 
                 if (result.Succeeded)
                 {
-                    _logger.LogInformation($"User email that logged in is {Input.Email}, {this.User.Identity.Name}");
+                    var user = await _userManager.FindByEmailAsync(Input.Email);
+                    _logger.LogInformation($"User details that logged in: Email={Input.Email}|Id={user?.Id??"null"}");
                     return LocalRedirect(returnUrl);
                 }
                 if (result.RequiresTwoFactor)
@@ -111,7 +112,8 @@ namespace YallaNakol.UI.Areas.Identity.Pages.Account
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, $"Invalid login attempt by user email {Input.Email}.");
+                    _logger.LogError($"Invalid login attempt by user email {Input.Email}.");
+                   ModelState.AddModelError(string.Empty, $"Invalid login attempt by user email {Input.Email}.");
                     return Page();
                 }
             }

@@ -1,0 +1,6 @@
+2021-02-26 22:12:36.0435|INFO|YallaNakol.UI.Areas.Identity.Pages.Account.LogoutModel|User details that logged out: Email =ahmedmahmoudabdelaty@gmail.com| Id =d62c757d-7bd3-44fa-a12c-e37dd9bea2f7.
+2021-02-26 22:12:50.9837|INFO|YallaNakol.UI.Areas.Identity.Pages.Account.LoginModel|User details that logged in: Email=ahmedmahmoudabdelaty@gmail.com|Id=null
+2021-02-26 22:16:17.7152|INFO|YallaNakol.UI.Areas.Identity.Pages.Account.LoginModel|User details that logged in: Email=ahmedmahmoudabdelaty@gmail.com|Id=d62c757d-7bd3-44fa-a12c-e37dd9bea2f7
+2021-02-26 22:16:30.2048|INFO|YallaNakol.UI.Areas.Identity.Pages.Account.LogoutModel|User details that logged out: Email =ahmedmahmoudabdelaty@gmail.com| Id =d62c757d-7bd3-44fa-a12c-e37dd9bea2f7.
+2021-02-26 22:18:35.4680|INFO|YallaNakol.UI.Areas.Identity.Pages.Account.LoginModel|User details that logged in: Email=ahmedmahmoudabdelaty@gmail.com|Id=d62c757d-7bd3-44fa-a12c-e37dd9bea2f7
+2021-02-26 22:27:18.4159|INFO|YallaNakol.UI.Areas.Identity.Pages.Account.LoginModel|User details that logged in: Email=ahmedmahmoudabdelaty@gmail.com|Id=d62c757d-7bd3-44fa-a12c-e37dd9bea2f7

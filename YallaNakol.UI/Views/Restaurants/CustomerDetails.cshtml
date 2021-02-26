@@ -1,69 +1,13 @@
 ﻿@model RestaurantMenu
-<h1>Details</h1>
 
-<div>
-    <h4>Restaurant</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Restaurant.Name)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Restaurant.Name)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Restaurant.Address)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Restaurant.Address)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Restaurant.Description)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Restaurant.Description)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Restaurant.Rate)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Restaurant.Rate)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Restaurant.ImageUrl)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Restaurant.ImageUrl)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Restaurant.PhoneNumber)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Restaurant.PhoneNumber)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Restaurant.WorkingHours)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Restaurant.WorkingHours)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Restaurant.DeliveryAreas)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Restaurant.DeliveryAreas)
-        </dd>
-    </dl>
-</div>
+<h1>@Model.Restaurant.Name</h1>
 
 @section Nagdy
-{
-<script>
-    $('#restaurant-menu .section-title').css('background-image','url(' +'@Model.Restaurant.ImageUrl' +')');
-</script>
+    {
+    <script>
+        $('#restaurant-menu .section-title').css('background-image','url(' +'@Model.Restaurant.ImageUrl' +')');
+    </script>
 }
-
-
 @section filter {
     <div class="row">
         <div class="categories">
@@ -84,11 +28,125 @@
     </div>
 }
 
-<div class="row">
-    <div class="portfolio-items">
-        @foreach (var item in Model.Dishes)
-        {
-            <partial name="PartialViews/_RestaurantDish" model="item" />
-        }
+<div class="span9">
+    <div class="well well-small">
+        <div class="row-fluid">
+            <div class="span2">
+                <img src="@Model.Restaurant.ImageUrl" alt="">
+            </div>
+            <div class="span6">
+                <h5>Product Name </h5>
+                <p>
+                    @Model.Restaurant.Description
+                </p>
+            </div>
+            <div class="span4 alignR">
+                <form class="form-horizontal qtyFrm">
+                    <h3> Rating: @Model.Restaurant.Rate</h3>
+                </form>
+            </div>
+        </div>
+
+                @foreach (var item in Model.Dishes)
+                {
+                    <partial name="PartialViews/_RestaurantDish" model="item" />
+                }
+
+
     </div>
 </div>
+
+
+@*<h1>Details</h1>
+
+    <div>
+        <h4>Restaurant</h4>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Restaurant.Name)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Restaurant.Name)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Restaurant.Address)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Restaurant.Address)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Restaurant.Description)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Restaurant.Description)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Restaurant.Rate)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Restaurant.Rate)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Restaurant.ImageUrl)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Restaurant.ImageUrl)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Restaurant.PhoneNumber)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Restaurant.PhoneNumber)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Restaurant.WorkingHours)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Restaurant.WorkingHours)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Restaurant.DeliveryAreas)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Restaurant.DeliveryAreas)
+            </dd>
+        </dl>
+    </div>
+
+    @section Nagdy
+    {
+    <script>
+        $('#restaurant-menu .section-title').css('background-image','url(' +'@Model.Restaurant.ImageUrl' +')');
+    </script>
+    }
+
+
+    @section filter {
+        <div class="row">
+            <div class="categories">
+                <ul class="cat">
+                    <li>
+                        <ol class="type">
+                            <li><a href="#" data-filter="*" class="active">All</a></li>
+                            @foreach (var item in Model.Category)
+                            {
+                                <li><a href="#" data-filter=".@item.Name">@item.Name</a></li>
+
+                            }
+                        </ol>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    }
+
+    <div class="row">
+        <div class="portfolio-items">
+            @foreach (var item in Model.Dishes)
+            {
+                <partial name="PartialViews/_RestaurantDish" model="item" />
+            }
+        </div>
+    </div>*@

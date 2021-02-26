@@ -65,7 +65,6 @@ namespace YallaNakol.Data.Models
                   WorkingHours="From 11:00 AM To 02:15 AM",
                   ImageUrl= "https://www.nrn.com/sites/nrn.com/files/styles/article_featured_standard/public/mcdonalds-logo.gif?itok=U_TliriA",
                   MenuId=1
-                  
                 },
                 new Restaurant 
                 { Id = 2,

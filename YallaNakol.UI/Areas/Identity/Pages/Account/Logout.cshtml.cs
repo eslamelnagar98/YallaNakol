@@ -16,11 +16,15 @@ namespace YallaNakol.UI.Areas.Identity.Pages.Account
     {
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly ILogger<LogoutModel> _logger;
+        private readonly UserManager<ApplicationUser> userManager;
 
-        public LogoutModel(SignInManager<ApplicationUser> signInManager, ILogger<LogoutModel> logger)
+        public LogoutModel(SignInManager<ApplicationUser> signInManager, 
+                            ILogger<LogoutModel> logger,
+                            UserManager<ApplicationUser> userManager)
         {
             _signInManager = signInManager;
             _logger = logger;
+            this.userManager = userManager;
         }
 
         public void OnGet()
@@ -29,8 +33,9 @@ namespace YallaNakol.UI.Areas.Identity.Pages.Account
        
         public async Task<IActionResult> OnPost(string returnUrl = null)
         {
+            var user = await userManager.GetUserAsync(this.User);
             await _signInManager.SignOutAsync();
-            _logger.LogInformation($"User email{this.User.Identity.Name} logged out.");
+            _logger.LogInformation($"User details that logged out: Email ={ user.Email}| Id ={user?.Id ?? "null"}.");
             if (returnUrl != null)
             {
                 return LocalRedirect(returnUrl);

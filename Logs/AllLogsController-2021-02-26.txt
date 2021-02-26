@@ -10,3 +10,4 @@
 2021-02-26 01:01:24.5963|INFO|YallaNakol.UI.Areas.Identity.Pages.Account.RegisterModel|User name asdasd asdasd with user name: trial3@gmail.com created a new account with password. His email is trial3@gmail.com.
 2021-02-26 01:01:27.1919|INFO|YallaNakol.UI.Areas.Identity.Pages.Account.LogoutModel|User emailtrial3@gmail.com logged out.
 2021-02-26 01:01:35.4329|INFO|YallaNakol.UI.Areas.Identity.Pages.Account.LoginModel|User email that logged in is trial3@gmail.com, 
+2021-02-26 02:24:09.1050|INFO|YallaNakol.UI.Areas.Identity.Pages.Account.LoginModel|User email that logged in is trial2@gmail.com, 

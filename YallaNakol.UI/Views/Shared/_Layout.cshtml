@@ -49,7 +49,7 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="#about" class="page-scroll">About</a></li>
- <li><a asp-action="Index" asp-controller="Home">Restaurants</a></li>
+                    <li><a asp-action="Index" asp-controller="Home">Restaurants</a></li>
                     <partial name="_LoginPartial"/>
                 </ul>
                 
@@ -186,6 +186,7 @@
     <script type="text/javascript" src="~/js/jqBootstrapValidation.js"></script>
     @*<script type="text/javascript" src="~/js/contact_me.js"></script>*@
     <script type="text/javascript" src="~/js/main.js"></script>
+    @await RenderSectionAsync("Nagdy",required:false)
     @await RenderSectionAsync("Scripts", required: false)
 
 </body>

@@ -94,6 +94,7 @@ namespace YallaNakol.UI.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Processing(string stripeToken, string stripeTokenType, string stripeEmail)
         {
+            int centToDollar = 100;
             Dictionary<string, string> Metadata = new Dictionary<string, string>();
             //Metadata.Add("CustomerName", "Ahmed");
             //Metadata.Add("CartId", "10sads20");
@@ -106,8 +107,8 @@ namespace YallaNakol.UI.Controllers
             var options = new ChargeCreateOptions
             {
                 StatementDescriptorSuffix = "YallaNakol Website",
-                Amount = (long)(shoppingCart.TotalCost()),
-                Currency = "US",
+                Amount = (long)(shoppingCart.TotalCost() * centToDollar),
+                Currency = "EGP",
                 Description = "YallaNakol Checkout Cart",
                 Source = "tok_mastercard",
                 ReceiptEmail = stripeEmail,
@@ -116,18 +117,17 @@ namespace YallaNakol.UI.Controllers
 
             var service = new ChargeService();
             Charge charge = service.Create(options);
+
             #region Logging
             //charge.Created//charge.Currency//charge.Amount//charge.AmountCaptured//charge.AmountRedunded//
             //charge.BalanceTransactionId//charge.Captured//charge.Description//charge.Id//charge.Metadata//charge.PaymentMethod//charge.ReceiptEmail                                  
             //charge.ReceiptUrl//charge.StatementDescriptorSuffix//charge.Status
             #endregion
+
             switch (charge.Status)
             {
                 case "succeeded":
-                    //This is an example of what to do after a charge is successful
                     return RedirectToAction("PaymentComplete");
-                    //Database.ReduceStock(Product, Quantity);
-                    break;
                 case "failed":
                     //Code to execute on a failed charge
                     return View();
@@ -137,7 +137,7 @@ namespace YallaNakol.UI.Controllers
                     break;
             }
         }
-        //4242424242424242
+//4242424242424242
 //test card https://stripe.com/docs/testing
 
 
@@ -147,7 +147,6 @@ namespace YallaNakol.UI.Controllers
             //Retrieve object from temp data
             var orderToPlace = JsonSerializer.Deserialize<YallaNakol.Data.Models.Order>((string)TempData["Order"]);
 
-            // if Payment Successfull
             orderRepo.CreateOrder(orderToPlace); // place order
             shoppingCart.ClearItems(); // clear cart items
             orderRepo.SaveChanges(); // save order changes

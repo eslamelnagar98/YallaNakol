@@ -82,10 +82,19 @@ namespace YallaNakol.UI.Areas.Identity.Pages.Account
         
             if (ModelState.IsValid)
             {
-                var Nagdy = await _userManager.FindByEmailAsync(Input.Email);
+                Microsoft.AspNetCore.Identity.SignInResult result;
+                var Email = await _userManager.FindByEmailAsync(Input.Email);
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                var result = await _signInManager.PasswordSignInAsync(Nagdy.UserName, Input.Password, Input.RememberMe, lockoutOnFailure: false);
+                if (Email is not null)
+                {
+                    result = await _signInManager.PasswordSignInAsync(Email.UserName, Input.Password, Input.RememberMe, lockoutOnFailure: false);
+                }
+                else
+                {
+                    result = Microsoft.AspNetCore.Identity.SignInResult.Failed;
+                }
+
                 if (result.Succeeded)
                 {
                     _logger.LogInformation($"User email that logged in is {Input.Email}, {this.User.Identity.Name}");

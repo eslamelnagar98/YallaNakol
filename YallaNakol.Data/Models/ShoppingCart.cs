@@ -15,7 +15,7 @@ namespace YallaNakol.Data.Models
         private readonly ApplicationDbContext _applicationDbContext;
 
         public string CartId { get; private set; }
-        public int ResturantId { get; private set; }
+        public int ResturantId { get; set; }
         public IEnumerable<ShoppingCartItem> ShoppingCartItems
         {
             get => _applicationDbContext.ShoppingCartItems
@@ -26,17 +26,17 @@ namespace YallaNakol.Data.Models
 
         public bool IsEmpty => ShoppingCartItems.Count() == 0;
 
-        private ShoppingCart(ApplicationDbContext applicationDbContext)
+        private ShoppingCart(ApplicationDbContext applicationDbContext, string cartId)
         {
+            this.CartId = cartId;
             this._applicationDbContext = applicationDbContext;
 
-            if (!this.IsEmpty)
-            {
-                TrySetResturantId(applicationDbContext.ShoppingCartItems
-                                                      .FirstOrDefault()
-                                                      .Dish
+            if(applicationDbContext.ShoppingCartItems.Any())
+                SetResturantId(_applicationDbContext.ShoppingCartItems
+                                                    .Include( sh => sh.Dish )
+                                                    .FirstOrDefault(sh => sh.ShoppingCartId == this.CartId)
+                                                   ?.Dish
                                  );
-            }
         }
 
         public static ShoppingCart GetCart(ApplicationDbContext applicationDbContext, IHttpContextAccessor httpContextAccessor)
@@ -90,30 +90,25 @@ namespace YallaNakol.Data.Models
             #endregion
 
 
-            return new ShoppingCart(context)
-            {
-                CartId = cartId
-            };
-
+            return new ShoppingCart(context, cartId);
+           
         }
 
         /// <summary>
         /// Only Sets the ID if the cart is empty ,otherwise does nothing
         /// </summary>
-        private void TrySetResturantId(Dish dish)
+        private void SetResturantId(Dish dish)
         {
-            if (!ShoppingCartItems.Any() && dish != null)
-            {
+            if(dish is not null)
                 ResturantId = _applicationDbContext.Restaurants
-                                                        .Select(r => r.Id)
-                                                        .SingleOrDefault(r => r == dish.MenuId);
-            }
+                                                   .Select(r => r.Id)
+                                                   .SingleOrDefault(r => r == dish.MenuId);
         }
 
         public void AddDish(Dish dish, int amount)
         {
-
-            TrySetResturantId(dish);
+            if( this.IsEmpty )
+                SetResturantId(dish);
 
             var shoppingCartItem = _applicationDbContext.ShoppingCartItems
                                                         .SingleOrDefault(D => D.Dish.Id == dish.Id && D.ShoppingCartId == CartId);
@@ -146,6 +141,9 @@ namespace YallaNakol.Data.Models
                 else
                     _applicationDbContext.ShoppingCartItems.Remove(shoppingCartItem);
             }
+
+            if (this.IsEmpty)
+                ClearItems();
 
         }
 

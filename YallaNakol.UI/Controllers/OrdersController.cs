@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using YallaNakol.Data.Models;
 using YallaNakol.Data.Services;
 using YallaNakol.Data;
-
+using YallaNakol.UI.ViewModels;
 
 namespace YallaNakol.UI.Controllers
 {
@@ -20,19 +20,22 @@ namespace YallaNakol.UI.Controllers
         private readonly IOrder orderRepo;
         private readonly IShoppingCart shoppingCart;
         private readonly UserManager<ApplicationUser> userManager;
+        private readonly IRestaurant restaurant;
 
-        public OrdersController(IOrder orderRepo, IShoppingCart shoppingCart, UserManager<ApplicationUser> userManager)
+        public OrdersController(IOrder orderRepo, IShoppingCart shoppingCart, UserManager<ApplicationUser> userManager, IRestaurant restaurant)
         {
             this.orderRepo = orderRepo;
             this.shoppingCart = shoppingCart;
             this.userManager = userManager;
+            this.restaurant = restaurant;
         }
 
 
-        public async Task<IActionResult> Checkout( )
+        public async Task<IActionResult> Checkout()
         {
+
             var user = await userManager.GetUserAsync(User);
-            var order = new YallaNakol.Data.Models.Order()
+            var orderToPlace = new YallaNakol.Data.Models.Order()
             {
                 FirstName = user.FirstName,
                 LastName = user.LastName,
@@ -40,7 +43,13 @@ namespace YallaNakol.UI.Controllers
                 Email = user.Email
             };
 
-            return View(order);
+            var checkoutVM = new CheckoutViewModel()
+            {
+                Order = orderToPlace,
+                deliveryAreas = restaurant.GetDeliveryAreasByResturantId(shoppingCart.ResturantId)
+            };
+
+            return View(checkoutVM);
         }
 
         [HttpPost]

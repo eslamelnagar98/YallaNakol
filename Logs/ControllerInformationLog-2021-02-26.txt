@@ -10,3 +10,12 @@
 2021-02-26 01:01:24.5963|INFO|YallaNakol.UI.Areas.Identity.Pages.Account.RegisterModel|User name asdasd asdasd with user name: trial3@gmail.com created a new account with password. His email is trial3@gmail.com.
 2021-02-26 01:01:27.1919|INFO|YallaNakol.UI.Areas.Identity.Pages.Account.LogoutModel|User emailtrial3@gmail.com logged out.
 2021-02-26 01:01:35.4329|INFO|YallaNakol.UI.Areas.Identity.Pages.Account.LoginModel|User email that logged in is trial3@gmail.com, 
+2021-02-26 07:42:03.7502|INFO|YallaNakol.UI.Areas.Identity.Pages.Account.LoginModel|User email that logged in is trial3@gmail.com, 
+2021-02-26 08:06:13.3950|INFO|YallaNakol.UI.Areas.Identity.Pages.Account.LoginModel|User email that logged in is trial3@gmail.com, 
+2021-02-26 08:10:51.4240|INFO|YallaNakol.UI.Areas.Identity.Pages.Account.LoginModel|User email that logged in is trial3@gmail.com, 
+2021-02-26 08:23:03.1752|INFO|YallaNakol.UI.Areas.Identity.Pages.Account.LoginModel|User email that logged in is trial3@gmail.com, 
+2021-02-26 08:24:27.1211|INFO|YallaNakol.UI.Areas.Identity.Pages.Account.LoginModel|User email that logged in is trial3@gmail.com, 
+2021-02-26 09:52:07.8996|INFO|YallaNakol.UI.Areas.Identity.Pages.Account.LogoutModel|User emailtrial3@gmail.com logged out.
+2021-02-26 09:53:07.2867|INFO|YallaNakol.UI.Areas.Identity.Pages.Account.RegisterModel|User name Abdallh hamid with user name: abdallh created a new account with password. His email is engabdallhabdelhamid@gmail.com.
+2021-02-26 09:53:48.7294|INFO|YallaNakol.UI.Areas.Identity.Pages.Account.LoginModel|User email that logged in is engabdallhabdelhamid@gmail.com, 
+2021-02-26 09:56:18.9433|INFO|YallaNakol.UI.Areas.Identity.Pages.Account.LoginModel|User email that logged in is engabdallhabdelhamid@gmail.com, 

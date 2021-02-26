@@ -17,6 +17,7 @@ namespace YallaNakol.Data.Services
         void SaveChanges();
         decimal TotalCost();
         bool IsEmpty { get; }
+        public int ResturantId { get; set; }
 
         void ClearItems();
     }

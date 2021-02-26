@@ -27,7 +27,7 @@ namespace YallaNakol.Data.Repository
             order.OrderTotal = shoppingCart.TotalCost();
             order.TrackingID = $"{DateTime.Now.Year}{DateTime.Now.Month}{DateTime.Now.Day}{DateTime.Now.Hour}{DateTime.Now.Minute}{DateTime.Now.Millisecond}";
             dbContext.Orders.Add(order);
-
+            order.OrderDetails = new List<OrderDetail>();
 
 
             //Add All dishes in the shopping cart to the order
@@ -38,11 +38,11 @@ namespace YallaNakol.Data.Repository
                     DishId = shoppingCartItem.DishId,
                     Amount = shoppingCartItem.Amount,
                     Price = shoppingCartItem.Dish.Price,
-                    OrderId = order.OrderId,
                 };
                 
-                dbContext.OrdersDetails.Add(orderDetail);
+                order.OrderDetails.Add(orderDetail);
             }
+
         }
 
 

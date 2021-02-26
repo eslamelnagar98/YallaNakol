@@ -9,7 +9,7 @@ namespace YallaNakol.Data.Services
 {
     public interface IShoppingCart
     {
-        string CartId { get; set; }
+        string CartId { get;}
         IEnumerable<ShoppingCartItem> ShoppingCartItems { get; }
 
         void AddDish(Dish dish, int amount);

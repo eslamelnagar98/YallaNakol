@@ -10,10 +10,12 @@ using YallaNakol.Data.Services;
 
 namespace YallaNakol.Data.Models
 {
-    public class ShoppingCart :  IShoppingCart
+    public class ShoppingCart : IShoppingCart
     {
         private readonly ApplicationDbContext _applicationDbContext;
 
+        public string CartId { get; private set; }
+        public int ResturantId { get; private set; }
         public IEnumerable<ShoppingCartItem> ShoppingCartItems
         {
             get => _applicationDbContext.ShoppingCartItems
@@ -21,16 +23,23 @@ namespace YallaNakol.Data.Models
                                         .Where(D => D.ShoppingCartId == CartId)
                                         .ToList();
         }
-        public string CartId { get; set; }
 
         public bool IsEmpty => ShoppingCartItems.Count() == 0;
 
         private ShoppingCart(ApplicationDbContext applicationDbContext)
         {
             this._applicationDbContext = applicationDbContext;
+
+            if (!this.IsEmpty)
+            {
+                TrySetResturantId(applicationDbContext.ShoppingCartItems
+                                                      .FirstOrDefault()
+                                                      .Dish
+                                 );
+            }
         }
 
-        public static ShoppingCart GetCart(ApplicationDbContext applicationDbContext,IHttpContextAccessor httpContextAccessor)
+        public static ShoppingCart GetCart(ApplicationDbContext applicationDbContext, IHttpContextAccessor httpContextAccessor)
         {
             var context = applicationDbContext;
             ISession session = httpContextAccessor.HttpContext.Session;
@@ -39,7 +48,7 @@ namespace YallaNakol.Data.Models
 
             string cartId = session.GetString("CartId");
 
-            if(cartId == null)
+            if (cartId == null)
             {
                 cartId = Guid.NewGuid().ToString();
             }
@@ -81,14 +90,34 @@ namespace YallaNakol.Data.Models
             #endregion
 
 
-            return new ShoppingCart(context) { CartId = cartId };
+            return new ShoppingCart(context)
+            {
+                CartId = cartId
+            };
 
+        }
+
+        /// <summary>
+        /// Only Sets the ID if the cart is empty ,otherwise does nothing
+        /// </summary>
+        private void TrySetResturantId(Dish dish)
+        {
+            if (!ShoppingCartItems.Any() && dish != null)
+            {
+                ResturantId = _applicationDbContext.Restaurants
+                                                        .Select(r => r.Id)
+                                                        .SingleOrDefault(r => r == dish.MenuId);
+            }
         }
 
         public void AddDish(Dish dish, int amount)
         {
+
+            TrySetResturantId(dish);
+
             var shoppingCartItem = _applicationDbContext.ShoppingCartItems
                                                         .SingleOrDefault(D => D.Dish.Id == dish.Id && D.ShoppingCartId == CartId);
+
             if (shoppingCartItem != null)
             {
                 shoppingCartItem.Amount += amount;
@@ -122,27 +151,27 @@ namespace YallaNakol.Data.Models
 
         public decimal TotalCost() => ShoppingCartItems.Select(D => D.Dish.Price * D.Amount)
                                                        .Sum();
-    //    {
-    //        First Trial
-    //        decimal TotalCoast = ShoppingCartItems.Select(D => D.Dish.Price * D.Amount)
-    //                                             .Sum();
-    //        /Second Trial(The Worst One By The Way)
-    //        foreach (var item in ShoppingCartItems)
-    //        {
-    //            TotalCoast += item.Dish.Price* item.Amount;
-    //        }
-    //         second  
-    //        return ShoppingCartItems.Select(D => D.Dish.Price* D.Amount)
-    //                                             .Sum();
-    //  }
+        //    {
+        //        First Trial
+        //        decimal TotalCoast = ShoppingCartItems.Select(D => D.Dish.Price * D.Amount)
+        //                                             .Sum();
+        //        /Second Trial(The Worst One By The Way)
+        //        foreach (var item in ShoppingCartItems)
+        //        {
+        //            TotalCoast += item.Dish.Price* item.Amount;
+        //        }
+        //         second  
+        //        return ShoppingCartItems.Select(D => D.Dish.Price* D.Amount)
+        //                                             .Sum();
+        //  }
 
         public void SaveChanges() => _applicationDbContext.SaveChanges();
 
         public void ClearItems()
         {
             var cartItemsToRemove = _applicationDbContext.ShoppingCartItems.Where(sh => sh.ShoppingCartId == this.CartId);
-
-            _applicationDbContext.ShoppingCartItems.RemoveRange( cartItemsToRemove);
+            ResturantId = 0;
+            _applicationDbContext.ShoppingCartItems.RemoveRange(cartItemsToRemove);
         }
     }
 }

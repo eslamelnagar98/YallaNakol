@@ -11,6 +11,7 @@ using YallaNakol.Data.Models;
 using YallaNakol.Data.Services;
 using YallaNakol.Data;
 
+
 namespace YallaNakol.UI.Controllers
 {
     [Authorize]
@@ -28,7 +29,7 @@ namespace YallaNakol.UI.Controllers
         }
 
 
-        public async Task<IActionResult> Checkout()
+        public async Task<IActionResult> Checkout( )
         {
             var user = await userManager.GetUserAsync(User);
             var order = new YallaNakol.Data.Models.Order()

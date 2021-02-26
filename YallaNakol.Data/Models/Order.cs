@@ -27,8 +27,8 @@ namespace YallaNakol.Data.Models
         public string AddressLine2 { get; set; }
 
 
-        [Required(ErrorMessage = "Please Enter Your City")]
-        public string City { get; set; }
+        [Required(ErrorMessage = "Please Select Your City")]
+        public DeliveryAreas City { get; set; }
 
 
         [Required(ErrorMessage = "Please Enter Your Phone Number")]

@@ -1,4 +1,4 @@
-﻿@model YallaNakol.Data.Models.Order
+﻿@model YallaNakol.UI.ViewModels.CheckoutViewModel
 
 @{
     ViewData["Title"] = "Checkout";
@@ -15,39 +15,40 @@
 
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="FirstName" class="control-label"></label>
-                <input asp-for="FirstName" class="form-control" />
-                <span asp-validation-for="FirstName" class="text-danger"></span>
+                <label asp-for="Order.FirstName" class="control-label"></label>
+                <input asp-for="Order.FirstName" class="form-control" />
+                <span asp-validation-for="Order.FirstName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="LastName" class="control-label"></label>
-                <input asp-for="LastName" class="form-control" />
-                <span asp-validation-for="LastName" class="text-danger"></span>
+                <label asp-for="Order.LastName" class="control-label"></label>
+                <input asp-for="Order.LastName" class="form-control" />
+                <span asp-validation-for="Order.LastName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="AddressLine1" class="control-label"></label>
-                <input asp-for="AddressLine1" class="form-control" />
-                <span asp-validation-for="AddressLine1" class="text-danger"></span>
+                <label asp-for="Order.AddressLine1" class="control-label"></label>
+                <input asp-for="Order.AddressLine1" class="form-control" />
+                <span asp-validation-for="Order.AddressLine1" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="AddressLine2" class="control-label"></label>
-                <input asp-for="AddressLine2" class="form-control" />
-                <span asp-validation-for="AddressLine2" class="text-danger"></span>
+                <label asp-for="Order.AddressLine2" class="control-label"></label>
+                <input asp-for="Order.AddressLine2" class="form-control" />
+                <span asp-validation-for="Order.AddressLine2" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="City" class="control-label"></label>
-                <input asp-for="City" class="form-control" />
-                <span asp-validation-for="City" class="text-danger"></span>
+                <label asp-for="Order.City" class="control-label"></label>
+                <select asp-for="Order.City" asp-items="@Model.ResturantDeliveryAreas"  class="form-control" >
+                    </select>
+                <span asp-validation-for="Order.City" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="PhoneNumber" class="control-label"></label>
-                <input asp-for="PhoneNumber" class="form-control" />
-                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                <label asp-for="Order.PhoneNumber" class="control-label"></label>
+                <input asp-for="Order.PhoneNumber" class="form-control" />
+                <span asp-validation-for="Order.PhoneNumber" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
+                <label asp-for="Order.Email" class="control-label"></label>
+                <input asp-for="Order.Email" class="form-control" />
+                <span asp-validation-for="Order.Email" class="text-danger"></span>
             </div>
             <div class="form-group " >
                 <input type="submit" value="Create" class="btn btn-default " />

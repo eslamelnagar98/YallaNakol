@@ -9,7 +9,7 @@ namespace YallaNakol.Data.Services
 {
     public interface IShoppingCart
     {
-        string CartId { get; set; }
+        string CartId { get;}
         IEnumerable<ShoppingCartItem> ShoppingCartItems { get; }
 
         void AddDish(Dish dish, int amount);
@@ -17,6 +17,7 @@ namespace YallaNakol.Data.Services
         void SaveChanges();
         decimal TotalCost();
         bool IsEmpty { get; }
+        public int ResturantId { get; set; }
 
         void ClearItems();
     }

@@ -1,16 +1,43 @@
-﻿@model Dish 
+﻿@model Dish
 @{ string c = Model.Category.Name;}
- 
-<div class="col-sm-6 col-md-4  @c">
-    <div class="portfolio-item">
-        <div class="hover-bg">
-            <div class="hover-text">
-                <a asp-action="Details" asp-controller="Dishes" asp-route-id="@Model.Id">Dets</a>
+
+
+<hr class="soften">
+<div class="row-fluid">
+    <div class="float-left">
+        <img src="@Model.ImageUrl" alt="">
+    </div>
+    <div class="span6">
+        <h5>@Model.Name</h5>
+        <p>
+            @Model.Description
+        </p>
+    </div>
+    <div class="span4 alignR">
+        <form class="form-horizontal qtyFrm">
+            <h3> @Model.Price L.E.</h3>
+            @*<label class="checkbox">
+                <input type="checkbox">  Add product to cart
+            </label><br>*@
+            <div class="btn-group">
+                <a asp-action="Details" asp-controller="Dishes" asp-route-id="@Model.Id" class="defaultBtn">@*need to go to cart*@
+                <span class="icon-shopping-cart"></span> Add to cart</a>
+                <a asp-action="Details" asp-controller="Dishes" asp-route-id="@Model.Id" class="shopBtn">View Dish</a>
             </div>
-            <img src="@Model.ImageUrl" class="img-responsive" alt="Project Title">
-            <p class="text-secondary"> @Model.Description</p>
-
-
-        </div>
+        </form>
     </div>
 </div>
+@*<div class="col-sm-6 col-md-4  @c">
+        <div class="portfolio-item">
+            <div class="hover-bg">
+                <div class="hover-text">
+                    <a asp-action="Details" asp-controller="Dishes" asp-route-id="@Model.Id">Dets</a>
+                </div>
+                <img src="@Model.ImageUrl" class="img-responsive" alt="Project Title">
+                <p class="text-secondary"> @Model.Description</p>
+
+
+            </div>
+        </div>
+    </div>*@
+

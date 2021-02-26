@@ -133,6 +133,7 @@ namespace YallaNakol.UI.Areas.Identity.Pages.Account
                 foreach (var error in result.Errors)
                 {
                     ModelState.AddModelError(string.Empty, error.Description);
+                    _logger.LogError($"Error {error.Description} occured in registration page for user {user.Id}");
                 }
             }
             ModelState.AddModelError("XX","ZZ");

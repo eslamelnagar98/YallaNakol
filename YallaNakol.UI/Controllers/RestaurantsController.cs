@@ -50,7 +50,8 @@ namespace YallaNakol.UI.Controllers
             var restaurantMenu = new RestaurantMenu
             {
                 Dishes = dish.AllDishes.Where(m => m.MenuId == restaurant.MenuId),
-                Category = cat.AllCategories,
+                //Category = cat.AllCategories,
+                Category = restaurant.Categories,
                 Restaurant = restaurant
             };
             

@@ -10,8 +10,8 @@ using YallaNakol.Data.Models;
 namespace YallaNakol.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210227111452_inititalUpdate2")]
-    partial class inititalUpdate2
+    [Migration("20210227160259_AddRestaurant")]
+    partial class AddRestaurant
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -449,11 +449,33 @@ namespace YallaNakol.Data.Migrations
                         {
                             Id = 12,
                             CategoryId = 2,
-                            Description = "Fera5 Cheicken",
+                            Description = "A new Sandwich introduced from macdonalds from our chefs with our great sauses",
                             ImageUrl = "https://s3-eu-west-1.amazonaws.com/elmenusv5-stg/Normal/298f37b4-f9f7-44ea-a297-02cda66bd50b.jpg",
                             InStock = true,
                             MenuId = 1,
                             Name = "Chicked Grilled New Sandwich",
+                            Price = 100m
+                        },
+                        new
+                        {
+                            Id = 13,
+                            CategoryId = 2,
+                            Description = "A new Sandwich introduced from macdonalds from our chefs with our great sauses",
+                            ImageUrl = "https://s3-eu-west-1.amazonaws.com/elmenusv5-stg/Normal/298f37b4-f9f7-44ea-a297-02cda66bd50b.jpg",
+                            InStock = true,
+                            MenuId = 1,
+                            Name = "Chicked Grilled New Sandwich",
+                            Price = 100m
+                        },
+                        new
+                        {
+                            Id = 14,
+                            CategoryId = 3,
+                            Description = "Juicy beef patty smothered in three extraordinary slices of Emmental cheese and topped with sliced tomato, shredded lettuce, onions and that special Big Tasty sauce",
+                            ImageUrl = "https://s3-eu-west-1.amazonaws.com/elmenusv5-stg/Normal/a660c55e-d9ea-4c0d-be33-4d0cc5d0a7b4.jpg",
+                            InStock = true,
+                            MenuId = 1,
+                            Name = "Big Tasty",
                             Price = 100m
                         });
                 });

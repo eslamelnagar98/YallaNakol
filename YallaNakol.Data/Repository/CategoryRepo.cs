@@ -11,7 +11,6 @@ namespace YallaNakol.Data.Repository
     public class CategoryRepo : ICategory
     {
         private readonly ApplicationDbContext _applicationDbContext;
-
         public CategoryRepo(ApplicationDbContext applicationDbContext)
         {
             this._applicationDbContext = applicationDbContext;

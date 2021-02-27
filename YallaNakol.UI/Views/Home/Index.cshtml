@@ -1,4 +1,5 @@
 ﻿@model HomeViewModel
+@{int FlagCount = 0; }
 @section header {
     <header id="header">
         <div class="intro">
@@ -20,28 +21,31 @@
     </header>
 }
 @section filter {
-<div class="row">
-    <div class="categories">
-        <ul class="cat">
-            <li>
-                <ol class="type">
-                    <li><a href="#" data-filter="*" class="active">All</a></li>
-                    <li><a href="#" data-filter=".breakfast">Breakfast</a></li>
-                    <li><a href="#" data-filter=".lunch">Lunch</a></li>
-                    <li><a href="#" data-filter=".dinner">Dinner</a></li>
-                </ol>
-            </li>
-        </ul>
-        <div class="clearfix"></div>
+    <div class="row">
+        <div class="categories">
+            <ul class="cat">
+                <li>
+                    <ol class="type">
+                        <li><a href="#" data-filter="*" class="active">All</a></li>
+                        @foreach (var item in Model.Category)
+                        {
+                            <li><a href="#" data-filter=".@item.Name">@item.Name</a></li>
+                        }
+                    </ol>
+                </li>
+            </ul>
+            <div class="clearfix"></div>
+        </div>
     </div>
-</div>
 }
-
 <div class="row">
+    <div class="portfolio-items">
         @foreach (var item in Model.Restaurants)
         {
             <partial name="PartialViews/_Restaurant" model="item" />
         }
+    </div>
 </div>
+
 
 

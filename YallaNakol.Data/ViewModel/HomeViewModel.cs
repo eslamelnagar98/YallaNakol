@@ -10,5 +10,6 @@ namespace YallaNakol.Data.ViewModel
     public class HomeViewModel
     {
         public IEnumerable<Restaurant> Restaurants { get; set; }
+        public IEnumerable<Category> Category { get; set; }
     }
 }

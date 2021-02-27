@@ -1,13 +1,17 @@
 ﻿@model Restaurant
 
 @{ string b = "breakfast"; }
+<style>
 
+</style>
 <div class="col-sm-6 col-md-4  @b">
     <div class="portfolio-item">
-        <a asp-action="CustomerDetails" asp-controller="Restaurants" asp-route-id="@Model.Id" class="hover-bg">
-            <img src="@Model.ImageUrl" class="img-responsive" />
-            <div class="mask" style="background-color: rgba(251, 251, 251, 0.15)"></div>
-        </a>
+        @*<div style="width:100%">*@
+            <a asp-action="CustomerDetails" asp-controller="Restaurants" asp-route-id="@Model.Id">
+                <img src="@Model.ImageUrl" class="img-thumbnail" />
+                <div class="mask" style="background-color: rgba(251, 251, 251, 0.15)"></div>
+            </a>
+        @*</div>*@
         <div class="card-body">
             <h5 class="card-title">@Model.Name</h5>
             <p class="card-text">

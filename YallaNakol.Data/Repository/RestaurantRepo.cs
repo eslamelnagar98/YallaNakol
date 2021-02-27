@@ -18,11 +18,12 @@ namespace YallaNakol.Data.Repository
         }
         public IEnumerable<Restaurant> AllRestaurants =>
             _applicationDbContext.Restaurants
+                                 .Include(r => r.Categories)
                                  .AsNoTracking()
                                  .ToList();
 
         public Restaurant GetRestaurantById(int? restaurantId) =>
-            _applicationDbContext.Restaurants.FirstOrDefault(I => I.Id == restaurantId);
+            _applicationDbContext.Restaurants.Include(r=>r.Categories).FirstOrDefault(I => I.Id == restaurantId);
         public void AddRestaurant(Restaurant restaurant) =>
             _applicationDbContext.Restaurants.Add(restaurant);
 

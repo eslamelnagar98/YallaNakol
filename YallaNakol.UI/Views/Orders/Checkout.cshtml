@@ -60,25 +60,21 @@
                             <span asp-validation-for="Order.LastName" class="text-danger"></span>
                         </div>
                         <div class="form-group">
-                            <label asp-for="Order.AddressLine1" class="control-label"></label>
-                            <input asp-for="Order.AddressLine1" class="form-control" />
-                            <span asp-validation-for="Order.AddressLine1" class="text-danger"></span>
+                            <label asp-for="Order.Address.City" class="control-label"></label>
+                            <input asp-for="Order.Address.City" class="form-control" disabled/>
                         </div>
                         <div class="form-group">
-                            <label asp-for="Order.AddressLine2" class="control-label"></label>
-                            <input asp-for="Order.AddressLine2" class="form-control" />
-                            <span asp-validation-for="Order.AddressLine2" class="text-danger"></span>
+                            <label asp-for="Order.Address.Area" class="control-label"></label>
+                            <input asp-for="Order.Address.Area" class="form-control" disabled />
                         </div>
                         <div class="form-group">
-                            <label asp-for="Order.City" class="control-label"></label>
-                            <select asp-for="Order.City" asp-items="@Model.ResturantDeliveryAreas" class="form-control">
-                            </select>
-                            <span asp-validation-for="Order.City" class="text-danger"></span>
+                            <label asp-for="Order.Address.Zone" class="control-label"></label>
+                            <input asp-for="Order.Address.Zone" class="form-control" disabled />
                         </div>
                         <div class="form-group">
-                            <label asp-for="Order.PhoneNumber" class="control-label"></label>
-                            <input asp-for="Order.PhoneNumber" class="form-control" />
-                            <span asp-validation-for="Order.PhoneNumber" class="text-danger"></span>
+                            <label asp-for="Order.Address.Phone" class="control-label"></label>
+                            <input asp-for="Order.Address.Phone" class="form-control" />
+                            <span asp-validation-for="Order.Address.Phone" class="text-danger"></span>
                         </div>
                         <div class="form-group">
                             <label asp-for="Order.Email" class="control-label"></label>
@@ -98,24 +94,3 @@
     <script src="https://maps.googleapis.com/maps/api/js?libraries=places&amp;key=AIzaSyBmnATbcsItV07AIzYhG-6E0ZYgZgTkh3w"></script>
     <script src="~/js/Map.js"></script>
 </body>
-@*<style>
-    #map{position:relative; width:500px; height:500px;}
-    #map:after {
-            z-index: 100;
-            width: 22px;
-            height: 40px;
-            display: block;
-            content: ' ';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            margin: -40px 0 0 -11px;
-            background: url('https://maps.gstatic.com/mapfiles/api-3/images/spotlight-poi_hdpi.png');
-            background-size: 22px 40px; /* Since I used the HiDPI marker version this compensates for the 2x size */
-            pointer-events: none; /* This disables clicks on the marker. Not fully supported by all major browsers, though */
-        }
-</style>
-<div id="map">
-</div>
-<script src="https://maps.googleapis.com/maps/api/js?libraries=places&amp;key=AIzaSyBmnATbcsItV07AIzYhG-6E0ZYgZgTkh3w"></script>
-<script src="~/js/Map.js"></script>*@

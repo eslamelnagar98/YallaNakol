@@ -39,7 +39,6 @@ namespace YallaNakol.UI.Controllers
             {
                 FirstName = user.FirstName,
                 LastName = user.LastName,
-                PhoneNumber = user.PhoneNumber,
                 Email = user.Email
             };
 

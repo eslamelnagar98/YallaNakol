@@ -9,7 +9,7 @@ namespace YallaNakol.Data.Models
     public class Address
     {
         public string ID { get; set; }
-        public string Street { get; set; }
+        public string Zone { get; set; }
         public string Area { get; set; }
         public string City { get; set; }
         public string DetailedInfo { get; set; }

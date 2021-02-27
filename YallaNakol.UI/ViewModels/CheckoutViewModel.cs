@@ -9,7 +9,6 @@ namespace YallaNakol.UI.ViewModels
 {
     public class CheckoutViewModel
     {
-
         public Order Order { get; set; }
        // public int ResturantId { get; set; }
         public DeliveryAreas deliveryAreas { get; set; }

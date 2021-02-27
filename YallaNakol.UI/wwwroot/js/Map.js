@@ -14,14 +14,6 @@ function getPosition()
         myLat = e.coords.latitude;
         myLng = e.coords.longitude;
         //---------------
-        myMap = new google.maps.Map(mapHTML, {
-            center: {
-                lat: myLat,
-                lng: myLng
-            },
-            zoom: 16
-        })
-        geocode();
         AllowDrag();
     }, function ()
     {
@@ -54,6 +46,14 @@ function geocode()
     });
 }
 function AllowDrag() {
+
+    myMap = new google.maps.Map(mapHTML, {
+        center: {
+            lat: myLat,
+            lng: myLng
+        },
+        zoom: 16
+    })
     google.maps.event.addListener(myMap, 'center_changed',
         function () {
             myLat = myMap.getCenter().lat();

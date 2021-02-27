@@ -13,7 +13,6 @@ namespace YallaNakol.Data.Models
     public class ShoppingCart : IShoppingCart
     {
         private readonly ApplicationDbContext _applicationDbContext;
-
         public string CartId { get; private set; }
         public int ResturantId { get; set; }
         public IEnumerable<ShoppingCartItem> ShoppingCartItems
@@ -35,8 +34,7 @@ namespace YallaNakol.Data.Models
                 SetResturantId(_applicationDbContext.ShoppingCartItems
                                                     .Include( sh => sh.Dish )
                                                     .FirstOrDefault(sh => sh.ShoppingCartId == this.CartId)
-                                                   ?.Dish
-                                 );
+                                                   ?.Dish);
         }
 
         public static ShoppingCart GetCart(ApplicationDbContext applicationDbContext, IHttpContextAccessor httpContextAccessor)

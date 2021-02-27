@@ -1,0 +1,16 @@
+2021-02-27 20:43:29.1889|ERROR|YallaNakol.UI.Controllers.HomeController|UserID:NA|User Mail:NA | ErrorPath:/ | Exeption:Input string was not in a correct format.
+2021-02-27 20:53:24.0407|ERROR|YallaNakol.UI.Controllers.HomeController|UserID:NA|User Mail:NA | ErrorPath:/ | Exeption:Input string was not in a correct format.
+2021-02-27 20:55:51.6516|ERROR|YallaNakol.UI.Controllers.HomeController|UserID:NA|User Mail:NA | ErrorPath:/ | Exeption:Input string was not in a correct format.
+2021-02-27 20:56:25.3779|ERROR|YallaNakol.UI.Controllers.HomeController|UserID:NA|User Mail:NA | ErrorPath:/ | Exeption:Input string was not in a correct format.
+2021-02-27 21:00:16.2995|ERROR|YallaNakol.UI.Controllers.HomeController|UserID:NA|User Mail:NA | ErrorPath:/ | Exeption:Input string was not in a correct format.
+2021-02-27 21:02:25.6027|ERROR|YallaNakol.UI.Controllers.HomeController|UserID:NA|User Mail:NA | ErrorPath:/ | Exeption:Input string was not in a correct format.
+2021-02-27 21:03:02.8081|ERROR|YallaNakol.UI.Controllers.HomeController|UserID:NA|User Mail:NA | ErrorPath:/ | Exeption:Input string was not in a correct format.
+2021-02-27 21:03:04.3243|ERROR|YallaNakol.UI.Controllers.HomeController|UserID:NA|User Mail:NA | ErrorPath:/ | Exeption:Input string was not in a correct format.
+2021-02-27 21:03:05.3941|ERROR|YallaNakol.UI.Controllers.HomeController|UserID:NA|User Mail:NA | ErrorPath:/ | Exeption:Input string was not in a correct format.
+2021-02-27 21:03:06.5580|ERROR|YallaNakol.UI.Controllers.HomeController|UserID:NA|User Mail:NA | ErrorPath:/ | Exeption:Input string was not in a correct format.
+2021-02-27 21:03:07.7770|ERROR|YallaNakol.UI.Controllers.HomeController|UserID:NA|User Mail:NA | ErrorPath:/ | Exeption:Input string was not in a correct format.
+2021-02-27 21:03:10.3826|ERROR|YallaNakol.UI.Controllers.HomeController|UserID:NA|User Mail:NA | ErrorPath:/ | Exeption:Input string was not in a correct format.
+2021-02-27 21:03:11.4260|ERROR|YallaNakol.UI.Controllers.HomeController|UserID:NA|User Mail:NA | ErrorPath:/ | Exeption:Input string was not in a correct format.
+2021-02-27 21:03:16.3512|ERROR|YallaNakol.UI.Controllers.HomeController|UserID:NA|User Mail:NA | ErrorPath:/ | Exeption:Input string was not in a correct format.
+2021-02-27 21:03:17.3459|ERROR|YallaNakol.UI.Controllers.HomeController|UserID:NA|User Mail:NA | ErrorPath:/ | Exeption:Input string was not in a correct format.
+2021-02-27 21:03:18.3593|ERROR|YallaNakol.UI.Controllers.HomeController|UserID:NA|User Mail:NA | ErrorPath:/ | Exeption:Input string was not in a correct format.

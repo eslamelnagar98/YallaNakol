@@ -1,9 +1,13 @@
 ﻿@model Restaurant
 @using System.Text
-@{ var RestaurantCategory = new StringBuilder(); }
+@{ 
+    var RestaurantCategory = new StringBuilder();
+
+    }
 
 <style>
     .Restaurant-item-Display {
+        /*width:100%;*/
         position: relative;
         overflow: hidden;
     }
@@ -31,23 +35,49 @@
     .py-3 {
         padding: 12px;
     }
+    .checked {
+        color: orange;
+    }
 </style>
-
-@foreach (var item in Model.Categories)
+@for (int i = 0; i < (Model?.Categories?.Count??0); i++)
 {
-    RestaurantCategory.Append(item?.Name ?? "All");
-    RestaurantCategory.Append(" ");
+    RestaurantCategory.Append(Model.Categories.ElementAt(i).Name?? "All");
+    if(!(i==Model.Categories.Count-1))
+        RestaurantCategory.Append(" ");
 }
 
 
-<div class="col-md-4 col-sm-6 py-3 @RestaurantCategory.ToString()">
-    <div class="Restaurant-item-Display text-center">
-        <img src="@Model.ImageUrl" class="img-rounded" style="max-width:100%; height:250px;">
+
+<div class="col-md-4 col-sm-6 py-3 everyClass @RestaurantCategory.ToString()">
+    <div class="Restaurant-item-Display ">
+        <img src="@Model.ImageUrl" class="img-rounded" style="width:100%; height:250px;">
         <div class="newLayoutlayer">
             <h3>@Model.Name</h3>
             <a asp-action="CustomerDetails" asp-controller="Restaurants"
                asp-route-id="@Model.Id" class="btn btn-primary">Order Now</a>
         </div>
+    </div>
+    <div class="py-2">
+
+
+        <img class="img-rounded" src="@Model.ImageUrl" style="width:30px; height:30px;" />
+        <span>@RestaurantCategory.ToString().Replace(' ', '-')</span>
+        <div>
+            @for (int i = 0; i < 5; i++)
+            {
+                if (i < int.Parse(Model.Rate))
+                {
+                    <span class="fa fa-star checked"></span>
+                }
+                else
+                {
+                    <span class="fa fa-star"></span>
+                }
+            }
+
+        </div>
+    
+        
     </div>
     <div class="row">
         <div class="col-md-4 py-2">

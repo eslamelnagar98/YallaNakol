@@ -3,103 +3,364 @@
 @{
     ViewData["Title"] = "Checkout";
 }
+<header>
+    <style>
+        #map {
+            width: 800px;
+            height: 800px;
+            border: 1px solid black;
+        }
+        .cont{
+            display:flex;
+             justify-content:space-between;
+        }
+        .lft {
+            order:1;
+            width:60%;
+        }
+        #map{
+            order:2;
+           
+        }
+    </style>
+</header>
+<body>
+    <div class="cont">
+        <div class="lft">
+            <h2>Checkout</h2>
 
-<h2>Checkout</h2>
+            <h4>Order</h4>
+            <hr />
+            <div class="row">
+                <div class="col-md-4">
+                    <form asp-action="Checkout">
+                        @Html.AntiForgeryToken();
 
-<h4>Order</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Checkout">
-            @Html.AntiForgeryToken();
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-group">
+                            <label asp-for="Order.FirstName" class="control-label"></label>
+                            <input asp-for="Order.FirstName" class="form-control" />
+                            <span asp-validation-for="Order.FirstName" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Order.LastName" class="control-label"></label>
+                            <input asp-for="Order.LastName" class="form-control" />
+                            <span asp-validation-for="Order.LastName" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Order.AddressLine1" class="control-label"></label>
+                            <input asp-for="Order.AddressLine1" class="form-control" />
+                            <span asp-validation-for="Order.AddressLine1" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Order.AddressLine2" class="control-label"></label>
+                            <input asp-for="Order.AddressLine2" class="form-control" />
+                            <span asp-validation-for="Order.AddressLine2" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Order.City" class="control-label"></label>
+                            <select asp-for="Order.City" asp-items="@Model.ResturantDeliveryAreas" class="form-control">
+                            </select>
+                            <span asp-validation-for="Order.City" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Order.PhoneNumber" class="control-label"></label>
+                            <input asp-for="Order.PhoneNumber" class="form-control" />
+                            <span asp-validation-for="Order.PhoneNumber" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Order.Email" class="control-label"></label>
+                            <input asp-for="Order.Email" class="form-control" />
+                            <span asp-validation-for="Order.Email" class="text-danger"></span>
+                        </div>
+                        <div class="form-group ">
+                            <input type="submit" value="Create" class="btn btn-default " />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div  id="map">
 
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Order.FirstName" class="control-label"></label>
-                <input asp-for="Order.FirstName" class="form-control" />
-                <span asp-validation-for="Order.FirstName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Order.LastName" class="control-label"></label>
-                <input asp-for="Order.LastName" class="form-control" />
-                <span asp-validation-for="Order.LastName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Order.AddressLine1" class="control-label"></label>
-                <input asp-for="Order.AddressLine1" class="form-control" />
-                <span asp-validation-for="Order.AddressLine1" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Order.AddressLine2" class="control-label"></label>
-                <input asp-for="Order.AddressLine2" class="form-control" />
-                <span asp-validation-for="Order.AddressLine2" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Order.City" class="control-label"></label>
-                <select asp-for="Order.City" asp-items="@Model.ResturantDeliveryAreas" class="form-control">
-                </select>
-                <span asp-validation-for="Order.City" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Order.PhoneNumber" class="control-label"></label>
-                <input asp-for="Order.PhoneNumber" class="form-control" />
-                <span asp-validation-for="Order.PhoneNumber" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Order.Email" class="control-label"></label>
-                <input asp-for="Order.Email" class="form-control" />
-                <span asp-validation-for="Order.Email" class="text-danger"></span>
-            </div>
-            <div class="form-group ">
-                <input type="submit" value="Create" class="btn btn-default " />
-            </div>
-        </form>
+        </div>
+
     </div>
-    <div class="col-md-4" id="map">
-        
+
+    <script src="https://maps.googleapis.com/maps/api/js?libraries=places&amp;key=AIzaSyBmnATbcsItV07AIzYhG-6E0ZYgZgTkh3w"></script>
+
+    <script src="~/js/Map.js"></script>
+</body>
+
+<!--<style>
+    .mydiv{
+        display:inline;
+    }
+</style>
+<div class="mydiv">
+   
+        <div class="col-md-4" id="map">
+
+        </div>
+        <div>
+            <button id="position">display position </button>
+            <button id="data">display location data </button>
+        </div>
+        <div style="width:800px;height:800px" id="map">  </div>
+        <table>
+            <tr>
+                <th>Your postition latitude</th>
+                <th>Your postition longitude</th>
+                <th>Your postition Accuracy</th>
+                <th>Your Address</th>
+                <th>Your City</th>
+                <th>Notes</th>
+            </tr>
+            <tr>
+                <td id="latitude"></td>
+                <td id="longitude"></td>
+                <td id="Accuracy"></td>
+                <td id="Address"></td>
+                <td id="City"></td>
+                <td id="notes"></td>
+            </tr>
+        </table>
     </div>
-</div>
+    </div>
 
-<div>
-    <a asp-action="Index">Back</a>
-</div>
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
-<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places&amp;key=AIzaSyBmnATbcsItV07AIzYhG-6E0ZYgZgTkh3w"></script>
+    <div>
+        <a asp-action="Index">Back</a>
+    </div>
+</div>-->
+@*@section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }*@
+<!--<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places&amp;key=AIzaSyBmnATbcsItV07AIzYhG-6E0ZYgZgTkh3w"></script>
 <script>
-    var address;
-    var lat; 
-    var lng;
-    var map = document.querySelector("#map");
-    //get position
-    navigator.geolocation.getCurrentPosition(
-    function (e)
-    {
-            myMap = new google.maps.Map(map, {
-                center: {
-                    lat: e.coords.latitude,
-                    lng: e.coords.longitude
-                }
-            });
-            var marker = new google.maps.Marker({
-                position: { lat: e.coords.latitude, lng: e.coords.longitude },
-                map: myMap,
-            });
-             lat = e.coords.latitude;
-             lng = e.coords.longitude;
-    }, function () { console.log("Error") });
-    
-    var geocoder = new google.maps.Geocoder();
-    var latlng = new google.maps.LatLng(lat, lng);
-    geocoder.geocode({ location: latlng }, function (results, status) {
-
-        if (status == google.maps.GeocoderStatus.OK)
-        {
-            address = results[0].formatted_address.split(',');
-            console.log(results);
-            console.log(address);
+    var map = document.querySelector('#map')
+    var displayBtn = document.getElementById('position')
+    var detailsBtn = document.getElementById('data')
+    displayBtn.addEventListener('click', function () {
+        //check browser support
+        if (navigator.geolocation) {
+            //get position
+            navigator.geolocation.getCurrentPosition(success, error);
+        }
+        else {
+            map.innerText = "update your browser";
         }
     });
-</script>
+    detailsBtn.addEventListener('click', function () {
+        //check browser support
+        if (navigator.geolocation) {
+            //get position
+            navigator.geolocation.getCurrentPosition(success2, error2);
+        }
+        else {
+            map.innerText = "update your browser";
+        }
+    });
+    var myMap;
+    function success(e) {
+        console.log(e)
+        // map.innerText = "position is "+e.coords.latitude + " , " +e.coords.longitude
+        myMap = new google.maps.Map(map, {
+            center: {
+                lat: e.coords.latitude,
+                lng: e.coords.longitude
+            },
+            zoom: 15,
+            styles: [
+                { elementType: "geometry", stylers: [{ color: "#242f3e" }] },
+                { elementType: "labels.text.stroke", stylers: [{ color: "#242f3e" }] },
+                { elementType: "labels.text.fill", stylers: [{ color: "#746855" }] },
+                {
+                    featureType: "administrative.locality",
+                    elementType: "labels.text.fill",
+                    stylers: [{ color: "#d59563" }],
+                },
+                {
+                    featureType: "poi",
+                    elementType: "labels.text.fill",
+                    stylers: [{ color: "#d59563" }],
+                },
+                {
+                    featureType: "poi.park",
+                    elementType: "geometry",
+                    stylers: [{ color: "#263c3f" }],
+                },
+                {
+                    featureType: "poi.park",
+                    elementType: "labels.text.fill",
+                    stylers: [{ color: "#6b9a76" }],
+                },
+                {
+                    featureType: "road",
+                    elementType: "geometry",
+                    stylers: [{ color: "#38414e" }],
+                },
+                {
+                    featureType: "road",
+                    elementType: "geometry.stroke",
+                    stylers: [{ color: "#212a37" }],
+                },
+                {
+                    featureType: "road",
+                    elementType: "labels.text.fill",
+                    stylers: [{ color: "#9ca5b3" }],
+                },
+                {
+                    featureType: "road.highway",
+                    elementType: "geometry",
+                    stylers: [{ color: "#746855" }],
+                },
+                {
+                    featureType: "road.highway",
+                    elementType: "geometry.stroke",
+                    stylers: [{ color: "#1f2835" }],
+                },
+                {
+                    featureType: "road.highway",
+                    elementType: "labels.text.fill",
+                    stylers: [{ color: "#f3d19c" }],
+                },
+                {
+                    featureType: "transit",
+                    elementType: "geometry",
+                    stylers: [{ color: "#2f3948" }],
+                },
+                {
+                    featureType: "transit.station",
+                    elementType: "labels.text.fill",
+                    stylers: [{ color: "#d59563" }],
+                },
+                {
+                    featureType: "water",
+                    elementType: "geometry",
+                    stylers: [{ color: "#17263c" }],
+                },
+                {
+                    featureType: "water",
+                    elementType: "labels.text.fill",
+                    stylers: [{ color: "#515c6d" }],
+                },
+                {
+                    featureType: "water",
+                    elementType: "labels.text.stroke",
+                    stylers: [{ color: "#17263c" }],
+                },
+            ],
+        })
+        var marker = new google.maps.Marker({
+            position: { lat: e.coords.latitude, lng: e.coords.longitude },
+            map: myMap,
+        });
+    };
+    function success2(e) {
+        console.log(e)
+        document.getElementById("latitude").innerText = e.coords.latitude;
+        document.getElementById("longitude").innerText = e.coords.longitude;
+        document.getElementById("Accuracy").innerText = e.coords.accuracy;
+        var lat = e.coords.latitude;
+        var lng = e.coords.longitude;
+        codeLatLng(lat, lng);
+    };
+    function error(e) {
+        console.log(e)
+        var message = "";
+        switch (e.code) {
+            case 1: {
+                message = "please allow me to know your location"
+                break
+            }
+            case 2: {
+                message = "position is not available check your configuration"
+                break
+            }
+            case 3: {
+                message = "try again later"
+                break
+            }
+            default: {
+                message = "unknown error"
+            }
+        }
+        map.innerText = message
+    };
+    function error2(e) {
+        console.log(e)
+        switch (e.code) {
+            case 1: {
+                document.getElementById("latitude").innerText = "please allow me to know your location"
+                document.getElementById("longitude").innerText = "please allow me to know your location"
+                break
+            }
+            case 2: {
+                document.getElementById("latitude").innerText = "Error retrieving data"
+                document.getElementById("longitude").innerText = "Error retrieving data"
+                break
+            }
+            case 3: {
+                document.getElementById("latitude").innerText = "try again later"
+                document.getElementById("longitude").innerText = "try again later"
+                break
+            }
+            default: {
+                document.getElementById("latitude").innerText = "Error retrieving data"
+                document.getElementById("longitude").innerText = "Error retrieving data"
+            }
+        }
+    };
+
+
+
+    var geocoder = new google.maps.Geocoder();;
+    function codeLatLng(lat, lng) {
+        var latlng = new google.maps.LatLng(lat, lng);
+        geocoder.geocode({ 'latLng': latlng }, function (results, status) {
+            console.log('shawky');
+
+            console.log(results);
+            if (status == google.maps.GeocoderStatus.OK) {
+                console.log(results)
+                if (results[1]) {
+                    //formatted address
+                    document.getElementById("Address").innerText = results[0].formatted_address
+                    //alert(results[0].formatted_address)
+                    //find country name
+                    for (var i = 0; i < results[0].address_components.length; i++) {
+                        for (var b = 0; b < results[0].address_components[i].types.length; b++) {
+
+                            //there are different types that might hold a city admin_area_lvl_1 usually does in come cases looking for sublocality type will be more appropriate
+                            if (results[0].address_components[i].types[b] == "administrative_area_level_1") {
+                                //this is the object you are looking for
+                                city = results[0].address_components[i];
+                                break;
+                            }
+                        }
+                    }
+                    //city data
+                    document.getElementById("City").innerText = city.short_name + " " + city.long_name;
+                    //alert(city.short_name + " " + city.long_name)
+
+                } else {
+                    document.getElementById("notes").innerText = "No results found";
+                    //alert("No results found");
+                }
+            } else {
+                document.getElementById("notes").innerText = "Geocoder failed due to: " + status;
+                //alert("Geocoder failed due to: " + status);
+            }
+        });
+    }
+    //var geocoder = new google.maps.Geocoder();
+    //var latlng = new google.maps.LatLng(lat, lng);
+    //geocoder.geocode({ location: latlng }, function (results, status) {
+
+    //    if (status == google.maps.GeocoderStatus.OK)
+    //    {
+    //        address = results[0].formatted_address.split(',');
+    //        console.log(results);
+    //        console.log(address);
+    //    }
+    //});
+</script>-->

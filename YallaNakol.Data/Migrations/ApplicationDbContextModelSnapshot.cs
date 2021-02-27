@@ -169,6 +169,36 @@ namespace YallaNakol.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("YallaNakol.Data.Models.Address", b =>
+                {
+                    b.Property<string>("ID")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ApplicationUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Area")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("City")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DetailedInfo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Phone")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Street")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("ApplicationUserId");
+
+                    b.ToTable("Address");
+                });
+
             modelBuilder.Entity("YallaNakol.Data.Models.ApplicationUser", b =>
                 {
                     b.Property<string>("Id")
@@ -685,6 +715,13 @@ namespace YallaNakol.Data.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("YallaNakol.Data.Models.Address", b =>
+                {
+                    b.HasOne("YallaNakol.Data.Models.ApplicationUser", null)
+                        .WithMany("Addresses")
+                        .HasForeignKey("ApplicationUserId");
+                });
+
             modelBuilder.Entity("YallaNakol.Data.Models.Dish", b =>
                 {
                     b.HasOne("YallaNakol.Data.Models.Category", "Category")
@@ -750,6 +787,11 @@ namespace YallaNakol.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Dish");
+                });
+
+            modelBuilder.Entity("YallaNakol.Data.Models.ApplicationUser", b =>
+                {
+                    b.Navigation("Addresses");
                 });
 
             modelBuilder.Entity("YallaNakol.Data.Models.Category", b =>

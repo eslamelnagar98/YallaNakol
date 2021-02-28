@@ -11,6 +11,8 @@ using YallaNakol.Data.Models;
 using YallaNakol.Data.Services;
 using YallaNakol.Data;
 using YallaNakol.UI.ViewModels;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 
 namespace YallaNakol.UI.Controllers
 {
@@ -22,12 +24,15 @@ namespace YallaNakol.UI.Controllers
         private readonly UserManager<ApplicationUser> userManager;
         private readonly IRestaurant restaurant;
 
-        public OrdersController(IOrder orderRepo, IShoppingCart shoppingCart, UserManager<ApplicationUser> userManager, IRestaurant restaurant)
+        public ApplicationDbContext shawky { get; }
+
+        public OrdersController(IOrder orderRepo, IShoppingCart shoppingCart, UserManager<ApplicationUser> userManager, IRestaurant restaurant, ApplicationDbContext dbcontext)
         {
             this.orderRepo = orderRepo;
             this.shoppingCart = shoppingCart;
             this.userManager = userManager;
             this.restaurant = restaurant;
+            shawky = dbcontext;
         }
 
 
@@ -35,6 +40,10 @@ namespace YallaNakol.UI.Controllers
         {
 
             var user = await userManager.GetUserAsync(User);
+            var user2 = await userManager.FindByIdAsync(user.Id);
+            var shawkyy = shawky.Users.Where(u => u.Id == user.Id).Include(d => d.Addresses).ToList();
+
+
             var orderToPlace = new YallaNakol.Data.Models.Order()
             {
                 FirstName = user.FirstName,
@@ -45,7 +54,7 @@ namespace YallaNakol.UI.Controllers
             var checkoutVM = new CheckoutViewModel()
             {
                 Order = orderToPlace,
-                deliveryAreas = restaurant.GetDeliveryAreasByResturantId(shoppingCart.ResturantId)
+                Addresses = new SelectList(user.Addresses,"ID","AddressString")
             };
 
             return View(checkoutVM);
@@ -59,7 +68,20 @@ namespace YallaNakol.UI.Controllers
             {
                 ModelState.AddModelError("CartItems", "Shopping Cart Empty..");
             }
-
+            //if( order.Address.Area )
+            var deliveryAreas = restaurant.GetDeliveryAreasByResturantId(shoppingCart.ResturantId);
+            var list = new List<string>();
+            foreach (var area in Enum.GetValues<DeliveryAreas>())
+            {
+                if (deliveryAreas.HasFlag(area))
+                {
+                    list.Add(area.ToString());    
+                }
+            }
+            if(!list.Contains(order.Address.Area))
+            {
+                ModelState.AddModelError("Area", "Area out of zone");
+            }
             if (ModelState.IsValid)
             {
                 // save for upcoming requests

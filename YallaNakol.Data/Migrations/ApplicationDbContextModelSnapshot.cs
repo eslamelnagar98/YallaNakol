@@ -189,7 +189,7 @@ namespace YallaNakol.Data.Migrations
                     b.Property<string>("Phone")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Street")
+                    b.Property<string>("Zone")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
@@ -420,15 +420,8 @@ namespace YallaNakol.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("AddressLine1")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("AddressLine2")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("City")
-                        .HasColumnType("int");
+                    b.Property<string>("AddressID")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -448,14 +441,12 @@ namespace YallaNakol.Data.Migrations
                     b.Property<decimal>("OrderTotal")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<string>("PhoneNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("TrackingID")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("OrderId");
+
+                    b.HasIndex("AddressID");
 
                     b.ToTable("Orders");
                 });
@@ -746,6 +737,15 @@ namespace YallaNakol.Data.Migrations
                         .HasForeignKey("DishOfTheWeekId");
 
                     b.Navigation("DishOfTheWeek");
+                });
+
+            modelBuilder.Entity("YallaNakol.Data.Models.Order", b =>
+                {
+                    b.HasOne("YallaNakol.Data.Models.Address", "Address")
+                        .WithMany()
+                        .HasForeignKey("AddressID");
+
+                    b.Navigation("Address");
                 });
 
             modelBuilder.Entity("YallaNakol.Data.Models.Order+OrderDetail", b =>

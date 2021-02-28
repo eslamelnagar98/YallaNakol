@@ -14,7 +14,8 @@ namespace YallaNakol.Data.Models
         public string City { get; set; }
         public string DetailedInfo { get; set; }
         public string Phone { get; set; }
+        public string AddressString => $"{City}, {Area}, {Zone}, {DetailedInfo}"; 
 
-        public int ApplicationUserID { get; set; }
+        //public int ApplicationUserID { get; set; }
     }
 }

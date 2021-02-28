@@ -1,4 +1,7 @@
 ﻿
+var zoneHTML = document.querySelector("#zone");
+var cityHTML = document.querySelector("#city");
+var areaHTML = document.querySelector("#area");
 var mapHTML = document.querySelector('#map')
 var myLat = 30;
 var myLng = 31;
@@ -54,13 +57,32 @@ function AllowDrag() {
         },
         zoom: 16
     })
-    google.maps.event.addListener(myMap, 'center_changed',
+    google.maps.event.addListener(myMap, 'dragend',
         function () {
             myLat = myMap.getCenter().lat();
             myLng = myMap.getCenter().lng();
             geocode();
+
+            zoneHTML.value = address.zone;
+            areaHTML.value = address.area;
+            cityHTML.value = address.city;
         });
 }
+
+//-----------------------------------------------
+var selectList = document.querySelector("#addressList");
+selectList.addEventListener("change", function () {
+    var addressInfo = this.value.split(',');
+    zoneHTML.value = addressInfo[0].Trim();
+    areaHTML.value = addressInfo[1].Trim();
+    cityHTML.value = addressInfo[2].Trim();
+})
+
+var btnAdd = document.querySelector("#btnAdd");
+btnAdd.addEventListener("click", function () {
+    console.log("test");
+    $("#map").toggle();
+})
 
 
 

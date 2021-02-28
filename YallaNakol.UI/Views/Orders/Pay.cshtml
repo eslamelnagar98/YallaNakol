@@ -9,8 +9,9 @@
 
 }
 
-<h3>Continue With Payment</h3>
+<section class="wholeContainer">
 
+<h3>Continue With Payment</h3>
 
 <p class="radioPayment">
     <label class="lblPayment">Pay With Cash</label>
@@ -18,8 +19,9 @@
 </p>
 <p class="radioPayment" >
     <label class="lblPayment">Pay With Visa</label>
-    <input type="radio" id="radioVisa" name="paymentMethod" checked />
-</p>
+
+    <input type="radio" id="radioVisa" name="paymentMethod" checked/>
+</div>
 
 <div id="payment">
     <form id="heh" action="/Orders/Processing" method="POST">
@@ -37,39 +39,41 @@
     </form>
     <a id="btnCash" class="btn btn-danger" asp-controller="Orders" asp-action="PaymentComplete">Cash On Delivery</a>
 </div>
+</section>
 
 <style>
-    #btnCash {
+/*    #btnCash {
         display: none;
     }
 
     .lblPayment {
-        font-size: 1.5rem;
+        font-size: 20px;
     }
 
-    #radioPayment {
+
+    .radioPayment {
+       display:inline-block;
        margin:5px;
     }
-
-    .container{
-        display:flex;
+    .wholeContainer {
         flex-direction:column;
-    }
-    .container>*{
-        margin:0px auto;
-    }
+        width:100%;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        margin:20px;
+        background-color:gray;
+    }*/
+ 
 
 </style>
-
 <script>
     document.querySelector("#radioCash").addEventListener("change", function () {
         $("#heh>button").toggle() // visa
         $("#btnCash").toggle();
-        console.log("ABC");
     });
     document.querySelector("#radioVisa").addEventListener("change", function () {
         $("#heh>button").toggle() // visa
         $("#btnCash").toggle();
-        console.log("ABC");
     });
 </script>

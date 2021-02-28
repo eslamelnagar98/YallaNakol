@@ -1,1 +1,2 @@
 2021-02-28 01:40:38.1326|INFO|YallaNakol.UI.Areas.Identity.Pages.Account.RegisterModel|User name Ahmed Nagdy with user name: ahmed created a new account with password. His email is ahmed.nagdy39@gmail.com.
+2021-02-28 21:38:46.8054|INFO|YallaNakol.UI.Areas.Identity.Pages.Account.LoginModel|User details that logged in: Email=engabdallhabdelhamid@gmail.com|Id=c644fada-6d98-434e-892a-5c17d88c6829

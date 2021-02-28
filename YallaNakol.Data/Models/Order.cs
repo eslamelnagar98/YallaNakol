@@ -53,11 +53,5 @@ namespace YallaNakol.Data.Models
         public string TrackingID { get; set; }
     }
 
-    public enum PaymentType
-    {
-        Cash,
-        Visa
-    }
-
 }
     

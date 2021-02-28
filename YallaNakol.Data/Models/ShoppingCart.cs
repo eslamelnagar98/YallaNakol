@@ -108,9 +108,12 @@ namespace YallaNakol.Data.Models
             if( this.IsEmpty )
                 SetResturantId(dish);
 
-            //TODO: Check if dish belongs to current cart resturant
-     //       if (ResturantId != )
-     //           return;
+
+            var resturantMenuId = _applicationDbContext.Restaurants.Find(ResturantId).MenuId;
+            
+            // check if dish belongs to current menu, other wise return
+            if(resturantMenuId != dish.MenuId)
+                return;
 
             var shoppingCartItem = _applicationDbContext.ShoppingCartItems
                                                         .SingleOrDefault(D => D.Dish.Id == dish.Id && D.ShoppingCartId == CartId);

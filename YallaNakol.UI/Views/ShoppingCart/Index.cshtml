@@ -4,6 +4,14 @@
     ViewData["Title"] = "Index";
 }
 
+<style>
+    .cartOperations
+    {
+        font-size: 20pt;
+        font-weight:bold;
+    }
+
+</style>
 <div>
     <h4>Your lovely dishes are waiting here</h4>
     <hr />
@@ -21,16 +29,25 @@
             </thead>
             <tbody>
                 @{int i = 0; }
-                    @foreach (var item in Model.ShoppingCartItems)
-                    {
-                <tr class="row">
-                    <td class="col-md-4">@item.Dish.Name</td>
-                    <td class="col-md-3"><input disabled min="1" asp-for="@item.Amount" id="@($"btnAmount{i}")" style="width:52px" /></td>
-                    <td class="col-md-3" id="@($"labelUnitCost{i}")">@(item.Dish.Price)$</td>
-                    <td class="col-md-3" id="@($"labelTotalCost{i++}")">@(item.Amount*item.Dish.Price)$</td>
-                    <td class="col-md-3" ><a asp-controller="ShoppingCart" asp-action="RemoveFromCart" asp-route-dishId="@item.Dish.Id" >Remove Item </a></td>
+                @foreach (var item in Model.ShoppingCartItems)
+                 {
+                    <tr class="row">
+                        <td class="col-md-4">@item.Dish.Name</td>
+                        <td class="col-md-3"><input disabled min="1" asp-for="@item.Amount" id="@($"btnAmount{i}")" style="width:52px" /></td>
+                        <td class="col-md-3" id="@($"labelUnitCost{i}")">@(item.Dish.Price)$</td>
+                        <td class="col-md-3" id="@($"labelTotalCost{i++}")">@(item.Amount*item.Dish.Price)$</td>
+                        <td class="col-md-3"><a class="cartOperations"  asp-controller="ShoppingCart" asp-action="AddToCart" asp-route-dishId="@item.Dish.Id">+</a></td>
+                        <td class="col-md-3"><a class="cartOperations"  asp-controller="ShoppingCart" asp-action="RemoveFromCart" asp-route-dishId="@item.Dish.Id">-</a></td>
+                    </tr>
+                 }
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td><b>Total: @Model.TotalCost()$</b></td>
                 </tr>
-                }
+
             </tbody>
         </table>
         @if (!Model.IsEmpty)

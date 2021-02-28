@@ -19,21 +19,30 @@ namespace YallaNakol.UI.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IRestaurant _restaurant;
+        private readonly ICategory _category;
 
-        public HomeController(ILogger<HomeController> logger,IRestaurant restaurant)
+        public HomeController(ILogger<HomeController> logger,IRestaurant restaurant,ICategory category)
         {
             _logger = logger;
             this._restaurant = restaurant;
+            this._category = category;
         }
 
         public IActionResult Index()
         {
+            
             var homeViewModel = new HomeViewModel
             {
-                Restaurants = _restaurant.AllRestaurants
+                Restaurants = _restaurant.AllRestaurants,
+                Category=_category.AllCategories
+                
             };
 
             return View(homeViewModel);
+        }
+        public IActionResult About()
+        {
+            return View();
         }
 
         public IActionResult Privacy()
@@ -47,7 +56,7 @@ namespace YallaNakol.UI.Controllers
             //_logger.LogError();
             var user = await userManager.GetUserAsync(this.User);
             var exeptionHandlerFeature=HttpContext.Features.Get<IExceptionHandlerPathFeature>();
-            _logger.LogError($"UserID:{user.Id}|User Mail:{user.Email} | " +
+            _logger.LogError($"UserID:{user?.Id??"NA"}|User Mail:{user?.Email??"NA"} | " +
                              $"ErrorPath:{exeptionHandlerFeature.Path} | Exeption:{exeptionHandlerFeature.Error.Message}");
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }

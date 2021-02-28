@@ -10,6 +10,8 @@ namespace YallaNakol.UI.ViewModels
     public class CheckoutViewModel
     {
         public Order Order { get; set; }
+
         public SelectList Addresses { get; set; }
+
     }
 }

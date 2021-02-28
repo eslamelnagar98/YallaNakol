@@ -13,7 +13,6 @@ namespace YallaNakol.Data.Models
     public class ShoppingCart : IShoppingCart
     {
         private readonly ApplicationDbContext _applicationDbContext;
-
         public string CartId { get; private set; }
         public int ResturantId { get; set; }
         public IEnumerable<ShoppingCartItem> ShoppingCartItems
@@ -35,8 +34,7 @@ namespace YallaNakol.Data.Models
                 SetResturantId(_applicationDbContext.ShoppingCartItems
                                                     .Include( sh => sh.Dish )
                                                     .FirstOrDefault(sh => sh.ShoppingCartId == this.CartId)
-                                                   ?.Dish
-                                 );
+                                                   ?.Dish);
         }
 
         public static ShoppingCart GetCart(ApplicationDbContext applicationDbContext, IHttpContextAccessor httpContextAccessor)
@@ -110,6 +108,13 @@ namespace YallaNakol.Data.Models
             if( this.IsEmpty )
                 SetResturantId(dish);
 
+
+            var resturantMenuId = _applicationDbContext.Restaurants.Find(ResturantId).MenuId;
+            
+            // check if dish belongs to current menu, other wise return
+            if(resturantMenuId != dish.MenuId)
+                return;
+
             var shoppingCartItem = _applicationDbContext.ShoppingCartItems
                                                         .SingleOrDefault(D => D.Dish.Id == dish.Id && D.ShoppingCartId == CartId);
 
@@ -133,7 +138,7 @@ namespace YallaNakol.Data.Models
         public void RemoveDish(Dish dish)
         {
             var shoppingCartItem = _applicationDbContext.ShoppingCartItems
-                                                        .SingleOrDefault(D => D.Id == dish.Id && D.ShoppingCartId == CartId);
+                                                        .SingleOrDefault(D => D.Dish.Id == dish.Id && D.ShoppingCartId == CartId);
             if (shoppingCartItem is not null)
             {
                 if (shoppingCartItem.Amount > 1)

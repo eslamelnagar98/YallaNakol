@@ -7,11 +7,23 @@
 
 @{
 
-    <h3>PAYMENT FORM</h3>
 }
 
-<div>
-    <form action="/Orders/Processing" method="POST">
+<section class="wholeContainer">
+
+<h3>Continue With Payment</h3>
+
+<div class="radioPayment">
+    <label class="lblPayment">Pay With Cash</label>
+    <input type="radio" id="radioCash" name="paymentMethod" />
+</div>
+<div class="radioPayment" >
+    <label class="lblPayment">Pay With Visa</label>
+    <input type="radio" id="radioVisa" name="paymentMethod" checked/>
+</div>
+
+<div id="payment">
+    <form id="heh" action="/Orders/Processing" method="POST">
         <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
                 data-key=@configration["StripeApiKey"]
                 data-amount="@ViewBag.PaymentAmount"
@@ -20,10 +32,45 @@
                 data-image="https://i.pinimg.com/236x/02/fd/5c/02fd5cc15841730936c0c5c555dae3a9.jpg"
                 data-locale="en"
                 data-zip-code="true"
-                data-label="Checkout">
-
+                data-label="Pay With Visa">
         </script>
         @Html.AntiForgeryToken()
     </form>
+    <a id="btnCash" class="btn btn-danger" asp-controller="Orders" asp-action="PaymentComplete">Cash On Delivery</a>
 </div>
+</section>
 
+<style>
+/*    #btnCash {
+        display: none;
+    }
+
+    .lblPayment {
+        font-size: 20px;
+    }
+
+    .radioPayment {
+       display:inline-block;
+       margin:5px;
+    }
+    .wholeContainer {
+        flex-direction:column;
+        width:100%;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        margin:20px;
+        background-color:gray;
+    }*/
+ 
+</style>
+<script>
+    document.querySelector("#radioCash").addEventListener("change", function () {
+        $("#heh>button").toggle() // visa
+        $("#btnCash").toggle();
+    });
+    document.querySelector("#radioVisa").addEventListener("change", function () {
+        $("#heh>button").toggle() // visa
+        $("#btnCash").toggle();
+    });
+</script>

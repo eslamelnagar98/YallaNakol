@@ -173,7 +173,14 @@ namespace YallaNakol.UI.Controllers
             orderRepo.SaveChanges(); // save order changes
             shoppingCart.SaveChanges(); // save cart changes
 
-            return View();
+            var paymentCompleteVM = new PaymentCompleteViewModel()
+            {
+                TotalOrderCost = orderToPlace.OrderTotal,
+                TrackingId = orderToPlace.TrackingID
+            };
+
+
+            return View(paymentCompleteVM);
         }
 
     }

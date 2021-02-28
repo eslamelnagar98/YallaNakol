@@ -26,12 +26,12 @@ namespace YallaNakol.UI.Controllers
             // TEST DATA ONLY 
             // START OF TEST DATA
             var addedDish1 = _dish.GetDishById(1);
-            var addedDish2 = _dish.GetDishById(2);
-            var addedDish3 = _dish.GetDishById(3);
-
+           // var addedDish2 = _dish.GetDishById(2);
+           // var addedDish3 = _dish.GetDishById(3);
+           //
             _shoppingCart.AddDish(addedDish1, 1);
-            _shoppingCart.AddDish(addedDish2, 3);
-            _shoppingCart.AddDish(addedDish3, 2);
+           // _shoppingCart.AddDish(addedDish2, 3);
+           // _shoppingCart.AddDish(addedDish3, 2);
             _shoppingCart.SaveChanges();
             // END OF TEST DATA
 
@@ -45,13 +45,13 @@ namespace YallaNakol.UI.Controllers
         }
 
         [Route("ShoppingCart/AddToCart/dishId")]
-        public ActionResult AddToCart(int dishId)
+        public ActionResult AddToCart(int dishId, int amount = 1)
         {
             var addedDish = _dish.GetDishById(dishId);
             if (addedDish != null)
             {
 
-                _shoppingCart.AddDish(addedDish, 1);
+                _shoppingCart.AddDish(addedDish, amount);
                 _shoppingCart.SaveChanges();
 
             }
@@ -59,7 +59,7 @@ namespace YallaNakol.UI.Controllers
         }
 
         [Route("ShoppingCart/RemoveFromCart/dishId")]
-        public ActionResult RemoveFromCart(int dishId )
+        public ActionResult RemoveFromCart(int dishId)
         {
             var removedDish = _dish.GetDishById(dishId);
             if (removedDish != null)

@@ -341,5 +341,5 @@ healthchecksdb
 
 
 #AllLogs
-Logs/**
+Logs/
 

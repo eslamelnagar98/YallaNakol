@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using YallaNakol.Data.Models;
 
 namespace YallaNakol.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210228190147_initialMigration")]
+    partial class initialMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -167,36 +169,6 @@ namespace YallaNakol.Data.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
-                });
-
-            modelBuilder.Entity("YallaNakol.Data.Models.Address", b =>
-                {
-                    b.Property<string>("ID")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("ApplicationUserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Area")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("City")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("DetailedInfo")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Phone")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Zone")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ID");
-
-                    b.HasIndex("ApplicationUserId");
-
-                    b.ToTable("Address");
                 });
 
             modelBuilder.Entity("YallaNakol.Data.Models.ApplicationUser", b =>
@@ -557,8 +529,15 @@ namespace YallaNakol.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("AddressID")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<string>("AddressLine1")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("AddressLine2")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("City")
+                        .HasColumnType("int");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -585,13 +564,10 @@ namespace YallaNakol.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-
                     b.Property<string>("TrackingID")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("OrderId");
-
-                    b.HasIndex("AddressID");
 
                     b.ToTable("Orders");
                 });
@@ -825,13 +801,6 @@ namespace YallaNakol.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("YallaNakol.Data.Models.Address", b =>
-                {
-                    b.HasOne("YallaNakol.Data.Models.ApplicationUser", null)
-                        .WithMany("Addresses")
-                        .HasForeignKey("ApplicationUserId");
-                });
-
             modelBuilder.Entity("YallaNakol.Data.Models.Dish", b =>
                 {
                     b.HasOne("YallaNakol.Data.Models.Category", "Category")
@@ -856,15 +825,6 @@ namespace YallaNakol.Data.Migrations
                         .HasForeignKey("DishOfTheWeekId");
 
                     b.Navigation("DishOfTheWeek");
-                });
-
-            modelBuilder.Entity("YallaNakol.Data.Models.Order", b =>
-                {
-                    b.HasOne("YallaNakol.Data.Models.Address", "Address")
-                        .WithMany()
-                        .HasForeignKey("AddressID");
-
-                    b.Navigation("Address");
                 });
 
             modelBuilder.Entity("YallaNakol.Data.Models.Order+OrderDetail", b =>
@@ -906,11 +866,6 @@ namespace YallaNakol.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Dish");
-                });
-
-            modelBuilder.Entity("YallaNakol.Data.Models.ApplicationUser", b =>
-                {
-                    b.Navigation("Addresses");
                 });
 
             modelBuilder.Entity("YallaNakol.Data.Models.Category", b =>

@@ -26,6 +26,8 @@ namespace YallaNakol.Data.Models
 
         //public string AddressLine2 { get; set; }
 
+        [Required(ErrorMessage = "Please Select Your City")]
+        public DeliveryAreas City { get; set; }
 
         //[Required(ErrorMessage = "Please Select Your City")]
         //public DeliveryAreas City { get; set; }
@@ -42,11 +44,19 @@ namespace YallaNakol.Data.Models
         public string Email { get; set; }
 
         [BindNever]
+        public PaymentType PaymentType { get; set; } = PaymentType.Cash;
+        [BindNever]
         public decimal OrderTotal { get; set; }
         [BindNever]
         public DateTime OrderPlaced { get; set; }
         [BindNever]
         public string TrackingID { get; set; }
+    }
+
+    public enum PaymentType
+    {
+        Cash,
+        Visa
     }
 
 }

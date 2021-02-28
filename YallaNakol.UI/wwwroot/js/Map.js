@@ -25,7 +25,7 @@ function getPosition()
     })
 }
 
-function geocode()
+ function geocode()
 {
     var geocoder = new google.maps.Geocoder();
     var latlng = new google.maps.LatLng(myLat, myLng);
@@ -46,6 +46,9 @@ function geocode()
                 }
             }
         };
+        zoneHTML.value = address.zone;
+        areaHTML.value = address.area;
+        cityHTML.value = address.city;
     });
 }
 function AllowDrag() {
@@ -57,32 +60,36 @@ function AllowDrag() {
         },
         zoom: 16
     })
-    google.maps.event.addListener(myMap, 'dragend',
-        function () {
-            myLat = myMap.getCenter().lat();
-            myLng = myMap.getCenter().lng();
-            geocode();
-
-            zoneHTML.value = address.zone;
-            areaHTML.value = address.area;
-            cityHTML.value = address.city;
-        });
+    google.maps.event.addListener(myMap, 'center_changed',
+        UpdateLocation);
 }
+
+ function UpdateLocation()
+{
+    myLat = myMap.getCenter().lat();
+    myLng = myMap.getCenter().lng();
+     geocode();  
+}
+
 
 //-----------------------------------------------
 var selectList = document.querySelector("#addressList");
 selectList.addEventListener("change", function () {
-    var addressInfo = this.value.split(',');
-    zoneHTML.value = addressInfo[0].Trim();
-    areaHTML.value = addressInfo[1].Trim();
-    cityHTML.value = addressInfo[2].Trim();
+    var addressInfo = this.options[this.selectedIndex].text.split(',');
+    zoneHTML.value = addressInfo[0].trim();
+    areaHTML.value = addressInfo[1].trim();
+    cityHTML.value = addressInfo[2].trim();
 })
 
 var btnAdd = document.querySelector("#btnAdd");
-btnAdd.addEventListener("click", function () {
+btnAdd.addEventListener("click",  function () {
     console.log("test");
     $("#map").toggle();
+     UpdateLocation();
 })
+
+
+
 
 
 

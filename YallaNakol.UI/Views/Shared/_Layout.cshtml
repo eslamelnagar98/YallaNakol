@@ -53,6 +53,7 @@
                     <li><a asp-action="About" asp-controller="Home">About</a></li>
                     <li><a class="page-scroll" href="#footer">Contact Us</a></li>
                     <partial name="_LoginPartial" />
+                    @await Component.InvokeAsync("ShoppingCartIcon")
                 </ul>
 
             </div>

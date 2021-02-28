@@ -108,6 +108,10 @@ namespace YallaNakol.Data.Models
             if( this.IsEmpty )
                 SetResturantId(dish);
 
+            //TODO: Check if dish belongs to current cart resturant
+     //       if (ResturantId != )
+     //           return;
+
             var shoppingCartItem = _applicationDbContext.ShoppingCartItems
                                                         .SingleOrDefault(D => D.Dish.Id == dish.Id && D.ShoppingCartId == CartId);
 
@@ -131,7 +135,7 @@ namespace YallaNakol.Data.Models
         public void RemoveDish(Dish dish)
         {
             var shoppingCartItem = _applicationDbContext.ShoppingCartItems
-                                                        .SingleOrDefault(D => D.Id == dish.Id && D.ShoppingCartId == CartId);
+                                                        .SingleOrDefault(D => D.Dish.Id == dish.Id && D.ShoppingCartId == CartId);
             if (shoppingCartItem is not null)
             {
                 if (shoppingCartItem.Amount > 1)

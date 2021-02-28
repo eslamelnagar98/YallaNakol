@@ -4,12 +4,9 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
-
 <div>
-    <h4>ShoppingCart</h4>
+    <h4>Your lovely dishes are waiting here</h4>
     <hr />
-    <h2>@Model.CartId</h2>
 </div>
 <div class="row d-flex justify-content-center">
     <div class="col-md-9">
@@ -18,32 +15,51 @@
                 <tr class="row">
                     <th class="col-md-4" scope="col">Dish</th>
                     <th class="col-md-3" scope="col">Amount</th>
+                    <th class="col-md-3" scope="col">Unit Cost</th>
                     <th class="col-md-3" scope="col">Total Cost</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach (var item in Model.ShoppingCartItems)
-                {
-                    <tr class="row">
-                        <td class="col-md-4">@item.Dish.Name</td>
-                        <td class="col-md-3">@item.Amount</td>
-                        <td class="col-md-3">@(item.Amount*item.Dish.Price)$</td>
-                    </tr>
+                @{int i = 0; }
+                    @foreach (var item in Model.ShoppingCartItems)
+                    {
+                <tr class="row">
+                    <td class="col-md-4">@item.Dish.Name</td>
+                    <td class="col-md-3"><input disabled min="1" asp-for="@item.Amount" id="@($"btnAmount{i}")" style="width:52px" /></td>
+                    <td class="col-md-3" id="@($"labelUnitCost{i}")">@(item.Dish.Price)$</td>
+                    <td class="col-md-3" id="@($"labelTotalCost{i++}")">@(item.Amount*item.Dish.Price)$</td>
+                    <td class="col-md-3" ><a asp-controller="ShoppingCart" asp-action="RemoveFromCart" asp-route-dishId="@item.Dish.Id" >Remove Item </a></td>
+                </tr>
                 }
             </tbody>
         </table>
         @if (!Model.IsEmpty)
         {
-            @*<form asp-action="Checkout" asp-controller="Orders">
-                @Html.AntiForgeryToken();
-                <input type="submit" class="btn btn-primary" value="Checkout"/>
-            </form>*@
-
-            <a asp-action="Checkout" asp-controller="Orders" class="btn btn-primary">Checkout</a>
+            <div id="divSubmit">
+                <a asp-action="Checkout" asp-controller="Orders" id="btnSubmit" data="" class="btn btn-primary">Checkout</a>
+            </div>
         }
     </div>
 </div>
+<style>
+    #divSubmit {
+        margin:20px;
+        text-align:center;
+    }
+</style>
+<script>
+    var allBtns = document.querySelectorAll("td>input");
 
+    for (var i = 0; i < allBtns.length; i++) {
+        allBtns[i].addEventListener("change", function (index) {
+            return function () {
+                console.log(index);
+                document.querySelector("#labelTotalCost" + index).textContent = (parseInt(document.querySelector("#labelUnitCost" + index).textContent) * allBtns[index].value ) + "$";
+            };
+        }(i));
+    }
+
+</script>
 <div>
     <a asp-action="Index">Back to List</a>
 </div>

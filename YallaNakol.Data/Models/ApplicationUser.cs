@@ -11,6 +11,10 @@ namespace YallaNakol.Data.Models
     // Add profile data for application users by adding properties to the ApplicationUser class
     public class ApplicationUser : IdentityUser
     {
+        public ApplicationUser()
+        {
+            Addresses = new HashSet<Address>();
+        }
         [Required,PersonalData,MinLength(5)]
         [Column(TypeName = "nvarchar(100)")]
         public string FirstName { get; set; }
@@ -19,5 +23,6 @@ namespace YallaNakol.Data.Models
         [Column(TypeName = "nvarchar(100)")]
         public string LastName { get; set; }
 
+        public virtual ICollection<Address> Addresses { get; set; }
     }
 }

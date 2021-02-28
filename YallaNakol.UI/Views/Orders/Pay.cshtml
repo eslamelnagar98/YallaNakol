@@ -12,14 +12,14 @@
 <h3>Continue With Payment</h3>
 
 
-<div class="radioPayment">
+<p class="radioPayment">
     <label class="lblPayment">Pay With Cash</label>
     <input type="radio" id="radioCash" name="paymentMethod" />
-</div>
-<div class="radioPayment" >
+</p>
+<p class="radioPayment" >
     <label class="lblPayment">Pay With Visa</label>
     <input type="radio" id="radioVisa" name="paymentMethod" checked />
-</div>
+</p>
 
 <div id="payment">
     <form id="heh" action="/Orders/Processing" method="POST">
@@ -48,15 +48,17 @@
     }
 
     #radioPayment {
-       display:inline-block;
        margin:5px;
     }
-    .container{
 
+    .container{
+        display:flex;
+        flex-direction:column;
     }
     .container>*{
-        text-align:center
+        margin:0px auto;
     }
+
 </style>
 
 <script>

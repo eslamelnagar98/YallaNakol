@@ -76,7 +76,11 @@ namespace YallaNakol.UI.Controllers
         //TODO: Stop user from directly accessing this page.
         public async Task<IActionResult> Pay()
         {
-             int centToDollar = 100;
+            var orderToPlace = JsonSerializer.Deserialize<YallaNakol.Data.Models.Order>((string)TempData["Order"]);
+            orderToPlace.PaymentType = PaymentType.Visa;
+            TempData["Order"] = JsonSerializer.Serialize(orderToPlace); //order;
+
+            int centToDollar = 100;
             //TODO: show payment form here
             bool isLocalRedirect = TempData.ContainsKey("LocalRedirect");
 
@@ -155,7 +159,8 @@ namespace YallaNakol.UI.Controllers
             var paymentCompleteVM = new PaymentCompleteViewModel()
             {
                 TotalOrderCost = orderToPlace.OrderTotal,
-                TrackingId = orderToPlace.TrackingID
+                TrackingId = orderToPlace.TrackingID,
+                PaymentType = orderToPlace.PaymentType
             };
 
 

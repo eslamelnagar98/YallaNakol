@@ -65,7 +65,8 @@
         <div>
             @for (int i = 0; i < 5; i++)
             {
-                if (i < int.Parse(Model.Rate))
+                int.TryParse(Model.Rate, out int rating);
+                if (i < rating)
                 {
                     <span class="fa fa-star checked"></span>
                 }

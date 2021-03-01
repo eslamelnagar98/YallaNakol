@@ -13,6 +13,7 @@ namespace YallaNakol.Data.Models
         public string Zone { get; set; }
         public string Area { get; set; }
         public string City { get; set; }
+        [Required]
         public string DetailedInfo { get; set; }
         [Required]
         public string Phone { get; set; }

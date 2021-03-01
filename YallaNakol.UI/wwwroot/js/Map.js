@@ -6,13 +6,28 @@ var phoneHTML = document.querySelector("#phone");
 var detailedHTML = document.querySelector('#detailedInfo')
 
 var mapHTML = document.querySelector('#map')
+showMap = showMap == 1 ? 1 : 0;
 
-var myLat = 30;
-var myLng = 31;
+/*var myLat = 30;
+var myLng = 31;*/
 var address = { zone: 0, area: 0, city: 0 }
 var myMap;
 
-getPosition();
+if (!showMap) {
+    getPosition();
+}
+else {
+    $("#map").show();
+    AllowDrag();
+    $("#addressDiv").hide();
+    geocode();
+    phoneHTML.removeAttribute("readonly");
+    detailedHTML.removeAttribute("readonly");
+    phoneHTML.value = "";
+    detailedHTML.value = "";
+}
+latHTML.value = myLat;
+lngHTML.value = myLng;
 
 function getPosition()
 {
@@ -53,6 +68,11 @@ function getPosition()
         zoneHTML.value = address.zone;
         areaHTML.value = address.area;
         cityHTML.value = address.city;
+        //-------
+        var latHTML = document.querySelector("#latHTML");
+        var lngHTML = document.querySelector("#lngHTML");
+        latHTML.value = myLat;
+        lngHTML.value = myLng;
     });
 }
 function AllowDrag() {
@@ -103,6 +123,7 @@ btnAdd.addEventListener("click", function () {
     detailedHTML.value = "";
     $("#addressList").hide();
 })
+
 
 
 

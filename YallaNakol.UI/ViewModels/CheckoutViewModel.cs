@@ -13,5 +13,9 @@ namespace YallaNakol.UI.ViewModels
 
         public ICollection<Address> Addresses { get; set; }
 
+        public double Lat { get; set; }
+        public double Lng { get; set; }
+
+        public int showMap { get; set; }
     }
 }

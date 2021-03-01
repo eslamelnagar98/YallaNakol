@@ -50,7 +50,7 @@
                     @{
                         if (Model.Addresses.Count() > 0)
                         {
-                            <div class="form-group">
+                            <div class="form-group" id="addressDiv">
                                 <select asp-for="Order" class="form-control" id="addressList" asp-items="Addresses"></select>
                                 <label asp-for="Addresses" class="control-label"></label>
                             </div>
@@ -60,7 +60,7 @@
                     <form asp-action="Checkout">
                         @Html.AntiForgeryToken()
                         <div asp-validation-summary="All" class="text-danger"></div>
-                        <input asp-for="Order.Address.ID" type="hidden" class="form-control" id="addressID" />
+                        <input asp-for="Order.Address.ID" type="hidden" class="form-control" value="0" id="addressID" />
                         <div class="form-group">
                             <label asp-for="Order.FirstName" class="control-label"></label>
                             <input asp-for="Order.FirstName" class="form-control" />
@@ -91,13 +91,14 @@
                         <div class="form-group">
                             <label asp-for="Order.Address.DetailedInfo" class="control-label"></label>
                             <input id="detailedInfo" asp-for="Order.Address.DetailedInfo" class="form-control" readonly value="@Model.Addresses?.FirstOrDefault()?.DetailedInfo" />
-                            <span asp-validation-for="Order.Address.DetailedInfo" class="text-danger"></span>
                         </div>
                         <div class="form-group">
                             <label asp-for="Order.Email" class="control-label"></label>
                             <input asp-for="Order.Email" class="form-control" />
                             <span asp-validation-for="Order.Email" class="text-danger"></span>
                         </div>
+                        <input type="hidden" id="latHTML" name="Lat" />
+                        <input type="hidden" id="lngHTML" name="Lng" />
                         <div class="form-group">
                             <input type="submit" value="Create" class="btn btn-default " />
                         </div>
@@ -108,6 +109,12 @@
         <div id="map">
         </div>
     </div>
+
     <script src="https://maps.googleapis.com/maps/api/js?libraries=places&amp;key=AIzaSyBmnATbcsItV07AIzYhG-6E0ZYgZgTkh3w"></script>
+    <script>
+        var showMap = @Model.showMap;
+        var myLat = @Model.Lat;
+        var myLng = @Model.Lng;
+    </script>
     <script src="~/js/Map.js"></script>
 </body>

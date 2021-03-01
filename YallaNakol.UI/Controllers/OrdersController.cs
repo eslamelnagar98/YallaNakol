@@ -35,7 +35,7 @@ namespace YallaNakol.UI.Controllers
         }
         public async Task<IActionResult> Checkout()
         {
-            if (TempData.ContainsKey("Checkout")) ViewData = JsonSerializer.Deserialize<ViewDataDictionary>((string)TempData["Checkout"]);
+            //if (TempData.ContainsKey("ViewData")) ViewData = JsonSerializer.Deserialize<ViewDataDictionary>(TempData["ViewData"].ToString());
             var user = await userManager.Users.Include(U => U.Addresses).SingleOrDefaultAsync(U => U.UserName == User.Identity.Name);
             var orderToPlace = new YallaNakol.Data.Models.Order()
             {
@@ -46,15 +46,19 @@ namespace YallaNakol.UI.Controllers
             var checkoutVM = new CheckoutViewModel()
             {
                 Order = orderToPlace,
-                Addresses = user.Addresses
+                Addresses = user.Addresses,
+                Lat = 30,
+                Lng = 31,
+                showMap = 0
             };
             return View(checkoutVM);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Checkout(YallaNakol.Data.Models.Order order)
+        public async Task<IActionResult> CheckoutAsync(YallaNakol.Data.Models.Order order, double Lat, double Lng)
         {
+            
             if (shoppingCart.IsEmpty)
             {
                 ModelState.AddModelError("CartItems", "Shopping Cart Empty..");
@@ -74,19 +78,41 @@ namespace YallaNakol.UI.Controllers
             }
             //Check if will address or not
             //order.Address.ID
-            if (order.Address.ID == 0)
-            {
-                //
-            }
+            var user = await userManager.Users.Include(U => U.Addresses).SingleOrDefaultAsync(U => U.UserName == User.Identity.Name);
+            
             if (ModelState.IsValid)
             {
+                if (order.Address.ID == 0) //Save new address
+                {
+                    user.Addresses.Add(order.Address);
+                    orderRepo.SaveChanges();
+                }
                 // save for upcoming requests
                 TempData["Order"] = JsonSerializer.Serialize(order); //order;
                 TempData["LocalRedirect"] = true;
                 return RedirectToAction("Pay");
             }
-            TempData["ViewData"] = JsonSerializer.Serialize(ViewData); //to keep invalid model state
-            return RedirectToAction("Checkout");
+            /*TempData["ViewData"] = JsonSerializer.Serialize(ViewData); //to keep invalid model state
+            TempData["Lat"] = JsonSerializer.Serialize(Lat);
+            TempData["Lng"] = JsonSerializer.Serialize(Lng);
+            TempData["showMap"] = 1;*/
+
+            var orderToPlace = new YallaNakol.Data.Models.Order()
+            {
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Email = user.Email
+            };
+            var checkoutVM = new CheckoutViewModel()
+            {
+                Order = orderToPlace,
+                Addresses = user.Addresses,
+                Lat = Lat, //(TempData.ContainsKey("Lat")) ? JsonSerializer.Deserialize<double>((string)TempData["Lat"]) : 30.0,
+                Lng = Lng, //(TempData.ContainsKey("Lng")) ? JsonSerializer.Deserialize<double>((string)TempData["Lng"]) : 31.0,
+                showMap = 1 //(TempData.ContainsKey("showMap")) ? (int)TempData["showMap"] : 0
+            };
+            //return RedirectToAction("Checkout");
+            return View(checkoutVM);
         }
 
 

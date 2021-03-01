@@ -87,7 +87,7 @@ namespace YallaNakol.UI.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("Id,Name,Address,Description,Rate,ImageUrl,PhoneNumber,WorkingHours,DeliveryAreas")] Restaurant restaurant)
+        public IActionResult Create(Restaurant restaurant)
         {
             if (ModelState.IsValid)
             {
@@ -125,7 +125,7 @@ namespace YallaNakol.UI.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, [Bind("Id,Name,Address,Description,Rate,ImageUrl,PhoneNumber,WorkingHours,DeliveryAreas")] Restaurant restaurant)
+        public IActionResult Edit(int id, [Bind("Id,Name,Address,Description,Rate,ImageUrl,PhoneNumber,WorkingHours,DeliveryAreas,MenuId")] Restaurant restaurant)
         {
             if (id != restaurant.Id)
             {

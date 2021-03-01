@@ -27,94 +27,11 @@ namespace YallaNakol.UI.Controllers
             return View(_repo.AllMenus);
         }
 
-        // GET: Menus/Details/5
-        public IActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-            var menu = _repo.GetMenuById(id);
-            if (menu == null)
-            {
-                return NotFound();
-            }
-            return View(menu);
-        }
-
-        // GET: Menus/Create
         public IActionResult Create()
         {
-            return View();
-        }
-
-
-        // POST: Menus/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public  IActionResult Create([Bind("Id")] Menu menu)
-        {
-            if (ModelState.IsValid)
-            {
-                _repo.AddMenu(menu);
-                _repo.SaveChanges();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(menu);
-        }
-
-        // GET: Menus/Edit/5
-        public  IActionResult Edit(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var menu =  _repo.GetMenuById(id);
-            if (menu == null)
-            {
-                return NotFound();
-            }
-            return View(menu);
-        }
-
-        // POST: Menus/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, [Bind("Id")] Menu menu)
-        {
-            if (id != menu.Id)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _repo.UpdateMenu(menu);
-                    _repo.SaveChanges();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!_repo.MenuExists(menu.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-       
-            return View(menu);
+            _repo.AddMenu(new Menu());
+            _repo.SaveChanges();
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: Menus/Delete/5

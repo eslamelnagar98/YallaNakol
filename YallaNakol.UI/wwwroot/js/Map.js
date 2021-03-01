@@ -77,17 +77,19 @@ function AllowDrag() {
 
 //-----------------------------------------------
 var selectList = document.querySelector("#addressList");
-selectList.addEventListener("change", function () {
-    var addressInfo = this.options[this.selectedIndex].text.split(',');
-    zoneHTML.value = addressInfo[0].trim();
-    areaHTML.value = addressInfo[1].trim();
-    cityHTML.value = addressInfo[2].trim();
-    phoneHTML.value = addressInfo[3].trim();
-    detailedHTML.value = addressInfo[4].trim();
+if (selectList) {
+    selectList.addEventListener("change", function () {
+        var addressInfo = this.options[this.selectedIndex].text.split(',');
+        zoneHTML.value = addressInfo[0].trim();
+        areaHTML.value = addressInfo[1].trim();
+        cityHTML.value = addressInfo[2].trim();
+        phoneHTML.value = addressInfo[3].trim();
+        detailedHTML.value = addressInfo[4].trim();
 
-    var addressID = document.querySelector("#addressID");
-    addressID.value = this.value;
-})
+        var addressID = document.querySelector("#addressID");
+        addressID.value = this.value;
+    })
+}
 
 var btnAdd = document.querySelector("#btnAdd");
 btnAdd.addEventListener("click", function () {
@@ -95,8 +97,8 @@ btnAdd.addEventListener("click", function () {
     UpdateLocation();
     //enable input
     addressID.value = 0;
-    phoneHTML.disabled = false;
-    detailedHTML.disabled = false;
+    phoneHTML.removeAttribute("readonly");
+    detailedHTML.removeAttribute("readonly");
     phoneHTML.value = "";
     detailedHTML.value = "";
     $("#addressList").hide();

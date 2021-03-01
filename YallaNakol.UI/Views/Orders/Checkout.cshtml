@@ -73,25 +73,24 @@
                         </div>
                         <div class="form-group">
                             <label asp-for="Order.Address.City" class="control-label"></label>
-                            <input id="city" asp-for="Order.Address.City" class="form-control" disabled value="@Model.Addresses?.FirstOrDefault()?.City" />
+                            <input id="city" asp-for="Order.Address.City" class="form-control" readonly value="@Model.Addresses?.FirstOrDefault()?.City" />
                         </div>
                         <div class="form-group">
                             <label asp-for="Order.Address.Area" class="control-label"></label>
-                            <input id="area" asp-for="Order.Address.Area" class="form-control" disabled value="@Model.Addresses?.FirstOrDefault()?.Area" />
+                            <input id="area" asp-for="Order.Address.Area" class="form-control" readonly value="@Model.Addresses?.FirstOrDefault()?.Area" />
                             <span asp-validation-for="Order.Address.Area" class="text-danger"></span>
                         </div>
                         <div class="form-group">
                             <label asp-for="Order.Address.Zone" class="control-label"></label>
-                            <input id="zone" asp-for="Order.Address.Zone" class="form-control" disabled value="@Model.Addresses?.FirstOrDefault()?.Zone" />
+                            <input id="zone" asp-for="Order.Address.Zone" class="form-control" readonly value="@Model.Addresses?.FirstOrDefault()?.Zone" />
                         </div>
                         <div class="form-group">
                             <label asp-for="Order.Address.Phone" class="control-label"></label>
-                            <input id="phone" asp-for="Order.Address.Phone" class="form-control" disabled value="@Model.Addresses?.FirstOrDefault()?.Phone" />
-                            <span asp-validation-for="Order.Address.Phone" class="text-danger"></span>
+                            <input id="phone" asp-for="Order.Address.Phone" class="form-control" readonly value="@Model.Addresses?.FirstOrDefault()?.Phone" />
                         </div>
                         <div class="form-group">
                             <label asp-for="Order.Address.DetailedInfo" class="control-label"></label>
-                            <input id="detailedInfo" asp-for="Order.Address.DetailedInfo" class="form-control" disabled value="@Model.Addresses?.FirstOrDefault()?.DetailedInfo" />
+                            <input id="detailedInfo" asp-for="Order.Address.DetailedInfo" class="form-control" readonly value="@Model.Addresses?.FirstOrDefault()?.DetailedInfo" />
                             <span asp-validation-for="Order.Address.DetailedInfo" class="text-danger"></span>
                         </div>
                         <div class="form-group">

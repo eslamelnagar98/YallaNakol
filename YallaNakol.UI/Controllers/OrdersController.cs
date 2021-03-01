@@ -35,6 +35,7 @@ namespace YallaNakol.UI.Controllers
         }
         public async Task<IActionResult> Checkout()
         {
+            if (TempData.ContainsKey("Checkout")) ViewData = JsonSerializer.Deserialize<ViewDataDictionary>((string)TempData["Checkout"]);
             var user = await userManager.Users.Include(U => U.Addresses).SingleOrDefaultAsync(U => U.UserName == User.Identity.Name);
             var orderToPlace = new YallaNakol.Data.Models.Order()
             {
@@ -52,7 +53,7 @@ namespace YallaNakol.UI.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CheckoutAsync(/*YallaNakol.Data.Models.Order*/IFormCollection order)
+        public IActionResult Checkout(YallaNakol.Data.Models.Order order)
         {
             if (shoppingCart.IsEmpty)
             {
@@ -66,10 +67,10 @@ namespace YallaNakol.UI.Controllers
                 {
                     list.Add(area.ToString());
                 }
-            }/*
+            }
             if (!list.Contains(order.Address.Area))
             {
-                ModelState.AddModelError("Area", "Area out of zone");
+                ModelState.AddModelError("Area", "Area out of coverage");
             }
             //Check if will address or not
             //order.Address.ID
@@ -84,21 +85,8 @@ namespace YallaNakol.UI.Controllers
                 TempData["LocalRedirect"] = true;
                 return RedirectToAction("Pay");
             }
-            //------------------*/
-            var user = await userManager.Users.Include(U => U.Addresses).SingleOrDefaultAsync(U => U.UserName == User.Identity.Name);
-            var orderToPlace = new YallaNakol.Data.Models.Order()
-            {
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                Email = user.Email
-            };
-            var checkoutVM = new CheckoutViewModel()
-            {
-                Order = orderToPlace,
-                Addresses = user.Addresses
-            };
-            return View(checkoutVM);
-            //--------------
+            TempData["ViewData"] = JsonSerializer.Serialize(ViewData); //to keep invalid model state
+            return RedirectToAction("Checkout");
         }
 
 

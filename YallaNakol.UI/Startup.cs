@@ -35,7 +35,9 @@ namespace YallaNakol.UI
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("MyConn")));
-
+          
+                                
+                               
             services.AddScoped<IShoppingCart, ShoppingCart>(sp => {
                 var dbContext = sp.GetRequiredService<ApplicationDbContext>();
                 var httpContextAccessor = sp.GetRequiredService<IHttpContextAccessor>();
@@ -43,6 +45,9 @@ namespace YallaNakol.UI
             });
 
             services.AddScoped<ICategory,CategoryRepo>();
+            //services.AddDefaultIdentity<ApplicationUser>().AddRoles<IdentityRole>();
+
+
             services.AddScoped<IMenu,MenuRepo>();
             services.AddScoped<IDish, DishRepo>();
             services.AddScoped<IRestaurant,RestaurantRepo>();
@@ -63,6 +68,7 @@ namespace YallaNakol.UI
                     options.Password.RequireNonAlphanumeric = false;
                     options.User.RequireUniqueEmail = true;
                 })
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddHttpContextAccessor();
@@ -83,13 +89,15 @@ namespace YallaNakol.UI
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env,IServiceProvider serv)
         {
+            CreateRoles(serv).Wait();
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
                 //app.UseExceptionHandler("/Home/Error");
                 app.UseMigrationsEndPoint();
+
             }
             else
             {
@@ -121,6 +129,48 @@ namespace YallaNakol.UI
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                endpoints.MapRazorPages();
             });
+        }
+        private async Task CreateRoles(IServiceProvider serviceProvider)
+        {
+            //initializing custom roles 
+            var RoleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+            var UserManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+            List<string> roleNames = new List<string> () { "Admin", "Customer" };
+            IdentityResult roleResult;
+
+            foreach (var roleName in roleNames)
+            {
+                var roleExist = await RoleManager.RoleExistsAsync(roleName);
+                if (!roleExist)
+                {
+                    //create the roles and seed them to the database: Question 1
+                    roleResult = await RoleManager.CreateAsync(new IdentityRole(roleName));
+                }
+            }
+
+            //Here you could create a super user who will maintain the web app
+            var adminUser = new ApplicationUser
+            {
+
+                
+                FirstName = "Bruce",
+                LastName = "Wayne",
+                UserName = "admin",
+                Email = "Batman@batcave.com"
+            };
+            //Ensure you have these values in your appsettings.json file
+            
+        
+
+           
+                var CreateAdmin = await UserManager.CreateAsync(adminUser, "Batman123");
+                if (CreateAdmin.Succeeded)
+                {
+                    //here we tie the new user to the role
+                    await UserManager.AddToRoleAsync(adminUser, "Admin");
+
+                }
+            
         }
     }
 }

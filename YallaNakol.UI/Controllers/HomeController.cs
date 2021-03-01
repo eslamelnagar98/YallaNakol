@@ -15,6 +15,7 @@ using YallaNakol.UI.Models;
 
 namespace YallaNakol.UI.Controllers
 {
+    [Authorize(Roles = "Admin,Customer")]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;

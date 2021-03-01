@@ -19,7 +19,8 @@ using System.Text.RegularExpressions;
 
 namespace YallaNakol.UI.Controllers
 {
-    [Authorize]
+
+    [Authorize(Roles ="Admin,Customer")]
     public class OrdersController : Controller
     {
         private readonly IOrder orderRepo;

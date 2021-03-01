@@ -36,11 +36,5 @@ namespace YallaNakol.Data.Models
         [BindNever]
         public string TrackingID { get; set; }
     }
-    public enum PaymentType
-    {
-        Cash,
-        Visa
-    }
-
 }
     

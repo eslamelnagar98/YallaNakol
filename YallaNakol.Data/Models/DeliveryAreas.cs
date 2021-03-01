@@ -10,7 +10,7 @@ namespace YallaNakol.Data.Models
         NewCairo=1,
         Madinaty=2,
         NasrCity=4,
-        Maddi=8,
+        Maadi=8,
         AinShams=16,
         October=32,
         Mansoura = 64

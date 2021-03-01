@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Http;
+using System.Text.RegularExpressions;
 
 namespace YallaNakol.UI.Controllers
 {
@@ -72,6 +73,7 @@ namespace YallaNakol.UI.Controllers
                     list.Add(area.ToString());
                 }
             }
+            order.Address.Area = Regex.Replace(order.Address.Area, @"\s+", "");
             if (!list.Contains(order.Address.Area))
             {
                 ModelState.AddModelError("Area", "Area out of coverage");

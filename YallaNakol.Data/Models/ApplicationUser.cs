@@ -14,6 +14,7 @@ namespace YallaNakol.Data.Models
         public ApplicationUser()
         {
             Addresses = new HashSet<Address>();
+            Orders = new HashSet<Order>();
         }
         [Required,PersonalData,MinLength(5)]
         [Column(TypeName = "nvarchar(100)")]
@@ -24,5 +25,6 @@ namespace YallaNakol.Data.Models
         public string LastName { get; set; }
 
         public virtual ICollection<Address> Addresses { get; set; }
+        public virtual ICollection<Order> Orders { get; set; }
     }
 }

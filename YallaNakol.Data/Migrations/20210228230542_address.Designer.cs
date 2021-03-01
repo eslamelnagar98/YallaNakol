@@ -10,7 +10,7 @@ using YallaNakol.Data.Models;
 namespace YallaNakol.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210228192214_address")]
+    [Migration("20210228230542_address")]
     partial class address
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -173,10 +173,12 @@ namespace YallaNakol.Data.Migrations
 
             modelBuilder.Entity("YallaNakol.Data.Models.Address", b =>
                 {
-                    b.Property<string>("ID")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("ApplicationUserId")
+                    b.Property<string>("ApplicationUserID")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Area")
@@ -196,7 +198,7 @@ namespace YallaNakol.Data.Migrations
 
                     b.HasKey("ID");
 
-                    b.HasIndex("ApplicationUserId");
+                    b.HasIndex("ApplicationUserID");
 
                     b.ToTable("Address");
                 });
@@ -559,7 +561,10 @@ namespace YallaNakol.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("AddressID")
+                    b.Property<int?>("AddressID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ApplicationUserID")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Email")
@@ -580,12 +585,17 @@ namespace YallaNakol.Data.Migrations
                     b.Property<decimal>("OrderTotal")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<int>("PaymentType")
+                        .HasColumnType("int");
+
                     b.Property<string>("TrackingID")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("OrderId");
 
                     b.HasIndex("AddressID");
+
+                    b.HasIndex("ApplicationUserID");
 
                     b.ToTable("Orders");
                 });
@@ -823,7 +833,7 @@ namespace YallaNakol.Data.Migrations
                 {
                     b.HasOne("YallaNakol.Data.Models.ApplicationUser", null)
                         .WithMany("Addresses")
-                        .HasForeignKey("ApplicationUserId");
+                        .HasForeignKey("ApplicationUserID");
                 });
 
             modelBuilder.Entity("YallaNakol.Data.Models.Dish", b =>
@@ -857,6 +867,10 @@ namespace YallaNakol.Data.Migrations
                     b.HasOne("YallaNakol.Data.Models.Address", "Address")
                         .WithMany()
                         .HasForeignKey("AddressID");
+
+                    b.HasOne("YallaNakol.Data.Models.ApplicationUser", null)
+                        .WithMany("Orders")
+                        .HasForeignKey("ApplicationUserID");
 
                     b.Navigation("Address");
                 });
@@ -905,6 +919,8 @@ namespace YallaNakol.Data.Migrations
             modelBuilder.Entity("YallaNakol.Data.Models.ApplicationUser", b =>
                 {
                     b.Navigation("Addresses");
+
+                    b.Navigation("Orders");
                 });
 
             modelBuilder.Entity("YallaNakol.Data.Models.Category", b =>

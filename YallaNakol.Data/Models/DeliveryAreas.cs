@@ -13,6 +13,7 @@ namespace YallaNakol.Data.Models
         Maddi=8,
         AinShams=16,
         October=32,
-        Obour = 64
+        Mansoura = 64
+ 
     }
 }

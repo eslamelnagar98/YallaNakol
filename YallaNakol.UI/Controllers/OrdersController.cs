@@ -13,6 +13,8 @@ using YallaNakol.Data;
 using YallaNakol.UI.ViewModels;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using Microsoft.AspNetCore.Http;
 
 namespace YallaNakol.UI.Controllers
 {
@@ -24,25 +26,76 @@ namespace YallaNakol.UI.Controllers
         private readonly UserManager<ApplicationUser> userManager;
         private readonly IRestaurant restaurant;
 
-        public ApplicationDbContext shawky { get; }
-
-        public OrdersController(IOrder orderRepo, IShoppingCart shoppingCart, UserManager<ApplicationUser> userManager, IRestaurant restaurant, ApplicationDbContext dbcontext)
+        public OrdersController(IOrder orderRepo, IShoppingCart shoppingCart, UserManager<ApplicationUser> userManager, IRestaurant restaurant)
         {
             this.orderRepo = orderRepo;
             this.shoppingCart = shoppingCart;
             this.userManager = userManager;
             this.restaurant = restaurant;
-            shawky = dbcontext;
         }
-
-
         public async Task<IActionResult> Checkout()
         {
+            //if (TempData.ContainsKey("ViewData")) ViewData = JsonSerializer.Deserialize<ViewDataDictionary>(TempData["ViewData"].ToString());
+            var user = await userManager.Users.Include(U => U.Addresses).SingleOrDefaultAsync(U => U.UserName == User.Identity.Name);
+            var orderToPlace = new YallaNakol.Data.Models.Order()
+            {
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Email = user.Email
+            };
+            var checkoutVM = new CheckoutViewModel()
+            {
+                Order = orderToPlace,
+                Addresses = user.Addresses,
+                Lat = 30,
+                Lng = 31,
+                showMap = 0
+            };
+            return View(checkoutVM);
+        }
 
-            var user = await userManager.GetUserAsync(User);
-            var user2 = await userManager.FindByIdAsync(user.Id);
-            var shawkyy = shawky.Users.Where(u => u.Id == user.Id).Include(d => d.Addresses).ToList();
-
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CheckoutAsync(YallaNakol.Data.Models.Order order, double Lat, double Lng)
+        {
+            
+            if (shoppingCart.IsEmpty)
+            {
+                ModelState.AddModelError("CartItems", "Shopping Cart Empty..");
+            }
+            var deliveryAreas = restaurant.GetDeliveryAreasByResturantId(shoppingCart.ResturantId);
+            var list = new List<string>();
+            foreach (var area in Enum.GetValues<DeliveryAreas>())
+            {
+                if (deliveryAreas.HasFlag(area))
+                {
+                    list.Add(area.ToString());
+                }
+            }
+            if (!list.Contains(order.Address.Area))
+            {
+                ModelState.AddModelError("Area", "Area out of coverage");
+            }
+            //Check if will address or not
+            //order.Address.ID
+            var user = await userManager.Users.Include(U => U.Addresses).SingleOrDefaultAsync(U => U.UserName == User.Identity.Name);
+            
+            if (ModelState.IsValid)
+            {
+                if (order.Address.ID == 0) //Save new address
+                {
+                    user.Addresses.Add(order.Address);
+                    orderRepo.SaveChanges();
+                }
+                // save for upcoming requests
+                TempData["Order"] = JsonSerializer.Serialize(order); //order;
+                TempData["LocalRedirect"] = true;
+                return RedirectToAction("Pay");
+            }
+            /*TempData["ViewData"] = JsonSerializer.Serialize(ViewData); //to keep invalid model state
+            TempData["Lat"] = JsonSerializer.Serialize(Lat);
+            TempData["Lng"] = JsonSerializer.Serialize(Lng);
+            TempData["showMap"] = 1;*/
 
             var orderToPlace = new YallaNakol.Data.Models.Order()
             {
@@ -50,47 +103,16 @@ namespace YallaNakol.UI.Controllers
                 LastName = user.LastName,
                 Email = user.Email
             };
-
             var checkoutVM = new CheckoutViewModel()
             {
                 Order = orderToPlace,
-                Addresses = new SelectList(user.Addresses,"ID","AddressString")
+                Addresses = user.Addresses,
+                Lat = Lat, //(TempData.ContainsKey("Lat")) ? JsonSerializer.Deserialize<double>((string)TempData["Lat"]) : 30.0,
+                Lng = Lng, //(TempData.ContainsKey("Lng")) ? JsonSerializer.Deserialize<double>((string)TempData["Lng"]) : 31.0,
+                showMap = 1 //(TempData.ContainsKey("showMap")) ? (int)TempData["showMap"] : 0
             };
-
+            //return RedirectToAction("Checkout");
             return View(checkoutVM);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Checkout(YallaNakol.Data.Models.Order order)
-        {
-            if (shoppingCart.IsEmpty)
-            {
-                ModelState.AddModelError("CartItems", "Shopping Cart Empty..");
-            }
-            //if( order.Address.Area )
-            var deliveryAreas = restaurant.GetDeliveryAreasByResturantId(shoppingCart.ResturantId);
-            var list = new List<string>();
-            foreach (var area in Enum.GetValues<DeliveryAreas>())
-            {
-                if (deliveryAreas.HasFlag(area))
-                {
-                    list.Add(area.ToString());    
-                }
-            }
-            if(!list.Contains(order.Address.Area))
-            {
-                ModelState.AddModelError("Area", "Area out of zone");
-            }
-            if (ModelState.IsValid)
-            {
-                // save for upcoming requests
-                TempData["Order"] = JsonSerializer.Serialize(order); //order;
-                TempData["LocalRedirect"] = true;
-                return RedirectToAction("Pay");
-            }
-
-            return View();
         }
 
 

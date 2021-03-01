@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Checkout";
+    var Addresses = new SelectList(Model.Addresses, "ID", "AddressString");
 }
 <header>
     <style>
@@ -11,6 +12,7 @@
             height: 800px;
             border: 1px solid black;
             position: relative;
+            display: none;
         }
         .cont{
             display:flex;
@@ -45,14 +47,20 @@
             <hr />
             <div class="row">
                 <div class="col-md-6">
-                    <div class="form-group">
-                        <select asp-for="Order" class="form-control" id="addressList" asp-items="@Model.Addresses"></select>
-                        <label asp-for="Addresses" class="control-label"></label>
-                    </div>
-                    <input type="button" class="button" value="Add New Order Info" id="btnAdd"/>
+                    @{
+                        if (Model.Addresses.Count() > 0)
+                        {
+                            <div class="form-group" id="addressDiv">
+                                <select asp-for="Order" class="form-control" id="addressList" asp-items="Addresses"></select>
+                                <label asp-for="Addresses" class="control-label"></label>
+                            </div>
+                        }
+                    }
+                    <input type="button" class="btn btn-primary" value="Add New Address" id="btnAdd" />
                     <form asp-action="Checkout">
-                        @Html.AntiForgeryToken();
+                        @Html.AntiForgeryToken()
                         <div asp-validation-summary="All" class="text-danger"></div>
+                        <input asp-for="Order.Address.ID" type="hidden" class="form-control" value="0" id="addressID" />
                         <div class="form-group">
                             <label asp-for="Order.FirstName" class="control-label"></label>
                             <input asp-for="Order.FirstName" class="form-control" />
@@ -65,33 +73,33 @@
                         </div>
                         <div class="form-group">
                             <label asp-for="Order.Address.City" class="control-label"></label>
-                            <input id="city" asp-for="Order.Address.City" class="form-control" disabled />
+                            <input id="city" asp-for="Order.Address.City" class="form-control" readonly value="@Model.Addresses?.FirstOrDefault()?.City" />
                         </div>
                         <div class="form-group">
                             <label asp-for="Order.Address.Area" class="control-label"></label>
-                            <input id="area" asp-for="Order.Address.Area" class="form-control" disabled />
+                            <input id="area" asp-for="Order.Address.Area" class="form-control" readonly value="@Model.Addresses?.FirstOrDefault()?.Area" />
                             <span asp-validation-for="Order.Address.Area" class="text-danger"></span>
                         </div>
                         <div class="form-group">
                             <label asp-for="Order.Address.Zone" class="control-label"></label>
-                            <input id="zone" asp-for="Order.Address.Zone" class="form-control" disabled />
+                            <input id="zone" asp-for="Order.Address.Zone" class="form-control" readonly value="@Model.Addresses?.FirstOrDefault()?.Zone" />
                         </div>
                         <div class="form-group">
                             <label asp-for="Order.Address.Phone" class="control-label"></label>
-                            <input asp-for="Order.Address.Phone" class="form-control" />
-                            <span asp-validation-for="Order.Address.Phone" class="text-danger"></span>
+                            <input id="phone" asp-for="Order.Address.Phone" class="form-control" readonly value="@Model.Addresses?.FirstOrDefault()?.Phone" />
                         </div>
                         <div class="form-group">
                             <label asp-for="Order.Address.DetailedInfo" class="control-label"></label>
-                            <input asp-for="Order.Address.DetailedInfo" class="form-control" />
-                            <span asp-validation-for="Order.Address.DetailedInfo" class="text-danger"></span>
+                            <input id="detailedInfo" asp-for="Order.Address.DetailedInfo" class="form-control" readonly value="@Model.Addresses?.FirstOrDefault()?.DetailedInfo" />
                         </div>
                         <div class="form-group">
                             <label asp-for="Order.Email" class="control-label"></label>
                             <input asp-for="Order.Email" class="form-control" />
                             <span asp-validation-for="Order.Email" class="text-danger"></span>
                         </div>
-                        <div class="form-group ">
+                        <input type="hidden" id="latHTML" name="Lat" />
+                        <input type="hidden" id="lngHTML" name="Lng" />
+                        <div class="form-group">
                             <input type="submit" value="Create" class="btn btn-default " />
                         </div>
                     </form>
@@ -101,6 +109,12 @@
         <div id="map">
         </div>
     </div>
+
     <script src="https://maps.googleapis.com/maps/api/js?libraries=places&amp;key=AIzaSyBmnATbcsItV07AIzYhG-6E0ZYgZgTkh3w"></script>
+    <script>
+        var showMap = @Model.showMap;
+        var myLat = @Model.Lat;
+        var myLng = @Model.Lng;
+    </script>
     <script src="~/js/Map.js"></script>
 </body>

@@ -2,13 +2,32 @@
 var zoneHTML = document.querySelector("#zone");
 var cityHTML = document.querySelector("#city");
 var areaHTML = document.querySelector("#area");
+var phoneHTML = document.querySelector("#phone");
+var detailedHTML = document.querySelector('#detailedInfo')
+
 var mapHTML = document.querySelector('#map')
-var myLat = 30;
-var myLng = 31;
+showMap = showMap == 1 ? 1 : 0;
+
+/*var myLat = 30;
+var myLng = 31;*/
 var address = { zone: 0, area: 0, city: 0 }
 var myMap;
 
-getPosition();
+if (!showMap) {
+    getPosition();
+}
+else {
+    $("#map").show();
+    AllowDrag();
+    $("#addressDiv").hide();
+    geocode();
+    phoneHTML.removeAttribute("readonly");
+    detailedHTML.removeAttribute("readonly");
+    phoneHTML.value = "";
+    detailedHTML.value = "";
+}
+latHTML.value = myLat;
+lngHTML.value = myLng;
 
 function getPosition()
 {
@@ -25,7 +44,7 @@ function getPosition()
     })
 }
 
-function geocode()
+ function geocode()
 {
     var geocoder = new google.maps.Geocoder();
     var latlng = new google.maps.LatLng(myLat, myLng);
@@ -46,6 +65,14 @@ function geocode()
                 }
             }
         };
+        zoneHTML.value = address.zone;
+        areaHTML.value = address.area;
+        cityHTML.value = address.city;
+        //-------
+        var latHTML = document.querySelector("#latHTML");
+        var lngHTML = document.querySelector("#lngHTML");
+        latHTML.value = myLat;
+        lngHTML.value = myLng;
     });
 }
 function AllowDrag() {
@@ -57,32 +84,51 @@ function AllowDrag() {
         },
         zoom: 16
     })
-    google.maps.event.addListener(myMap, 'dragend',
-        function () {
-            myLat = myMap.getCenter().lat();
-            myLng = myMap.getCenter().lng();
-            geocode();
+    google.maps.event.addListener(myMap, 'center_changed',
+        UpdateLocation);
+}
 
-            zoneHTML.value = address.zone;
-            areaHTML.value = address.area;
-            cityHTML.value = address.city;
-        });
+ function UpdateLocation()
+{
+    myLat = myMap.getCenter().lat();
+    myLng = myMap.getCenter().lng();
+     geocode();  
 }
 
 //-----------------------------------------------
 var selectList = document.querySelector("#addressList");
-selectList.addEventListener("change", function () {
-    var addressInfo = this.value.split(',');
-    zoneHTML.value = addressInfo[0].Trim();
-    areaHTML.value = addressInfo[1].Trim();
-    cityHTML.value = addressInfo[2].Trim();
-})
+if (selectList) {
+    selectList.addEventListener("change", function () {
+        var addressInfo = this.options[this.selectedIndex].text.split(',');
+        zoneHTML.value = addressInfo[0].trim();
+        areaHTML.value = addressInfo[1].trim();
+        cityHTML.value = addressInfo[2].trim();
+        phoneHTML.value = addressInfo[3].trim();
+        detailedHTML.value = addressInfo[4].trim();
+
+        var addressID = document.querySelector("#addressID");
+        addressID.value = this.value;
+    })
+}
 
 var btnAdd = document.querySelector("#btnAdd");
 btnAdd.addEventListener("click", function () {
-    console.log("test");
-    $("#map").toggle();
+    $("#map").show();
+    UpdateLocation();
+    //enable input
+    addressID.value = 0;
+    phoneHTML.removeAttribute("readonly");
+    detailedHTML.removeAttribute("readonly");
+    phoneHTML.value = "";
+    detailedHTML.value = "";
+    $("#addressList").hide();
 })
+
+
+
+
+
+
 
 
 

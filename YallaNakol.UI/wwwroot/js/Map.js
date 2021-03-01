@@ -2,7 +2,11 @@
 var zoneHTML = document.querySelector("#zone");
 var cityHTML = document.querySelector("#city");
 var areaHTML = document.querySelector("#area");
+var phoneHTML = document.querySelector("#phone");
+var detailedHTML = document.querySelector('#detailedInfo')
+
 var mapHTML = document.querySelector('#map')
+
 var myLat = 30;
 var myLng = 31;
 var address = { zone: 0, area: 0, city: 0 }
@@ -71,7 +75,6 @@ function AllowDrag() {
      geocode();  
 }
 
-
 //-----------------------------------------------
 var selectList = document.querySelector("#addressList");
 selectList.addEventListener("change", function () {
@@ -79,14 +82,27 @@ selectList.addEventListener("change", function () {
     zoneHTML.value = addressInfo[0].trim();
     areaHTML.value = addressInfo[1].trim();
     cityHTML.value = addressInfo[2].trim();
+    phoneHTML.value = addressInfo[3].trim();
+    detailedHTML.value = addressInfo[4].trim();
+
+    var addressID = document.querySelector("#addressID");
+    addressID.value = this.value;
 })
 
 var btnAdd = document.querySelector("#btnAdd");
-btnAdd.addEventListener("click",  function () {
-    console.log("test");
-    $("#map").toggle();
-     UpdateLocation();
+btnAdd.addEventListener("click", function () {
+    $("#map").show();
+    UpdateLocation();
+    //enable input
+    addressID.value = 0;
+    phoneHTML.disabled = false;
+    detailedHTML.disabled = false;
+    phoneHTML.value = "";
+    detailedHTML.value = "";
+    $("#addressList").hide();
 })
+
+
 
 
 

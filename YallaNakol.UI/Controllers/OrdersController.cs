@@ -13,6 +13,8 @@ using YallaNakol.Data;
 using YallaNakol.UI.ViewModels;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using Microsoft.AspNetCore.Http;
 
 namespace YallaNakol.UI.Controllers
 {
@@ -24,63 +26,56 @@ namespace YallaNakol.UI.Controllers
         private readonly UserManager<ApplicationUser> userManager;
         private readonly IRestaurant restaurant;
 
-        public ApplicationDbContext shawky { get; }
-
-        public OrdersController(IOrder orderRepo, IShoppingCart shoppingCart, UserManager<ApplicationUser> userManager, IRestaurant restaurant, ApplicationDbContext dbcontext)
+        public OrdersController(IOrder orderRepo, IShoppingCart shoppingCart, UserManager<ApplicationUser> userManager, IRestaurant restaurant)
         {
             this.orderRepo = orderRepo;
             this.shoppingCart = shoppingCart;
             this.userManager = userManager;
             this.restaurant = restaurant;
-            shawky = dbcontext;
         }
-
-
         public async Task<IActionResult> Checkout()
         {
-
-            var user = await userManager.GetUserAsync(User);
-            var user2 = await userManager.FindByIdAsync(user.Id);
-            var shawkyy = shawky.Users.Where(u => u.Id == user.Id).Include(d => d.Addresses).ToList();
-
-
+            var user = await userManager.Users.Include(U => U.Addresses).SingleOrDefaultAsync(U => U.UserName == User.Identity.Name);
             var orderToPlace = new YallaNakol.Data.Models.Order()
             {
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 Email = user.Email
             };
-
             var checkoutVM = new CheckoutViewModel()
             {
                 Order = orderToPlace,
-                Addresses = new SelectList(user.Addresses,"ID","AddressString")
+                Addresses = user.Addresses
             };
-
             return View(checkoutVM);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Checkout(YallaNakol.Data.Models.Order order)
+        public async Task<IActionResult> CheckoutAsync(/*YallaNakol.Data.Models.Order*/IFormCollection order)
         {
             if (shoppingCart.IsEmpty)
             {
                 ModelState.AddModelError("CartItems", "Shopping Cart Empty..");
             }
-            //if( order.Address.Area )
             var deliveryAreas = restaurant.GetDeliveryAreasByResturantId(shoppingCart.ResturantId);
             var list = new List<string>();
             foreach (var area in Enum.GetValues<DeliveryAreas>())
             {
                 if (deliveryAreas.HasFlag(area))
                 {
-                    list.Add(area.ToString());    
+                    list.Add(area.ToString());
                 }
-            }
-            if(!list.Contains(order.Address.Area))
+            }/*
+            if (!list.Contains(order.Address.Area))
             {
                 ModelState.AddModelError("Area", "Area out of zone");
+            }
+            //Check if will address or not
+            //order.Address.ID
+            if (order.Address.ID == 0)
+            {
+                //
             }
             if (ModelState.IsValid)
             {
@@ -89,8 +84,21 @@ namespace YallaNakol.UI.Controllers
                 TempData["LocalRedirect"] = true;
                 return RedirectToAction("Pay");
             }
-
-            return View();
+            //------------------*/
+            var user = await userManager.Users.Include(U => U.Addresses).SingleOrDefaultAsync(U => U.UserName == User.Identity.Name);
+            var orderToPlace = new YallaNakol.Data.Models.Order()
+            {
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Email = user.Email
+            };
+            var checkoutVM = new CheckoutViewModel()
+            {
+                Order = orderToPlace,
+                Addresses = user.Addresses
+            };
+            return View(checkoutVM);
+            //--------------
         }
 
 

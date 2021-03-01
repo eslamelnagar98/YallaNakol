@@ -10,6 +10,7 @@ namespace YallaNakol.Data.Models
     {
         [BindNever]
         public int OrderId { get; set; }
+        public string ApplicationUserID { get; set; }
         public List<OrderDetail> OrderDetails { get; set; }
         
         [Required(ErrorMessage ="Please Enter Your First Name")]

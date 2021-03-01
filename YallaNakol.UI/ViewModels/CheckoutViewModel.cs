@@ -11,7 +11,7 @@ namespace YallaNakol.UI.ViewModels
     {
         public Order Order { get; set; }
 
-        public SelectList Addresses { get; set; }
+        public ICollection<Address> Addresses { get; set; }
 
     }
 }

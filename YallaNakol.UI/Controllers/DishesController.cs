@@ -55,12 +55,13 @@ namespace YallaNakol.UI.Controllers
             ViewData["CategoryId"] = new SelectList(_catRepo.AllCategories, "Id", "Name");
             ViewData["MenuId"] = new SelectList(_menuRepo.AllMenus, "Id", "Id");
             ViewBag.RestID = TempData["RestID"];
+            TempData.Keep("RestID");
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("Id,Name,Address,Description,Rate,ImageUrl,PhoneNumber,WorkingHours,DeliveryAreas,MenuId,CategoryId")] Dish dish)
+        public IActionResult Create(Dish dish)
         {
             if (ModelState.IsValid)
             {

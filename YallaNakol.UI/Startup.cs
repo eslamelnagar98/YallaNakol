@@ -60,7 +60,7 @@ namespace YallaNakol.UI
             services.AddDefaultIdentity<ApplicationUser>(
                 options =>
                 {
-                    options.SignIn.RequireConfirmedAccount = false;
+                    options.SignIn.RequireConfirmedAccount = true;
                     options.SignIn.RequireConfirmedEmail = false;
                     options.Password.RequireDigit = false;
                     options.Password.RequiredUniqueChars = 0;

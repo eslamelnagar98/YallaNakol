@@ -27,7 +27,7 @@ namespace YallaNakol.UI.Controllers
             this._catRepo = cat;
             this._menuRepo = menu;
         }
-        [AllowAnonymous]
+        
         public IActionResult Index()
         {
             //string y = null;

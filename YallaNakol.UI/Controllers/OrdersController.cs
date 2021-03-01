@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Http;
+using System.Text.RegularExpressions;
 
 namespace YallaNakol.UI.Controllers
 {
@@ -73,6 +74,7 @@ namespace YallaNakol.UI.Controllers
                     list.Add(area.ToString());
                 }
             }
+            order.Address.Area = Regex.Replace(order.Address.Area, @"\s+", "");
             if (!list.Contains(order.Address.Area))
             {
                 ModelState.AddModelError("Area", "Area out of coverage");
@@ -86,7 +88,7 @@ namespace YallaNakol.UI.Controllers
                 if (order.Address.ID == 0) //Save new address
                 {
                     user.Addresses.Add(order.Address);
-                    orderRepo.SaveChanges();
+                    //orderRepo.SaveChanges();
                 }
                 // save for upcoming requests
                 TempData["Order"] = JsonSerializer.Serialize(order); //order;
@@ -206,7 +208,6 @@ namespace YallaNakol.UI.Controllers
                 TrackingId = orderToPlace.TrackingID,
                 PaymentType = orderToPlace.PaymentType
             };
-
 
             return View(paymentCompleteVM);
         }

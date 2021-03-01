@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ using YallaNakol.Data.Services;
 
 namespace YallaNakol.UI.Controllers
 {
+    [Authorize(Roles = "Admin,Customer")]
     public class ShoppingCartController : Controller
     {
         private readonly IShoppingCart _shoppingCart;

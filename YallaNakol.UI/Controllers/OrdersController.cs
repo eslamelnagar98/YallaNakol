@@ -18,7 +18,8 @@ using Microsoft.AspNetCore.Http;
 
 namespace YallaNakol.UI.Controllers
 {
-    [Authorize]
+
+    [Authorize(Roles ="Admin,Customer")]
     public class OrdersController : Controller
     {
         private readonly IOrder orderRepo;

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +11,7 @@ using YallaNakol.Data.Services;
 
 namespace YallaNakol.UI.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class DishesController : Controller
     {
         private readonly IDish _repo;
@@ -18,13 +20,14 @@ namespace YallaNakol.UI.Controllers
         {
             _repo = context;
         }
-
+     
         public IActionResult Index()
         {
             return View(_repo.AllDishes);
         }
 
         // GET: Dishes/Details/5
+
         public IActionResult Details(int? id)
         {
             if (id == null)

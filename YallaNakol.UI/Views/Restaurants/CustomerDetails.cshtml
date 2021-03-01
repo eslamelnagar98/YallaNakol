@@ -6,8 +6,21 @@
     </script>
 }
 
+<style>
 
-<h1>@Model.Restaurant.Name</h1>
+    .resturant-description {
+        padding: 10px;
+        min-height: 150px;
+    }
+
+    .checked {
+        color: orange;
+    }
+
+
+</style>
+
+<h1 class="text-primary">@Model.Restaurant.Name</h1>
 
 <div class="span9">
     <div class="well well-small">
@@ -16,14 +29,28 @@
                 <img src="@Model.Restaurant.ImageUrl" alt="">
             </div>
             <div class="span6">
-                <h5>Product Name </h5>
-                <p>
+                <p class="resturant-description">
                     @Model.Restaurant.Description
                 </p>
             </div>
             <div class="span4 alignR">
                 <form class="form-horizontal qtyFrm">
-                    <h3> Rating: @Model.Restaurant.Rate</h3>
+                    <div>
+                        <span><b>Rating: </b></span>
+                        @for (int i = 0; i < 5; i++)
+                        {
+                            int.TryParse(Model.Restaurant.Rate, out int rating);
+                            if (i < rating)
+                            {
+                                <span class="fa fa-star checked"></span>
+                            }
+                            else
+                            {
+                                <span class="fa fa-star"></span>
+                            }
+                        }
+
+                    </div>
                 </form>
             </div>
         </div>
@@ -49,7 +76,7 @@
             <div class="portfolio-items">
                 @foreach (var item in Model.Dishes)
                 {
-                          <partial name="PartialViews/_RestaurantDish" model="item" />
+                    <partial name="PartialViews/_RestaurantDish" model="item" />
                 }
             </div>
         </div>

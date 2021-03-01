@@ -87,7 +87,7 @@ namespace YallaNakol.UI.Controllers
                 if (order.Address.ID == 0) //Save new address
                 {
                     user.Addresses.Add(order.Address);
-                    orderRepo.SaveChanges();
+                    //orderRepo.SaveChanges();
                 }
                 // save for upcoming requests
                 TempData["Order"] = JsonSerializer.Serialize(order); //order;
@@ -207,7 +207,6 @@ namespace YallaNakol.UI.Controllers
                 TrackingId = orderToPlace.TrackingID,
                 PaymentType = orderToPlace.PaymentType
             };
-
 
             return View(paymentCompleteVM);
         }

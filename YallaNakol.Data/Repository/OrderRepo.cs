@@ -31,7 +31,7 @@ namespace YallaNakol.Data.Repository
 
 
             //Add All dishes in the shopping cart to the order
-            foreach ( var shoppingCartItem in shoppingCart.ShoppingCartItems )
+            foreach (var shoppingCartItem in shoppingCart.ShoppingCartItems)
             {
                 var orderDetail = new OrderDetail()
                 {
@@ -39,12 +39,11 @@ namespace YallaNakol.Data.Repository
                     Amount = shoppingCartItem.Amount,
                     Price = shoppingCartItem.Dish.Price,
                 };
-                
+
                 order.OrderDetails.Add(orderDetail);
             }
 
         }
-
 
         public void SaveChanges() => dbContext.SaveChanges();
 

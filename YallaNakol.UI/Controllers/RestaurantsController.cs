@@ -15,27 +15,26 @@ namespace YallaNakol.UI.Controllers
     [Authorize(Roles = "Admin")]
     public class RestaurantsController : Controller
     {
-        private readonly IRestaurant _repo; 
-        private readonly IDish dish;
-        private readonly ICategory cat;
+        private readonly IRestaurant _restRepo; 
+        private readonly IDish _dishRepo;
+        private readonly ICategory _catRepo;
+        private readonly IMenu _menuRepo;
 
-
-
-        public RestaurantsController(IRestaurant context,IDish dish, ICategory cat)
+        public RestaurantsController(IRestaurant context,IDish dish, ICategory cat, IMenu menu)
         {
-            _repo = context;
-            this.dish = dish;
-            this.cat = cat;
-
+            this._restRepo = context;
+            this._dishRepo = dish;
+            this._catRepo = cat;
+            this._menuRepo = menu;
         }
-
+        [AllowAnonymous]
         public IActionResult Index()
         {
-            string y = null;
-            var x = y.Length;
-            return View(_repo.AllRestaurants);
+            //string y = null;
+            //var x = y.Length;
+            return View(_restRepo.AllRestaurants);
         }
-        [Authorize(Roles = "Admin,Customer")]
+        [AllowAnonymous]
         // GET: Restaurants/Details/5
         public IActionResult CustomerDetails(int? id)
         {
@@ -43,7 +42,7 @@ namespace YallaNakol.UI.Controllers
             {
                 return NotFound();
             }
-            var restaurant = _repo.GetRestaurantById(id);
+            var restaurant = _restRepo.GetRestaurantById(id);
             if (restaurant == null)
             {
                 return NotFound();
@@ -51,7 +50,7 @@ namespace YallaNakol.UI.Controllers
 
             var restaurantMenu = new RestaurantMenu
             {
-                Dishes = dish.AllDishes.Where(m => m.MenuId == restaurant.MenuId),
+                Dishes = _dishRepo.AllDishes.Where(m => m.MenuId == restaurant.MenuId),
                 //Category = cat.AllCategories,
                 Category = restaurant.Categories,
                 Restaurant = restaurant
@@ -59,13 +58,14 @@ namespace YallaNakol.UI.Controllers
             
             return View(restaurantMenu);
         }
+
         public IActionResult Details(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
-            var restaurant = _repo.GetRestaurantById(id);
+            var restaurant = _restRepo.GetRestaurantById(id);
             if (restaurant == null)
             {
                 return NotFound();
@@ -77,6 +77,8 @@ namespace YallaNakol.UI.Controllers
         // GET: Restaurants/Create
         public IActionResult Create()
         {
+            ViewData["MenuId"] = new SelectList(_menuRepo.AllMenus, "Id", "Id");
+
             return View();
         }
 
@@ -89,10 +91,12 @@ namespace YallaNakol.UI.Controllers
         {
             if (ModelState.IsValid)
             {
-                _repo.AddRestaurant(restaurant);
-                _repo.SaveChanges();
+                _restRepo.AddRestaurant(restaurant);
+                _restRepo.SaveChanges();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["MenuId"] = new SelectList(_menuRepo.AllMenus, "Id", "Id");
+
             return View(restaurant);
         }
         
@@ -103,12 +107,16 @@ namespace YallaNakol.UI.Controllers
             {
                 return NotFound();
             }
+            //ViewBag.MenuId = new SelectList()
 
-            var restaurant = _repo.GetRestaurantById(id);
+            var restaurant = _restRepo.GetRestaurantById(id);
+
             if (restaurant == null)
             {
                 return NotFound();
             }
+            ViewData["MenuId"] = new SelectList(_menuRepo.AllMenus, "Id", "Id", restaurant.MenuId);
+
             return View(restaurant);
         }
         
@@ -127,12 +135,12 @@ namespace YallaNakol.UI.Controllers
             {
                 try
                 {
-                    _repo.UpdateRestaurant(restaurant);
-                    _repo.SaveChanges();
+                    _restRepo.UpdateRestaurant(restaurant);
+                    _restRepo.SaveChanges();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!_repo.RestaurantExists(restaurant.Id))
+                    if (!_restRepo.RestaurantExists(restaurant.Id))
                     {
                         return NotFound();
                     }
@@ -143,6 +151,8 @@ namespace YallaNakol.UI.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["MenuId"] = new SelectList(_menuRepo.AllMenus, "Id", "Id");
+
             return View(restaurant);
         }
         
@@ -154,7 +164,7 @@ namespace YallaNakol.UI.Controllers
                 return NotFound();
             }
 
-            var restaurant = _repo.GetRestaurantById(id);
+            var restaurant = _restRepo.GetRestaurantById(id);
             if (restaurant == null)
             {
                 return NotFound();
@@ -168,9 +178,9 @@ namespace YallaNakol.UI.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(int id)
         {
-            var restaurant = _repo.GetRestaurantById(id);
-             _repo.DeleteRestaurant(restaurant);
-            _repo.SaveChanges();
+            var restaurant = _restRepo.GetRestaurantById(id);
+             _restRepo.DeleteRestaurant(restaurant);
+            _restRepo.SaveChanges();
             return RedirectToAction(nameof(Index));
         }
     }

@@ -1,0 +1,29 @@
+﻿@model IEnumerable<YallaNakol.Data.Models.Restaurant>
+
+@{
+    ViewData["Title"] = "AdminPanel";
+}
+
+<h2>Admin Panel</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <td>
+                <a class="btn btn-danger" asp-controller="Restaurants" asp-action="List">Manage Restaurants</a>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a class="btn btn-danger" asp-controller="Dishes" asp-action="Index">Cash On Delivery</a>
+
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a class="btn btn-danger" asp-controller="Orders" asp-action="PaymentComplete">Cash On Delivery</a>
+
+            </td>
+        </tr>
+    </thead>
+</table>

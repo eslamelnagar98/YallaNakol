@@ -10,7 +10,7 @@ using YallaNakol.Data.Services;
 
 namespace YallaNakol.UI.Controllers
 {
-    [Authorize(Roles = "Admin,Customer")]
+    
     public class ShoppingCartController : Controller
     {
         private readonly IShoppingCart _shoppingCart;

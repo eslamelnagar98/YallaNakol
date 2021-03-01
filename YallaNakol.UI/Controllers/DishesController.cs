@@ -14,53 +14,62 @@ namespace YallaNakol.UI.Controllers
     [Authorize(Roles = "Admin")]
     public class DishesController : Controller
     {
-        private readonly IDish _repo;
+        private readonly IDish _dishRepo;
+        private readonly IRestaurant _restRepo;
+        private readonly ICategory _catRepo;
+        private readonly IMenu _menuRepo;
 
-        public DishesController(IDish context)
+        public DishesController(IDish dish, IRestaurant rest, ICategory cat, IMenu menu)
         {
-            _repo = context;
+            _dishRepo = dish;
+            this._restRepo = rest;
+            this._catRepo = cat;
+            this._menuRepo = menu;
         }
      
-        public IActionResult Index()
+        public IActionResult Index(int? id)
         {
-            return View(_repo.AllDishes);
+            TempData["RestID"] = id;
+            return View(_dishRepo.AllDishes.Where(D=>D.MenuId == _restRepo.GetRestaurantById(id).MenuId).ToList());
         }
 
         // GET: Dishes/Details/5
-
         public IActionResult Details(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
-            var dish = _repo.GetDishById(id);
+            var dish = _dishRepo.GetDishById(id);
             if (dish == null)
             {
                 return NotFound();
             }
+            ViewBag.RestID = TempData["RestID"];
             return View(dish);
         }
 
-        // GET: Dishes/Create
         public IActionResult Create()
         {
+            ViewData["CategoryId"] = new SelectList(_catRepo.AllCategories, "Id", "Name");
+            ViewData["MenuId"] = new SelectList(_menuRepo.AllMenus, "Id", "Id");
+            ViewBag.RestID = TempData["RestID"];
             return View();
         }
 
-        // POST: Dishes/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Create([Bind("Id,Name,Address,Description,Rate,ImageUrl,PhoneNumber,WorkingHours,DeliveryAreas")] Dish dish)
         {
             if (ModelState.IsValid)
             {
-                _repo.AddDish(dish);
-                _repo.SaveChanges();
+                _dishRepo.AddDish(dish);
+                _dishRepo.SaveChanges();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["CategoryId"] = new SelectList(_catRepo.AllCategories, "Id", "Name");
+            ViewData["MenuId"] = new SelectList(_menuRepo.AllMenus, "Id", "Id");
+            ViewBag.RestID = TempData["RestID"];
             return View(dish);
         }
 
@@ -72,11 +81,14 @@ namespace YallaNakol.UI.Controllers
                 return NotFound();
             }
 
-            var dish = _repo.GetDishById(id);
+            var dish = _dishRepo.GetDishById(id);
             if (dish == null)
             {
                 return NotFound();
             }
+            ViewData["CategoryId"] = new SelectList(_catRepo.AllCategories, "Id", "Name",dish.CategoryId);
+            ViewData["MenuId"] = new SelectList(_menuRepo.AllMenus, "Id", "Id",dish.MenuId);
+            ViewBag.RestID = TempData["RestID"];
             return View(dish);
         }
 
@@ -95,12 +107,12 @@ namespace YallaNakol.UI.Controllers
             {
                 try
                 {
-                    _repo.UpdateDish(dish);
-                    _repo.SaveChanges();
+                    _dishRepo.UpdateDish(dish);
+                    _dishRepo.SaveChanges();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!_repo.DishExists(dish.Id))
+                    if (!_dishRepo.DishExists(dish.Id))
                     {
                         return NotFound();
                     }
@@ -111,6 +123,9 @@ namespace YallaNakol.UI.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["CategoryId"] = new SelectList(_catRepo.AllCategories, "Id", "Name",dish.CategoryId);
+            ViewData["MenuId"] = new SelectList(_menuRepo.AllMenus, "Id", "Id",dish.MenuId);
+            ViewBag.RestID = TempData["RestID"];
             return View(dish);
         }
 
@@ -122,12 +137,12 @@ namespace YallaNakol.UI.Controllers
                 return NotFound();
             }
 
-            var dish = _repo.GetDishById(id);
+            var dish = _dishRepo.GetDishById(id);
             if (dish == null)
             {
                 return NotFound();
             }
-
+            ViewBag.RestID = TempData["RestID"];
             return View(dish);
         }
 
@@ -136,9 +151,9 @@ namespace YallaNakol.UI.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(int id)
         {
-            var dish = _repo.GetDishById(id);
-            _repo.DeleteDish(dish);
-            _repo.SaveChanges();
+            var dish = _dishRepo.GetDishById(id);
+            _dishRepo.DeleteDish(dish);
+            _dishRepo.SaveChanges();
             return RedirectToAction(nameof(Index));
         }
     }

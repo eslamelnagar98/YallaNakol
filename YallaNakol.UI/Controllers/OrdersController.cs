@@ -20,7 +20,7 @@ using System.Text.RegularExpressions;
 namespace YallaNakol.UI.Controllers
 {
 
-    [Authorize(Roles ="Admin,Customer")]
+    [Authorize]
     public class OrdersController : Controller
     {
         private readonly IOrder orderRepo;
@@ -37,7 +37,6 @@ namespace YallaNakol.UI.Controllers
         }
         public async Task<IActionResult> Checkout()
         {
-            //if (TempData.ContainsKey("ViewData")) ViewData = JsonSerializer.Deserialize<ViewDataDictionary>(TempData["ViewData"].ToString());
             var user = await userManager.Users.Include(U => U.Addresses).SingleOrDefaultAsync(U => U.UserName == User.Identity.Name);
             var orderToPlace = new YallaNakol.Data.Models.Order()
             {
@@ -79,8 +78,6 @@ namespace YallaNakol.UI.Controllers
             {
                 ModelState.AddModelError("Area", "Area out of coverage");
             }
-            //Check if will address or not
-            //order.Address.ID
             var user = await userManager.Users.Include(U => U.Addresses).SingleOrDefaultAsync(U => U.UserName == User.Identity.Name);
             
             if (ModelState.IsValid)
@@ -88,17 +85,12 @@ namespace YallaNakol.UI.Controllers
                 if (order.Address.ID == 0) //Save new address
                 {
                     user.Addresses.Add(order.Address);
-                    //orderRepo.SaveChanges();
                 }
                 // save for upcoming requests
                 TempData["Order"] = JsonSerializer.Serialize(order); //order;
                 TempData["LocalRedirect"] = true;
                 return RedirectToAction("Pay");
             }
-            /*TempData["ViewData"] = JsonSerializer.Serialize(ViewData); //to keep invalid model state
-            TempData["Lat"] = JsonSerializer.Serialize(Lat);
-            TempData["Lng"] = JsonSerializer.Serialize(Lng);
-            TempData["showMap"] = 1;*/
 
             var orderToPlace = new YallaNakol.Data.Models.Order()
             {
@@ -110,9 +102,9 @@ namespace YallaNakol.UI.Controllers
             {
                 Order = orderToPlace,
                 Addresses = user.Addresses,
-                Lat = Lat, //(TempData.ContainsKey("Lat")) ? JsonSerializer.Deserialize<double>((string)TempData["Lat"]) : 30.0,
-                Lng = Lng, //(TempData.ContainsKey("Lng")) ? JsonSerializer.Deserialize<double>((string)TempData["Lng"]) : 31.0,
-                showMap = 1 //(TempData.ContainsKey("showMap")) ? (int)TempData["showMap"] : 0
+                Lat = Lat, 
+                Lng = Lng, 
+                showMap = 1 
             };
             //return RedirectToAction("Checkout");
             return View(checkoutVM);
@@ -181,10 +173,8 @@ namespace YallaNakol.UI.Controllers
                 case "failed":
                     //Code to execute on a failed charge
                     return View();
-                    break;
                 default:
                     return View();
-                    break;
             }
         }
 //4242424242424242

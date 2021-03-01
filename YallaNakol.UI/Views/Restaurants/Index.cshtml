@@ -49,7 +49,7 @@
                 @Html.DisplayFor(modelItem => item.Address)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Description)
+                @item.Description.Substring(0, 20) ...
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Rate)
@@ -69,7 +69,8 @@
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a> |
+                <a class="btn btn-default" asp-controller="Dishes" asp-action="Index" asp-route-id="@item.Id">Manage Dishes</a>
             </td>
         </tr>
 }

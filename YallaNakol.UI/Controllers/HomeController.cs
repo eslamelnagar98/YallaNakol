@@ -15,7 +15,6 @@ using YallaNakol.UI.Models;
 
 namespace YallaNakol.UI.Controllers
 {
-    [Authorize(Roles = "Admin,Customer")]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -45,8 +44,8 @@ namespace YallaNakol.UI.Controllers
         {
             return View();
         }
-
-        public IActionResult Privacy()
+        [Authorize(Roles = "Admin")]
+        public IActionResult AdminPanel()
         {
             return View();
         }

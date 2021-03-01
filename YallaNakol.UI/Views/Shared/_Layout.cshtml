@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Touché</title>
+    <title>YallaNakol</title>
     <meta name="description" content="">
     <meta name="author" content="">
 
@@ -51,7 +51,11 @@
                 <ul class="nav navbar-nav navbar-right">
                     <li><a asp-action="Index" asp-controller="Home">Restaurants</a></li>
                     <li><a asp-action="About" asp-controller="Home">About</a></li>
-                    <li><a class="page-scroll" href="#footer">Contact Us</a></li>
+                    @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                    {
+                        <li><a asp-action="AdminPanel" asp-controller="Home">Control Panel</a></li>
+                    }
+
                     <partial name="_LoginPartial" />
                     <li>@await Component.InvokeAsync("ShoppingCartIcon")</li>
                 </ul>

@@ -74,17 +74,27 @@ namespace YallaNakol.UI
             services.AddHttpContextAccessor();
             services.AddSession();
             services.AddControllersWithViews();
-            
+
             services.AddAuthentication()
             .AddMicrosoftAccount(microsoftOptions =>
             {
                 microsoftOptions.ClientId = "51217d7a-4861-45fe-8134-febfeebb8ec8";
                 microsoftOptions.ClientSecret = "_4DNh8j._XAF~1e1kB67g._zilRSSx1TxK";
+            })
+            .AddFacebook(facebookOptions =>
+            {
+                facebookOptions.ClientId = "735045007188520";
+                facebookOptions.ClientSecret = "46c921fbdbb3f9785257e7eb812696ce";
             });
+            //.AddGoogle(googleOptions => 
+            //{
+            //    googleOptions.ClientId = "834611763364-dmvsrajis9ru1po23nknom0vkp5ntpos.apps.googleusercontent.com";
+            //    googleOptions.ClientSecret = "WjG0ZLPA9rmWg4_OGPEbujdb";
+            //});//error??!
 
             //.AddGoogle(googleOptions => {  })
             //.AddTwitter(twitterOptions => {  })
-            //.AddFacebook(facebookOptions => {  });
+            
 
         }
 

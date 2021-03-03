@@ -81,8 +81,8 @@ namespace YallaNakol.UI
             services.AddAuthentication()
             .AddMicrosoftAccount(microsoftOptions =>
             {
-                microsoftOptions.ClientId = "51217d7a-4861-45fe-8134-febfeebb8ec8";
-                microsoftOptions.ClientSecret = "_4DNh8j._XAF~1e1kB67g._zilRSSx1TxK";
+                microsoftOptions.ClientId = "91bad2d5-2df1-43d9-bd34-974b608eb1ae";
+                microsoftOptions.ClientSecret = "_T.3iD_ihE2Xof7Peat_iRqcq0rVY.2-UR";
             })
             .AddFacebook(facebookOptions =>
             {

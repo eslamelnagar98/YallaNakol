@@ -27,14 +27,14 @@ namespace YallaNakol.UI.Controllers
         {
             // TEST DATA ONLY 
             // START OF TEST DATA
-            var addedDish1 = _dish.GetDishById(1);
+            /////////var addedDish1 = _dish.GetDishById(1);
            // var addedDish2 = _dish.GetDishById(2);
            // var addedDish3 = _dish.GetDishById(3);
            //
-            _shoppingCart.AddDish(addedDish1, 1);
+            //////////_shoppingCart.AddDish(addedDish1, 1);
            // _shoppingCart.AddDish(addedDish2, 3);
            // _shoppingCart.AddDish(addedDish3, 2);
-            _shoppingCart.SaveChanges();
+            ////////_shoppingCart.SaveChanges();
             // END OF TEST DATA
 
 

@@ -51,7 +51,7 @@
                 <ul class="nav navbar-nav navbar-right">
                     <li><a asp-action="Index" asp-controller="Home">Restaurants</a></li>
                     <li><a asp-action="About" asp-controller="Home">About</a></li>
-                    @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                    @if (User.Identity.IsAuthenticated && User.IsInRole(UserRoles.Admin))
                     {
                         <li><a asp-action="AdminPanel" asp-controller="Home">Control Panel</a></li>
                     }

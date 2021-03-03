@@ -11,7 +11,7 @@ using YallaNakol.Data.Services;
 
 namespace YallaNakol.UI.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = UserRoles.Admin)]
     public class CategoriesController : Controller
     {
         private readonly ICategory _repo;

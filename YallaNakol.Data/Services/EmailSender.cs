@@ -13,12 +13,11 @@ namespace YallaNakol.Data.Services
             Options = optionsAccessor.Value;
         }
 
-        public AuthMessageSenderOptions Options { get; } //set only via Secret Manager
+        public AuthMessageSenderOptions Options { get; set; }
 
         public Task SendEmailAsync(string email, string subject, string message)
         {
-            //Options.SendGridkey
-            return Execute("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", subject, message, email);
+            return Execute(Options.SendGridKey, subject, message, email);
         }
 
         public Task Execute(string apiKey, string subject, string message, string email)
@@ -33,8 +32,6 @@ namespace YallaNakol.Data.Services
             };
             msg.AddTo(new EmailAddress(email));
 
-            // Disable click tracking.
-            // See https://sendgrid.com/docs/User_Guide/Settings/tracking.html
             msg.SetClickTracking(false, false);
 
             return client.SendEmailAsync(msg);

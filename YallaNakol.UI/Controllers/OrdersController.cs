@@ -37,8 +37,13 @@ namespace YallaNakol.UI.Controllers
         }
         public async Task<IActionResult> Checkout()
         {
+            var checkoutVM = await getCheckoutViewModelAsync();
+            return View(checkoutVM);
+        }
+        async Task<CheckoutViewModel> getCheckoutViewModelAsync(double Lat = 30, double Lng = 31, int showMap = 0)
+        {
             var user = await userManager.Users.Include(U => U.Addresses).SingleOrDefaultAsync(U => U.UserName == User.Identity.Name);
-            var orderToPlace = new YallaNakol.Data.Models.Order()
+            var orderToPlace = new Data.Models.Order()
             {
                 FirstName = user.FirstName,
                 LastName = user.LastName,
@@ -48,18 +53,17 @@ namespace YallaNakol.UI.Controllers
             {
                 Order = orderToPlace,
                 Addresses = user.Addresses,
-                Lat = 30,
-                Lng = 31,
-                showMap = 0
+                Lat = Lat,
+                Lng = Lng,
+                showMap = showMap
             };
-            return View(checkoutVM);
+            return checkoutVM;
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CheckoutAsync(YallaNakol.Data.Models.Order order, double Lat, double Lng)
-        {
-            
+        public async Task<IActionResult> CheckoutAsync(Data.Models.Order order, double Lat, double Lng)
+        { 
             if (shoppingCart.IsEmpty)
             {
                 ModelState.AddModelError("CartItems", "Shopping Cart Empty..");
@@ -91,22 +95,7 @@ namespace YallaNakol.UI.Controllers
                 TempData["LocalRedirect"] = true;
                 return RedirectToAction("Pay");
             }
-
-            var orderToPlace = new YallaNakol.Data.Models.Order()
-            {
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                Email = user.Email
-            };
-            var checkoutVM = new CheckoutViewModel()
-            {
-                Order = orderToPlace,
-                Addresses = user.Addresses,
-                Lat = Lat, 
-                Lng = Lng, 
-                showMap = 1 
-            };
-            //return RedirectToAction("Checkout");
+            var checkoutVM = getCheckoutViewModelAsync(Lat, Lng, 1);
             return View(checkoutVM);
         }
 

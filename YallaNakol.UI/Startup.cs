@@ -45,15 +45,19 @@ namespace YallaNakol.UI
             });
 
             services.AddScoped<ICategory,CategoryRepo>();
-            //services.AddDefaultIdentity<ApplicationUser>().AddRoles<IdentityRole>();
-
-
             services.AddScoped<IMenu,MenuRepo>();
             services.AddScoped<IDish, DishRepo>();
             services.AddScoped<IRestaurant,RestaurantRepo>();
             services.AddScoped<IOrder, OrderRepo>();
+
             services.AddTransient<IEmailSender, EmailSender>();
-            services.Configure<AuthMessageSenderOptions>(Configuration);
+
+            services.Configure<AuthMessageSenderOptions>(options=>
+            {
+                options.SendGridUser = Configuration["Sendgrid:User"];
+                options.SendGridKey = Configuration["Sendgrid:APIKey"];
+                options.SenderEmail = Configuration["Sendgrid:SenderEmail"];
+            });
 
             services.AddDatabaseDeveloperPageExceptionFilter();
 
@@ -145,7 +149,7 @@ namespace YallaNakol.UI
             //initializing custom roles 
             var RoleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
             var UserManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
-            List<string> roleNames = new List<string> () { "Admin", "Customer" };
+            List<string> roleNames = new List<string> () { UserRoles.Admin, UserRoles.Customer };
             IdentityResult roleResult;
 
             foreach (var roleName in roleNames)
@@ -153,34 +157,26 @@ namespace YallaNakol.UI
                 var roleExist = await RoleManager.RoleExistsAsync(roleName);
                 if (!roleExist)
                 {
-                    //create the roles and seed them to the database: Question 1
                     roleResult = await RoleManager.CreateAsync(new IdentityRole(roleName));
                 }
             }
 
-            //Here you could create a super user who will maintain the web app
             var adminUser = new ApplicationUser
             {
-
-                
                 FirstName = "Bruce",
                 LastName = "Wayne",
-                UserName = "admin",
+                UserName = Configuration["Admin:Username"],
                 Email = "Batman@batcave.com"
             };
-            //Ensure you have these values in your appsettings.json file
-            
-        
 
-           
-                var CreateAdmin = await UserManager.CreateAsync(adminUser, "Batman123");
-                if (CreateAdmin.Succeeded)
-                {
-                    //here we tie the new user to the role
-                    await UserManager.AddToRoleAsync(adminUser, "Admin");
+            var CreateAdmin = await UserManager.CreateAsync(adminUser, Configuration["Admin:Password"]);
+            if (CreateAdmin.Succeeded)
+            {
+                //here we tie the new user to the role
+                await UserManager.AddToRoleAsync(adminUser, UserRoles.Admin);
 
-                }
-            
+            }
+
         }
     }
 }

@@ -44,7 +44,7 @@ namespace YallaNakol.UI.Controllers
         {
             return View();
         }
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = UserRoles.Admin)]
         public IActionResult AdminPanel()
         {
             return View();

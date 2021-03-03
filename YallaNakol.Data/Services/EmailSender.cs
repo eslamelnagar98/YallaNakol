@@ -25,7 +25,7 @@ namespace YallaNakol.Data.Services
             var client = new SendGridClient(apiKey);
             var msg = new SendGridMessage()
             {
-                From = new EmailAddress("yallaanakool@gmail.com", Options.SendGridUser),
+                From = new EmailAddress(Options.SenderEmail, Options.SendGridUser),
                 Subject = subject,
                 PlainTextContent = message,
                 HtmlContent = message

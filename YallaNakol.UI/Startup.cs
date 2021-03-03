@@ -34,9 +34,7 @@ namespace YallaNakol.UI
 
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
-                    Configuration.GetConnectionString("MyConn")));
-          
-                                
+                    Configuration.GetConnectionString("MyConn")));               
                                
             services.AddScoped<IShoppingCart, ShoppingCart>(sp => {
                 var dbContext = sp.GetRequiredService<ApplicationDbContext>();
@@ -49,6 +47,7 @@ namespace YallaNakol.UI
             services.AddScoped<IDish, DishRepo>();
             services.AddScoped<IRestaurant,RestaurantRepo>();
             services.AddScoped<IOrder, OrderRepo>();
+            //services.AddScoped<IAddress, AddressRepo>();
 
             services.AddTransient<IEmailSender, EmailSender>();
 
@@ -174,7 +173,6 @@ namespace YallaNakol.UI
             {
                 //here we tie the new user to the role
                 await UserManager.AddToRoleAsync(adminUser, UserRoles.Admin);
-
             }
 
         }

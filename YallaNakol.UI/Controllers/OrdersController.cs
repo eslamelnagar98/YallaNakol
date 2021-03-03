@@ -27,20 +27,37 @@ namespace YallaNakol.UI.Controllers
         private readonly IShoppingCart shoppingCart;
         private readonly UserManager<ApplicationUser> userManager;
         private readonly IRestaurant restaurant;
+        //private readonly IAddress address;
 
-        public OrdersController(IOrder orderRepo, IShoppingCart shoppingCart, UserManager<ApplicationUser> userManager, IRestaurant restaurant)
+        public OrdersController(IOrder orderRepo, IShoppingCart shoppingCart, UserManager<ApplicationUser> userManager, IRestaurant restaurant/*, IAddress address*/)
         {
             this.orderRepo = orderRepo;
             this.shoppingCart = shoppingCart;
             this.userManager = userManager;
             this.restaurant = restaurant;
+            //this.address = address;
         }
         public async Task<IActionResult> Checkout()
         {
-            var checkoutVM = await getCheckoutViewModelAsync();
+            //var checkoutVM = await getCheckoutViewModelAsync();
+            var user = await userManager.Users.Include(U => U.Addresses).SingleOrDefaultAsync(U => U.UserName == User.Identity.Name);
+            var orderToPlace = new Data.Models.Order()
+            {
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Email = user.Email
+            };
+            var checkoutVM = new CheckoutViewModel()
+            {
+                Order = orderToPlace,
+                Addresses = user.Addresses,
+                Lat = 30,
+                Lng = 31,
+                showMap = 0
+            };
             return View(checkoutVM);
         }
-        async Task<CheckoutViewModel> getCheckoutViewModelAsync(double Lat = 30, double Lng = 31, int showMap = 0)
+        /*async Task<CheckoutViewModel> getCheckoutViewModelAsync(double Lat = 30, double Lng = 31, int showMap = 0)
         {
             var user = await userManager.Users.Include(U => U.Addresses).SingleOrDefaultAsync(U => U.UserName == User.Identity.Name);
             var orderToPlace = new Data.Models.Order()
@@ -58,7 +75,7 @@ namespace YallaNakol.UI.Controllers
                 showMap = showMap
             };
             return checkoutVM;
-        }
+        }*/
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -88,6 +105,7 @@ namespace YallaNakol.UI.Controllers
             {
                 if (order.Address.ID == 0) //Save new address
                 {
+                    //if(address.AddressExists())
                     user.Addresses.Add(order.Address);
                 }
                 // save for upcoming requests
@@ -95,8 +113,8 @@ namespace YallaNakol.UI.Controllers
                 TempData["LocalRedirect"] = true;
                 return RedirectToAction("Pay");
             }
-            var checkoutVM = getCheckoutViewModelAsync(Lat, Lng, 1);
-            return View(checkoutVM);
+            //var checkoutVM = getCheckoutViewModelAsync(Lat, Lng, 1);
+            return View();
         }
 
 

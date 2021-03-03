@@ -16,11 +16,11 @@ namespace YallaNakol.Data.Models
             Addresses = new HashSet<Address>();
             Orders = new HashSet<Order>();
         }
-        [Required,PersonalData,MinLength(5)]
+        [PersonalData,MinLength(5)]
         [Column(TypeName = "nvarchar(100)")]
         public string FirstName { get; set; }
 
-        [Required,PersonalData,MinLength(5)]
+        [PersonalData,MinLength(5)]
         [Column(TypeName = "nvarchar(100)")]
         public string LastName { get; set; }
 

@@ -10,8 +10,8 @@ using YallaNakol.Data.Models;
 namespace YallaNakol.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210228230542_address")]
-    partial class address
+    [Migration("20210303202017_fname")]
+    partial class fname
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -188,9 +188,11 @@ namespace YallaNakol.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("DetailedInfo")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Phone")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Zone")
@@ -200,7 +202,7 @@ namespace YallaNakol.Data.Migrations
 
                     b.HasIndex("ApplicationUserID");
 
-                    b.ToTable("Address");
+                    b.ToTable("Addresses");
                 });
 
             modelBuilder.Entity("YallaNakol.Data.Models.ApplicationUser", b =>
@@ -223,11 +225,9 @@ namespace YallaNakol.Data.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("FirstName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("LastName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<bool>("LockoutEnabled")

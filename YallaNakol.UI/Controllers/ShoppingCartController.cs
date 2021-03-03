@@ -57,7 +57,12 @@ namespace YallaNakol.UI.Controllers
                 _shoppingCart.SaveChanges();
 
             }
-            return RedirectToAction("Index");
+
+            // get the caller URL which we will redirect to:
+
+            Uri callingUrl = Request.GetTypedHeaders().Referer;
+            return Redirect(callingUrl.OriginalString);
+            //return RedirectToAction("Index");
         }
 
         [Route("ShoppingCart/RemoveFromCart/dishId")]

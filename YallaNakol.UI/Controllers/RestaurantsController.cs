@@ -55,7 +55,7 @@ namespace YallaNakol.UI.Controllers
                 Category = restaurant.Categories,
                 Restaurant = restaurant
             };
-            
+            TempData["Reffer"] = Request.Headers["Referer"].ToString();
             return View(restaurantMenu);
         }
 

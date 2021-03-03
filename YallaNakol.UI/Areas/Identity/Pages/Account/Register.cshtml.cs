@@ -135,7 +135,7 @@ namespace YallaNakol.UI.Areas.Identity.Pages.Account
                     _logger.LogError($"Error {error.Description} occured in registration page for user {user.Id}");
                 }
             }
-            ModelState.AddModelError("XX","ZZ");
+            ModelState.AddModelError("","Some Error");
 
             // If we got this far, something failed, redisplay form
             return Page();

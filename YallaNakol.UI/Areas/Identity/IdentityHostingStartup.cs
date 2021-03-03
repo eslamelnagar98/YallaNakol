@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using YallaNakol.UI.Data;
 using YallaNakol.Data.Models;
 
 [assembly: HostingStartup(typeof(YallaNakol.UI.Areas.Identity.IdentityHostingStartup))]

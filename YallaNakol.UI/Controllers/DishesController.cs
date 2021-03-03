@@ -11,7 +11,7 @@ using YallaNakol.Data.Services;
 
 namespace YallaNakol.UI.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = UserRoles.Admin)]
     public class DishesController : Controller
     {
         private readonly IDish _dishRepo;

@@ -42,8 +42,6 @@ namespace YallaNakol.Data.Models
             var context = applicationDbContext;
             ISession session = httpContextAccessor.HttpContext.Session;
 
-
-
             string cartId = session.GetString("CartId");
 
             if (cartId == null)

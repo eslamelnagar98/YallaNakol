@@ -12,7 +12,7 @@ using YallaNakol.Data.ViewModel;
 
 namespace YallaNakol.UI.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = UserRoles.Admin)]
     public class RestaurantsController : Controller
     {
         private readonly IRestaurant _restRepo; 
